@@ -6,6 +6,7 @@ import { logout } from '../_actions/userActions'
 import { ALERT, THEME } from '../_constants/globalConstants'
 import Avatar from './Avatar'
 import LoadIcon from '../images/loading.gif'
+import UserCard from './UserCard'
 
 function Haader() {
     const navLinks = [
@@ -77,16 +78,8 @@ function Haader() {
                     }
                     <div className="users">
                         {
-                            users.map(user=>(
-                                <Link key={user._id} to={`/profile/${user._id}`}>
-                                    <div className="d-flex p-2 align-item-center border">
-                                        <Avatar src={user.avatar} size="big-avatar"/>
-                                        <div className="ml-1">
-                                            <span className="d-block">{user.username}</span>
-                                            <small style={{opacity:0.7}}>{user.fullname}</small>
-                                        </div>
-                                    </div>
-                                </Link>
+                            search && users.map(user=>(
+                                <UserCard key = {user._id} user={user} border="border" handleClose = {handleClose}/>
                             ))
                         }
                     </div>
