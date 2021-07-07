@@ -5,6 +5,7 @@ import {Link, useLocation} from 'react-router-dom'
 import { logout } from '../_actions/userActions'
 import { ALERT, THEME } from '../_constants/globalConstants'
 import Avatar from './Avatar'
+import LoadIcon from '../images/loading.gif'
 
 function Haader() {
     const navLinks = [
@@ -19,6 +20,7 @@ function Haader() {
 
     const [search, setSearch] = useState('')
     const [users, setUsers] = useState([])
+    const [load, setLoad] = useState(false)
 
     const dispatch = useDispatch()
 
@@ -34,7 +36,9 @@ function Haader() {
                                 })
                             })
             }
+            setLoad(true)
             get();
+            setLoad(false)
         }else{
             setUsers([])
         }
@@ -67,6 +71,10 @@ function Haader() {
                         <span>Search</span>
                     </div>
                     <div className="close_search" style={{opacity:users.length===0? 0:1}} onClick={handleClose}>&times;</div>
+                    <button className="submit" style={{display:'none'}}>Search</button>
+                    {
+                        load && <img  className = "loading" src={LoadIcon} alt="loading" />
+                    }
                     <div className="users">
                         {
                             users.map(user=>(
