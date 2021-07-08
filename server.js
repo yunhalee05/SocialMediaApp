@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 require('dotenv').config()
 const {User} = require('./models/User')
 const app = express();
+const path = require('path')
 
 const cookieParser = require('cookie-parser')
 
@@ -25,6 +26,11 @@ app.use(cookieParser())
 
 app.use('/api/users', require('./routes/userRouter'))
 app.use('/api/search', require('./routes/searchRouter'))
+app.use('/api/profileuploads', require('./routes/profileUploadRouter'));
+
+
+const __variableOfChoice = path.resolve();
+app.use('/profileuploads', express.static(path.join(__variableOfChoice, '/profileuploads')))
 
 
 const port = process.env.port || 5000

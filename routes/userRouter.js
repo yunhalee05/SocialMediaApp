@@ -98,6 +98,28 @@ userRouter.get('/:id',auth,  async(req, res)=>{
     }
 })
 
+userRouter.put('/:id', auth, async(req, res)=>{
+    try{
+        const user = await User.findById(req.params.id)
+        if(user){
+            user.fullname = req.body.fullname || user.fullname
+            user.avatar = req.body.avatar || user.avatar
+            user.mobile = req.body.mobile || user.mobile
+            user.address = req.body.address || user.address
+            user.website = req.body.website || user.website
+            user.story = req.body.story || user.story
+            user.gender = req.body.gender || user.gender
+        }
+        const updatedUser = await user.save()
+        res.send({
+            user:updatedUser,
+            token:generateToken(updatedUser)
+        })
+    }catch(err){
+        return res.status(500).json({message:err.message})
+    }
+})
+
 
 
 module.exports = userRouter
