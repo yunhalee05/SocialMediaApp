@@ -4,6 +4,8 @@ var bcrypt = require('bcrypt')
 const asyncHandler = require('express-async-handler')
 const jwt = require('jsonwebtoken')
 const {generateToken} = require('../middleware/auth')
+const {auth} = require('../middleware/auth')
+
 
 const userRouter = express.Router();
 
@@ -82,7 +84,19 @@ userRouter.post('/register', async(req, res)=>{
     }
 })
 
-
+userRouter.get('/:id',auth,  async(req, res)=>{
+    try{
+        const user = await User.findById(req.params.id)
+                                .select('-password')
+        if(user){
+            res.send(user)
+        }else{
+            res.status(404).send({message:'User Not Found.'})
+        }
+    }catch(err){
+        return res.status(500).json({message: err.message})
+    }
+})
 
 
 

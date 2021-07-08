@@ -1,5 +1,6 @@
 import{combineReducers, createStore, compose, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk'
+import { getUserProfileReducer } from './profileReducers';
 import themeReducer from './themeReducers';
 import { alertReducer, userLoginReducer, userRegisterReducer } from './userReducers';
 
@@ -16,6 +17,8 @@ const reducer = combineReducers({
     userRegister:userRegisterReducer,
     alert:alertReducer,
     theme:themeReducer,
+    userProfile:getUserProfileReducer,
+
     
 
 })

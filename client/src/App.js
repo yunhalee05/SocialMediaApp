@@ -8,6 +8,7 @@ import Header from './component/Haader'
 import Notify from './pages/Notify';
 import Discover from './pages/Discover';
 import Message from './pages/Message';
+import Profile from './pages/Profile';
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
       <div className="App">
         <div className="main">
           {userInfo && <Header/>}
+          <Route exact path="/profile/:id" component={Profile}/>
           <Route exact path="/message" component={Message}/>
           <Route exact path="/discover" component={Discover}/>
           <Route exact path="/notify" component={Notify}/>
