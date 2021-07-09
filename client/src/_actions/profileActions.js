@@ -1,5 +1,6 @@
 import axios from "axios"
-import { PROFILE_GETUSER_FAIL, PROFILE_GETUSER_REQUEST, PROFILE_GETUSER_SUCCESS, USER_UPDATE_PROFILE_FAIL, USER_UPDATE_PROFILE_REQUEST, USER_UPDATE_PROFILE_SUCCESS } from "../_constants/profileConstants"
+import { ALERT } from "../_constants/globalConstants"
+import { PROFILE_GETUSER_FAIL, PROFILE_GETUSER_REQUEST, PROFILE_GETUSER_SUCCESS, USER_FOLLOW_PROFILE, USER_UNFOLLOW_PROFILE, USER_UPDATE_PROFILE_FAIL, USER_UPDATE_PROFILE_REQUEST, USER_UPDATE_PROFILE_SUCCESS } from "../_constants/profileConstants"
 import { USER_LOGIN_SUCCESS } from "../_constants/userConstants"
 
 export const getProfileUser = (userId)=>async (dispatch, getState)=>{
@@ -59,6 +60,76 @@ export const updateUserProfile = (user ) =>async (dispatch, getState)=>{
         dispatch({
             type:USER_UPDATE_PROFILE_FAIL,
             payload:{error:err.response && err.response.data.message? err.response.data.message : err.message}
+        })
+    }
+}
+
+export const followUserProfile = (user)=> async(dispatch, getState)=>{
+
+    const {userLogin: {userInfo}} = getState()
+    let newUser =  {...user, followers:[...user.followers, userInfo.user] }
+
+    try{
+        
+        const {data} = await axios.patch(`/api/users/${user._id}/follow`,userInfo.user,{
+            headers:{authorization:`Bearer ${userInfo?.token}`}
+        } )
+
+        dispatch({
+            type:USER_FOLLOW_PROFILE,
+            payload:newUser
+        })
+        dispatch({
+            type:USER_LOGIN_SUCCESS,
+            payload:data
+        })
+        
+        localStorage.removeItem('userInfo')
+        localStorage.setItem('userInfo',JSON.stringify(data))
+
+    }catch(err){
+        dispatch({
+            type:ALERT,
+            payload:{error:err.response && err.response.data.message? err.response.data.message : err.message}
+
+        })
+    }
+
+}
+
+export const unfollowUserProfile = (user)=> async(dispatch, getState)=>{
+
+    const {userLogin: {userInfo}} = getState()
+    let newUser =  {...user, followers: user.followers.filter(x=>x._id !==userInfo.user._id) }
+
+    try{
+        
+        const {data} = await axios.patch(`/api/users/${user._id}/unfollow`,userInfo.user,{
+            headers:{authorization:`Bearer ${userInfo?.token}`}
+        } )
+
+        dispatch({
+            type:USER_UNFOLLOW_PROFILE,
+            payload:newUser
+        })
+        dispatch({
+            type:USER_LOGIN_SUCCESS,
+            payload:data
+        })
+        
+        dispatch({
+            type:USER_UPDATE_PROFILE_SUCCESS,
+            payload : data
+        })
+
+        localStorage.removeItem('userInfo')
+        localStorage.setItem('userInfo',JSON.stringify(data))
+
+    }catch(err){
+        dispatch({
+            type:ALERT,
+            payload:{error:err.response && err.response.data.message? err.response.data.message : err.message}
+
         })
     }
 }

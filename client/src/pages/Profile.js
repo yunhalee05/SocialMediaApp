@@ -6,6 +6,7 @@ import { PROFILE_GETUSER_RESET, USER_UPDATE_PROFILE_RESET } from '../_constants/
 import Loading from '../component/Loading';
 import Alert from '../component/Alert'
 import EditProfile from '../component/EditProfile'
+import FollowBtn from '../component/FollowBtn';
 
 
 function Profile(props) {
@@ -21,6 +22,9 @@ function Profile(props) {
 
     const userUpdateProfile = useSelector(state => state.userUpdateProfile)
     const {success}  = userUpdateProfile
+
+    const [showFollowers, setShowFollowers] = useState(false)
+    const [showFollowings, setShowFollowings] = useState(false)
     
 
     const [onEdit, setOnEdit] = useState(false)
@@ -42,7 +46,10 @@ function Profile(props) {
         <div className="profile">
             {loading&& <Loading></Loading>}
             {error && <Alert variant="danger">{error}</Alert>}
-            <div className="info">
+
+            {
+                user && 
+                <div className="info">
                 <div className="info_container" key={user?._id}>
                     <Avatar src={user?.avatar} size="supper-avatar" />
                     <div className="info_content">
@@ -51,15 +58,15 @@ function Profile(props) {
                             {
                                 user?._id === userInfo.user._id 
                                 ? <button className="btn btn-outline-info" onClick={()=>setOnEdit(true)}>Edit Profile</button>
-                                :   ''
+                                :   <FollowBtn user={user} userId={user?._id}/>
                             }
                         </div>
 
                         <div className="follow_btn">
-                            <span className="mr-4">
+                            <span className="mr-4" onClick={()=>setShowFollowers(true)}>
                                 {user?.followers.length} Followers
                             </span>
-                            <span className="mr-4">
+                            <span className="mr-4" onClick={()=>setShowFollowings(true)}>
                                 {user?.following.length} Following
                             </span>
                         </div>
@@ -78,6 +85,7 @@ function Profile(props) {
 
                 </div>
             </div>
+            }
         </div>
     )
 }
