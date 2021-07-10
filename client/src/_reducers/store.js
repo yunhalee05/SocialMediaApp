@@ -22,7 +22,7 @@ const reducer = combineReducers({
     userProfile:getUserProfileReducer,
     userUpdateProfile:userUpdateProfileReducer,
     status:statusReducer,
-    newpost:postCreateReducer,
+    createpost:postCreateReducer,
 
     
 

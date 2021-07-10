@@ -92,7 +92,7 @@ function StatusModal() {
     const handleSubmit= (e) =>{
         e.preventDefault()
         if(Images.length===0){
-            dispatch({type:ALERT, payload:{error:"Please add your photo."}})
+            return dispatch({type:ALERT, payload:{error:"Please add your photo."}})
         }
 
         dispatch(createPost({content, Images}))
