@@ -7,6 +7,8 @@ import Loading from '../component/Loading';
 import Alert from '../component/Alert'
 import EditProfile from '../component/EditProfile'
 import FollowBtn from '../component/FollowBtn';
+import Followers from '../component/Followers';
+import Followings from '../component/Followings';
 
 
 function Profile(props) {
@@ -24,7 +26,7 @@ function Profile(props) {
     const {success}  = userUpdateProfile
 
     const [showFollowers, setShowFollowers] = useState(false)
-    const [showFollowings, setShowFollowings] = useState(false)
+    const [showFollowing, setShowFollowing] = useState(false)
     
 
     const [onEdit, setOnEdit] = useState(false)
@@ -66,7 +68,7 @@ function Profile(props) {
                             <span className="mr-4" onClick={()=>setShowFollowers(true)}>
                                 {user?.followers.length} Followers
                             </span>
-                            <span className="mr-4" onClick={()=>setShowFollowings(true)}>
+                            <span className="mr-4" onClick={()=>setShowFollowing(true)}>
                                 {user?.following.length} Following
                             </span>
                         </div>
@@ -81,6 +83,17 @@ function Profile(props) {
 
                         {
                             onEdit && <EditProfile setOnEdit = {setOnEdit}/>
+                        }
+
+                        {
+                            showFollowers &&
+                            <Followers user = {user} setShowFollowers={setShowFollowers} />
+
+                        }
+                        {
+                            showFollowing &&
+                            <Followings user = {user} setShowFollowing={setShowFollowing}/>
+
                         }
 
                 </div>

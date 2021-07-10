@@ -89,6 +89,7 @@ userRouter.get('/:id',auth,  async(req, res)=>{
     try{
         const user = await User.findById(req.params.id)
                                 .select('-password')
+                                .populate("followers following", "-password")
         if(user){
             res.send(user)
         }else{
