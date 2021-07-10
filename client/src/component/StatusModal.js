@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { createPost } from '../_actions/postActions'
 import { ALERT, STATUS } from '../_constants/globalConstants'
 import Alert from './Alert'
 
@@ -80,7 +81,7 @@ function StatusModal() {
         const ctx = canvasRef.current.getContext('2d')
         ctx.drawImage(videoRef.current, 0, 0, width, height)
         let URL = canvasRef.current.toDataURL()
-        setImages([...Images, {camera: URL}])
+        setImages([...Images, URL])
     }
 
     const handleStopStream= () =>{
@@ -88,9 +89,23 @@ function StatusModal() {
         setStream(false)
     }
 
+    const handleSubmit= (e) =>{
+        e.preventDefault()
+        if(Images.length===0){
+            dispatch({type:ALERT, payload:{error:"Please add your photo."}})
+        }
+
+        dispatch(createPost({content, Images}))
+        setcontent('')
+        setImages([])
+        if(tracks) tracks.stop()
+        dispatch({type:STATUS, payload:false})
+        
+    }
+
     return (
         <div className="status_modal">
-            <form>
+            <form onSubmit={handleSubmit}>
                 <div className="status_header">
                     <h5 className="m-0">Create Post</h5>
                     <span onClick={()=>dispatch({type:STATUS, payload:false})}>&times;</span>
@@ -136,7 +151,7 @@ function StatusModal() {
                 </div>
 
                 <div className="statue_footer">
-                <button className="btn btn-secondary w-100" type="submit">Post</button>
+                <button className="btn btn-secondary w-100" type="submit" type="submit">Post</button>
                 </div>
 
             </form>

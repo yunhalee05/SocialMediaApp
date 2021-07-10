@@ -1,5 +1,6 @@
 import{combineReducers, createStore, compose, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk'
+import { postCreateReducer } from './postReducers';
 import { getUserProfileReducer, userUpdateProfileReducer } from './profileReducers';
 import { statusReducer } from './statusReducers';
 import themeReducer from './themeReducers';
@@ -21,6 +22,7 @@ const reducer = combineReducers({
     userProfile:getUserProfileReducer,
     userUpdateProfile:userUpdateProfileReducer,
     status:statusReducer,
+    newpost:postCreateReducer,
 
     
 
