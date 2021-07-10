@@ -9,17 +9,21 @@ import Notify from './pages/Notify';
 import Discover from './pages/Discover';
 import Message from './pages/Message';
 import Profile from './pages/Profile';
+import StatusModal from './component/StatusModal';
 
 
 function App() {
   const userLogin = useSelector(state => state.userLogin)
   const {userInfo} = userLogin
+
+  const status = useSelector(state => state.status)
   return (
     <BrowserRouter>
       <input type="checkbox" id="theme"/>
       <div className="App">
         <div className="main">
           {userInfo && <Header/>}
+          {status && <StatusModal/>}
           <Route exact path="/profile/:id" component={Profile}/>
           <Route exact path="/message" component={Message}/>
           <Route exact path="/discover" component={Discover}/>

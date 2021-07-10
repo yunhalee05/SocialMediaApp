@@ -1,6 +1,7 @@
 import{combineReducers, createStore, compose, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk'
 import { getUserProfileReducer, userUpdateProfileReducer } from './profileReducers';
+import { statusReducer } from './statusReducers';
 import themeReducer from './themeReducers';
 import { alertReducer, userLoginReducer, userRegisterReducer } from './userReducers';
 
@@ -19,6 +20,7 @@ const reducer = combineReducers({
     theme:themeReducer,
     userProfile:getUserProfileReducer,
     userUpdateProfile:userUpdateProfileReducer,
+    status:statusReducer,
 
     
 
