@@ -6,17 +6,17 @@ const postSchema = new mongoose.Schema({
         type:Array,
         required:true
     },
-    likes:{
+    likes:[{
         type:mongoose.Types.ObjectId,
         ref:'User'
-    },
-    comments:{
+    }],
+    comments:[{
         type:mongoose.Types.ObjectId,
-        ref:'comment'
-    },
+        ref:'Comment'
+    }],
     user:{
         type:mongoose.Types.ObjectId,
-        ref:'user'
+        ref:'User'
     }
 },{timestamps:true})
 

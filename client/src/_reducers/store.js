@@ -1,9 +1,9 @@
 import{combineReducers, createStore, compose, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk'
-import { postCreateReducer } from './postReducers';
+import { postCreateReducer, postGetReducer, postUpdateReducer } from './postReducers';
 import { getUserProfileReducer, userUpdateProfileReducer } from './profileReducers';
-import { statusReducer } from './statusReducers';
-import themeReducer from './themeReducers';
+import { editstatusReducer, statusReducer } from './statusReducers';
+import { themeReducer } from './themeReducers';
 import { alertReducer, userLoginReducer, userRegisterReducer } from './userReducers';
 
 
@@ -23,6 +23,9 @@ const reducer = combineReducers({
     userUpdateProfile:userUpdateProfileReducer,
     status:statusReducer,
     createpost:postCreateReducer,
+    getposts:postGetReducer,
+    editstatus:editstatusReducer,
+    updatepost:postUpdateReducer,
 
     
 

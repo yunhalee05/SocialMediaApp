@@ -1,7 +1,7 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { createPost } from '../_actions/postActions'
-import { ALERT, STATUS } from '../_constants/globalConstants'
+import { createPost, updatePost } from '../_actions/postActions'
+import { ALERT, EDITSTATUS, STATUS } from '../_constants/globalConstants'
 import Alert from './Alert'
 
 function StatusModal() {
@@ -20,6 +20,7 @@ function StatusModal() {
     const videoRef = useRef()
     const canvasRef = useRef()
     
+    const editstatus = useSelector(state => state.editstatus)
 
     const handleChangeImages=(e)=>{
         const files = [...e.target.files]
@@ -95,13 +96,25 @@ function StatusModal() {
             return dispatch({type:ALERT, payload:{error:"Please add your photo."}})
         }
 
+        if(editstatus.onEdit){
+            dispatch(updatePost({content, Images, editstatus}))
+        }else{
         dispatch(createPost({content, Images}))
+        }
         setcontent('')
         setImages([])
         if(tracks) tracks.stop()
         dispatch({type:STATUS, payload:false})
+        dispatch({type:EDITSTATUS, payload:{}})
         
     }
+
+    useEffect(() => {
+        if(editstatus.onEdit){
+            setcontent(editstatus.content)
+            setImages(editstatus.images)
+        }
+    }, [editstatus])
 
     return (
         <div className="status_modal">
@@ -118,7 +131,11 @@ function StatusModal() {
                         {
                             Images && Images.map((image, index)=>(
                                 <div key={index} id="file_img">
-                                    <img src={image.camera? image.camera : URL.createObjectURL(image)} 
+                                    <img src={image.camera
+                                            ? image.camera 
+                                            : image.data 
+                                            ? image.data
+                                            : URL.createObjectURL(image)} 
                                     alt="images" className="img-thumbnail rounded" style={{filter:theme? 'invert(1)':'inver(0)'}} />
                                     <span onClick={()=>deleteImage(index)}>&times;</span>
                                 </div>

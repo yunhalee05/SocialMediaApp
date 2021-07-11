@@ -1,6 +1,6 @@
 import { THEME } from "../_constants/globalConstants";
 
-const themeReducer = (state=false, action)=>{
+export const themeReducer = (state=false, action)=>{
     switch(action.type){
         case THEME:
             return action.payload;
@@ -9,4 +9,3 @@ const themeReducer = (state=false, action)=>{
     }
 }
 
-export default themeReducer

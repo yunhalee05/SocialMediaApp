@@ -18,6 +18,8 @@ function Haader() {
 
     const userLogin = useSelector(state => state.userLogin)
     const {userInfo, loading, error} = userLogin;
+    const {theme} = useSelector(state => state.theme)
+
 
     const [search, setSearch] = useState('')
     const [users, setUsers] = useState([])
@@ -45,7 +47,6 @@ function Haader() {
         }
     }, [search, userInfo.token, dispatch])
 
-    const {theme} = useSelector(state => state.theme)
     const {pathname} = useLocation()
     const isActive = (pn) => {
         if(pn === pathname) return 'active'

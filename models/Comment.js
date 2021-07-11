@@ -19,6 +19,5 @@ const commentSchema = new mongoose.Schema({
     postUserId:mongoose.Types.ObjectId
 },{timestamps:true})
 
-
 const Comment = mongoose.model('Comment', commentSchema)
-module.exports = {Comment}
+module.exports  = {Comment}
