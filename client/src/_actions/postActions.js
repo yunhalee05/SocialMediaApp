@@ -1,5 +1,5 @@
 import axios from "axios"
-import { CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_SUCCESS, GET_HOME_POSTS_FAIL, GET_HOME_POSTS_REQUEST, GET_HOME_POSTS_SUCCESS, UPDATE_POST_FAIL, UPDATE_POST_REQUEST, UPDATE_POST_SUCCESS } from "../_constants/postConstants"
+import { CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_SUCCESS, DELETE_POST_FAIL, DELETE_POST_REQUEST, DELETE_POST_SUCCESS, GET_HOME_POSTS_FAIL, GET_HOME_POSTS_REQUEST, GET_HOME_POSTS_SUCCESS, UPDATE_POST_FAIL, UPDATE_POST_REQUEST, UPDATE_POST_SUCCESS } from "../_constants/postConstants"
 
 export const createPost = ({content, Images})=> async(dispatch, getState)=>{
     const {userLogin:{userInfo}} = getState()
@@ -109,6 +109,33 @@ export const updatePost = ({content, Images, editstatus}) =>async(dispatch, getS
     }catch(error){
         dispatch({
             type:UPDATE_POST_FAIL,
+            payload:                
+            error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message
+        })
+    }
+}
+
+export const deletePost = (post) => async (dispatch, getState)=>{
+    dispatch({
+        type:DELETE_POST_REQUEST,
+        payload:{loading:true}
+    })
+    const {userLogin:{userInfo}} = getState()
+    try{
+        const res = await axios.delete(`/api/post/${post._id}`, {
+            headers:{authorization:`Bearer ${userInfo.token}`}
+        })
+
+        console.log(res)
+        dispatch({
+            type:DELETE_POST_SUCCESS,
+            payload:res.data.deletedpost
+        })
+    }catch(error){
+        dispatch({
+            type:DELETE_POST_FAIL,
             payload:                
             error.response && error.response.data.message
             ? error.response.data.message

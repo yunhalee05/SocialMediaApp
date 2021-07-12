@@ -35,6 +35,7 @@ postRouter.get('/', auth, async(req, res)=>{
                                 //         select:"-password"
                                 //     }
                                 // })
+
         res.json({
             msg:'Get posts successfully',
             result:posts.length,
@@ -60,9 +61,21 @@ postRouter.patch('/:id', auth,  async(req, res)=>{
                                     // })
 
 
+
         console.log(updatedPost)
         res.send({updatedPost})
 
+    }catch(err){
+        return res.status(500).json({message:err.message})
+    }
+})
+
+postRouter.delete('/:id', auth, async(req, res)=>{
+    try{
+        const deletedpost = await Post.findOneAndDelete({_id:req.params.id, user:req.user.id})
+        res.json({
+            deletedpost
+        })
     }catch(err){
         return res.status(500).json({message:err.message})
     }

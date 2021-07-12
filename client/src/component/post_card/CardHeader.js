@@ -4,6 +4,7 @@ import {Link}  from 'react-router-dom'
 import moment from 'moment'
 import { useDispatch, useSelector } from 'react-redux'
 import { EDITSTATUS, STATUS } from '../../_constants/globalConstants'
+import { deletePost } from '../../_actions/postActions'
 
 function CardHeader({post}) {
     const userLogin = useSelector(state => state.userLogin)
@@ -24,6 +25,9 @@ function CardHeader({post}) {
             }
         })
 
+    }
+    const handleDeletePost= () =>{
+        dispatch(deletePost(post))
     }
 
     return (
@@ -54,7 +58,7 @@ function CardHeader({post}) {
                                 <span className="material-icons" onClick={handleEditPost}>create</span> Edit Post
                             </div>
                             <div className="dropdown-item">
-                                <span className="material-icons">delete_outline</span> Remove Post
+                                <span className="material-icons" onClick = {handleDeletePost}>delete_outline</span> Remove Post
                             </div>
                         </>
                     }

@@ -168,7 +168,7 @@ function StatusModal() {
                 </div>
 
                 <div className="statue_footer">
-                <button className="btn btn-secondary w-100" type="submit" type="submit">Post</button>
+                <button className="btn btn-secondary w-100" type="submit">Post</button>
                 </div>
 
             </form>

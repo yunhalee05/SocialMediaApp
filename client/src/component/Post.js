@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { createPost, getHomePosts } from '../_actions/postActions'
-import { CREATE_POST_RESET, GET_POSTS_RESET, UPDATE_POST_RESET } from '../_constants/postConstants'
+import { CREATE_POST_RESET, DELETE_POST_RESET, GET_POSTS_RESET, UPDATE_POST_RESET } from '../_constants/postConstants'
 import PostCard from './PostCard'
 
 function Post() {
@@ -20,15 +20,20 @@ function Post() {
     const updatepost = useSelector(state => state.updatepost)
     const{success:updatesuccess}  = updatepost
 
+    const deletepost = useSelector(state => state.deletepost)
+    const {success:deletesuccess} = deletepost
+
+
     useEffect(() => {
-        if(success||updatesuccess){
+        if(success||updatesuccess ||deletesuccess){
             dispatch({type:GET_POSTS_RESET})
             dispatch({type:CREATE_POST_RESET})
             dispatch({type:UPDATE_POST_RESET})
+            dispatch({type:DELETE_POST_RESET})
         }
 
         dispatch(getHomePosts())
-    }, [dispatch, success, updatesuccess])
+    }, [dispatch, success, updatesuccess, deletesuccess])
 
     return (
         <div className="posts">
