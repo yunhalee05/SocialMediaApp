@@ -1,4 +1,4 @@
-import { CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_RESET, CREATE_POST_SUCCESS, DELETE_POST_FAIL, DELETE_POST_REQUEST, DELETE_POST_RESET, DELETE_POST_SUCCESS, GET_HOME_POSTS_FAIL, GET_HOME_POSTS_REQUEST, GET_HOME_POSTS_SUCCESS, GET_POSTS_RESET, UPDATE_POST_FAIL, UPDATE_POST_REQUEST, UPDATE_POST_RESET, UPDATE_POST_SUCCESS } from "../_constants/postConstants";
+import { CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_RESET, CREATE_POST_SUCCESS, DELETE_POST_FAIL, DELETE_POST_REQUEST, DELETE_POST_RESET, DELETE_POST_SUCCESS, GET_HOME_POSTS_FAIL, GET_HOME_POSTS_REQUEST, GET_HOME_POSTS_SUCCESS, GET_POSTS_RESET, LIKE_POST_FAIL, LIKE_POST_REQUEST, LIKE_POST_RESET, LIKE_POST_SUCCESS, UNLIKE_POST_FAIL, UNLIKE_POST_REQUEST, UNLIKE_POST_RESET, UNLIKE_POST_SUCCESS, UPDATE_POST_FAIL, UPDATE_POST_REQUEST, UPDATE_POST_RESET, UPDATE_POST_SUCCESS } from "../_constants/postConstants";
 
 
 export const postCreateReducer = (state={}, action)=>{
@@ -55,6 +55,36 @@ export const postDeleteReducer = (state={}, action)=>{
         case DELETE_POST_FAIL:
             return {loading:false, error:action.payload, success:false}
         case DELETE_POST_RESET:
+            return {}
+        default:
+            return state
+    }
+}
+
+export const postLikeReducer = (state={}, action)=>{
+    switch(action.type){
+        case LIKE_POST_REQUEST:
+            return {loading:true, success:false}
+        case LIKE_POST_SUCCESS:
+            return {loading:false, success:true, likedpost:action.payload}
+        case LIKE_POST_FAIL:
+            return {loading:false, success:false, error:action.payload}
+        case LIKE_POST_RESET:
+            return {}
+        default:
+            return state
+    }
+}
+
+export const postUnlikeReducer = (state={}, action)=>{
+    switch(action.type){
+        case UNLIKE_POST_REQUEST:
+            return {loading:true, success:false}
+        case UNLIKE_POST_SUCCESS:
+            return {loading:false, success:true, unlikedpost:action.payload}
+        case UNLIKE_POST_FAIL:
+            return {loading:false, success:false, error:action.payload}
+        case UNLIKE_POST_RESET:
             return {}
         default:
             return state

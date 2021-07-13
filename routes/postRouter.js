@@ -81,5 +81,42 @@ postRouter.delete('/:id', auth, async(req, res)=>{
     }
 })
 
+postRouter.patch('/:id/like',auth, async(req,res)=>{
+    try{
+        const post = await Post.find({_id:req.params.id, likes:req.user.id})
+        if(post.length>0) return res.status(400).json({msg:'You already liked this photo.'})
+
+        const likedpost = await Post.findOneAndUpdate({_id:req.params.id},{
+            $push:{likes:req.user.id}
+        },{new:true})
+
+        if(!likedpost) return res.status(400).json({msg:'This post does not exist.'})
+
+        res.json({
+            likedpost
+        })
+
+    }catch(err){
+        return res.status(500).json({message:err.message})
+    }
+} )
+
+postRouter.patch('/:id/unlike',auth, async(req,res)=>{
+    try{
+        const unlikedpost = await Post.findOneAndUpdate({_id:req.params.id},{
+            $pull:{likes:req.user.id}
+        },{new:true})
+
+        if(!unlikedpost) return res.status(400).json({msg:'This post does not exist.'})
+
+        res.json({
+            unlikedpost
+        })
+
+    }catch(err){
+        return res.status(500).json({message:err.message})
+    }
+} )
+
 module.exports = postRouter
 

@@ -1,5 +1,5 @@
 import axios from "axios"
-import { CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_SUCCESS, DELETE_POST_FAIL, DELETE_POST_REQUEST, DELETE_POST_SUCCESS, GET_HOME_POSTS_FAIL, GET_HOME_POSTS_REQUEST, GET_HOME_POSTS_SUCCESS, UPDATE_POST_FAIL, UPDATE_POST_REQUEST, UPDATE_POST_SUCCESS } from "../_constants/postConstants"
+import { CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_SUCCESS, DELETE_POST_FAIL, DELETE_POST_REQUEST, DELETE_POST_SUCCESS, GET_HOME_POSTS_FAIL, GET_HOME_POSTS_REQUEST, GET_HOME_POSTS_SUCCESS, LIKE_POST_FAIL, LIKE_POST_REQUEST, LIKE_POST_SUCCESS, UNLIKE_POST_FAIL, UNLIKE_POST_REQUEST, UNLIKE_POST_SUCCESS, UPDATE_POST_FAIL, UPDATE_POST_REQUEST, UPDATE_POST_SUCCESS } from "../_constants/postConstants"
 
 export const createPost = ({content, Images})=> async(dispatch, getState)=>{
     const {userLogin:{userInfo}} = getState()
@@ -127,8 +127,6 @@ export const deletePost = (post) => async (dispatch, getState)=>{
         const res = await axios.delete(`/api/post/${post._id}`, {
             headers:{authorization:`Bearer ${userInfo.token}`}
         })
-
-        console.log(res)
         dispatch({
             type:DELETE_POST_SUCCESS,
             payload:res.data.deletedpost
@@ -136,6 +134,60 @@ export const deletePost = (post) => async (dispatch, getState)=>{
     }catch(error){
         dispatch({
             type:DELETE_POST_FAIL,
+            payload:                
+            error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message
+        })
+    }
+}
+
+export const likePost = (post) => async (dispatch, getState)=>{
+    dispatch({
+        type:LIKE_POST_REQUEST,
+        payload:{loading:true}
+    })
+
+    const {userLogin:{userInfo}} = getState()
+    try{
+        const res = await axios.patch(`/api/post/${post._id}/like`,null, {
+            headers:{authorization:`Bearer ${userInfo.token}`}
+        })
+        dispatch({
+            type:LIKE_POST_SUCCESS,
+            payload:res.data.likedpost
+        })
+
+    }catch(error){
+        dispatch({
+            type:LIKE_POST_FAIL,
+            payload:                
+            error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message
+        })
+    }
+}
+
+export const unlikePost = (post) => async (dispatch, getState)=>{
+    dispatch({
+        type:UNLIKE_POST_REQUEST,
+        payload:{loading:true}
+    })
+
+    const {userLogin:{userInfo}} = getState()
+    try{
+        const res = await axios.patch(`/api/post/${post._id}/unlike`,null, {
+            headers:{authorization:`Bearer ${userInfo.token}`}
+        })
+        dispatch({
+            type:UNLIKE_POST_SUCCESS,
+            payload:res.data.unlikedpost
+        })
+
+    }catch(error){
+        dispatch({
+            type:UNLIKE_POST_FAIL,
             payload:                
             error.response && error.response.data.message
             ? error.response.data.message
