@@ -30,6 +30,10 @@ function CardHeader({post}) {
         dispatch(deletePost(post))
     }
 
+    const handleCopyLink= () =>{
+        navigator.clipboard.writeText(`http://localhost:3000/post/${post._id}`)
+    }
+
     return (
         <div className="card_header">
             <div className="d-flex">
@@ -62,7 +66,7 @@ function CardHeader({post}) {
                             </div>
                         </>
                     }
-                    <div className="dropdown-item">
+                    <div className="dropdown-item" onClick={handleCopyLink}>
                         <span className="material-icons">content_copy</span> Copy Link
                     </div>
                 </div>
