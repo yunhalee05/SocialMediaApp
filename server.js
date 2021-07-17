@@ -31,6 +31,7 @@ app.use('/postuploads', express.static(path.join(__variableOfChoice, '/postuploa
 
 app.use('/api/users', require('./routes/userRouter'))
 app.use('/api/post', require('./routes/postRouter'))
+app.use('/api/comment', require('./routes/commentRouter'))
 app.use('/api/search', require('./routes/searchRouter'))
 app.use('/api/postuploads', require('./routes/postUploadRouter'));
 

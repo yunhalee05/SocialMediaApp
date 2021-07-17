@@ -28,13 +28,13 @@ postRouter.get('/', auth, async(req, res)=>{
         const posts = await Post.find({user:[...user.following, user._id]})
                                 .sort('-createdAt')
                                 .populate("user likes", "avatar username fullname followers following")
-                                // .populate({
-                                //     path:"comments",
-                                //     populate:{
-                                //         path:"user likes",
-                                //         select:"-password"
-                                //     }
-                                // })
+                                .populate({
+                                    path:"comments",
+                                    populate:{
+                                        path:"user likes",
+                                        select:"-password"
+                                    }
+                                })
 
         res.json({
             msg:'Get posts successfully',
@@ -52,13 +52,13 @@ postRouter.patch('/:id', auth,  async(req, res)=>{
     try{
         const updatedPost = await Post.findOneAndUpdate({_id:req.params.id},{'content':req.body.content, 'images':req.body.images})
                                     .populate("user likes", "avatar username fullname")
-                                    // .populate({
-                                    //     path:"comments",
-                                    //     populate:{
-                                    //         path:"user likes",
-                                    //         select:"-password"
-                                    //     }
-                                    // })
+                                    .populate({
+                                        path:"comments",
+                                        populate:{
+                                            path:"user likes",
+                                            select:"-password"
+                                        }
+                                    })
 
 
 

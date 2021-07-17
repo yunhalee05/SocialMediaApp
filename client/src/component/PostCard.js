@@ -14,7 +14,7 @@ function PostCard({post}) {
             <CardFooter post = {post} />
 
             <Comments post = {post} />
-            <InputComment Comment = {post} />
+            <InputComment post = {post} />
 
         </div>
     )
