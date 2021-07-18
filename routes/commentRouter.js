@@ -71,4 +71,24 @@ commentRouter.patch('/:id/unlike', auth, async(req, res)=>{
         return res.status(500).json({message:err.message})
     }
 })
+
+commentRouter.delete('/:id', auth, async(req, res)=>{
+    try{
+        const comment =  await Comment.findOneAndDelete({
+            _id:req.params.id,
+            $or:[
+                {user:req.user.id},
+                {postUserId:req.user.id}
+            ]
+        })
+
+        await Post.findOneAndUpdate({_id:comment.postId}, {
+            $pull:{comments:req.params.id}
+        })
+
+        res.json({comment})
+
+    }catch(err){
+        return res.status(500).json({message:err.message})
+    }})
 module.exports = commentRouter

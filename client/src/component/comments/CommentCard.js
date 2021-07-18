@@ -6,12 +6,12 @@ import moment from 'moment'
 import LIkeButton from '../LIkeButton'
 import InputComment from '../post_card/InputComment'
 import CommentMenu from './CommentMenu'
-import { likeComment, unlikeComment } from '../../_actions/commentActions'
+import { likeComment, unlikeComment, updateComment } from '../../_actions/commentActions'
 
 function CommentCard({comment, post, commentId}) {
 
     const [onEdit, setOnEdit] = useState(false)
-    const [content, setContent] = useState('')
+    const [content, setContent] = useState(comment.content)
     const [readMore, setReadMore] = useState(false)
     const [onReply, setOnReply] = useState(false)
     const [isLike, setIsLike] = useState(false)
@@ -24,7 +24,6 @@ function CommentCard({comment, post, commentId}) {
     
 
     useEffect(() => {
-        setContent(comment.content)
         setIsLike(false)
         setOnReply(false)
         if(comment.likes.find(like=>like._id ===userInfo.user._id)){
@@ -50,6 +49,12 @@ function CommentCard({comment, post, commentId}) {
 
     }
     const handleUpdate=() =>{
+        if(comment.content !==content){
+            dispatch(updateComment({comment, post, content}))
+            setOnEdit(false)
+        }else{
+            setOnEdit(false)
+        }
 
     }
     
@@ -74,12 +79,12 @@ function CommentCard({comment, post, commentId}) {
                             }
                             <span>
                                 {
-                                    content.length <100 ? content:
-                                    readMore? content + ' ' : content.slice(0, 100) + '....'
+                                    content?.length <100 ? content:
+                                    readMore? content + ' ' : content?.slice(0, 100) + '....'
                                 }
                             </span>
                             {
-                                content.length > 100 &&
+                                content?.length > 100 &&
                                 <span className="readMore" onClick={()=>setReadMore(!readMore)}>
                                     {readMore? 'Hide content' : 'Read more'}
                                 </span>
@@ -111,7 +116,7 @@ function CommentCard({comment, post, commentId}) {
                 </div>
 
                 <div className="d-flex align-items-center mx-2">
-                    <CommentMenu/>
+                    <CommentMenu post = {post} comment = {comment} setOnEdit={setOnEdit}/>
                     <LIkeButton isLike={isLike} handleLike={handleLike}/>
                     
                 </div>

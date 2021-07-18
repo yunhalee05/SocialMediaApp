@@ -1,6 +1,6 @@
 import{combineReducers, createStore, compose, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk'
-import { commentCreateReducer, commentLikeReducer, commentUnlikeReducer } from './commentReducers';
+import { commentCreateReducer, commentDeleteReducer, commentLikeReducer, commentUnlikeReducer, commentUpdateReducer } from './commentReducers';
 import { postCreateReducer, postDeleteReducer, postGetReducer, postLikeReducer, postUnlikeReducer, postUpdateReducer } from './postReducers';
 import { getUserProfileReducer, userUpdateProfileReducer } from './profileReducers';
 import { editstatusReducer, statusReducer } from './statusReducers';
@@ -33,7 +33,9 @@ const reducer = combineReducers({
     createcomment:commentCreateReducer,
     likecomment:commentLikeReducer,
     unlikecomment:commentUnlikeReducer,
-    
+    updatecomment:commentUpdateReducer,
+    deletecomment:commentDeleteReducer,
+
     
 
     
