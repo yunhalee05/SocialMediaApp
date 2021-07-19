@@ -33,7 +33,8 @@ postRouter.get('/', auth, async(req, res)=>{
                                     populate:{
                                         path:"user likes",
                                         select:"-password"
-                                    }
+                                    },
+                                    sort:'-createdAt'
                                 })
 
         res.json({

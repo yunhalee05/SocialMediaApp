@@ -8,7 +8,7 @@ import InputComment from '../post_card/InputComment'
 import CommentMenu from './CommentMenu'
 import { likeComment, unlikeComment, updateComment } from '../../_actions/commentActions'
 
-function CommentCard({comment, post, commentId}) {
+function CommentCard({children, comment, post, commentId}) {
 
     const [onEdit, setOnEdit] = useState(false)
     const [content, setContent] = useState(comment.content)
@@ -129,6 +129,8 @@ function CommentCard({comment, post, commentId}) {
                     </Link>
                 </InputComment>
             }
+
+            {children}
         </div>
     )
 }

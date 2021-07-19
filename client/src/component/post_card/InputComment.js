@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { createComment } from '../../_actions/commentActions'
 
-function InputComment({children,post}) {
+function InputComment({children,post , onReply, setOnReply}) {
 
     const [content, setContent] = useState("")
 
@@ -15,16 +15,25 @@ function InputComment({children,post}) {
     const handleSubmit= (e) =>{
         e.preventDefault()
 
-        if(!content.trim()) return 
+        if(!content.trim()) {
+            if(setOnReply) return setOnReply(false)
+            return
+        } 
+
+        setContent('')
 
         const newcomment = {
             content, 
             likes:[],
             user:userInfo.user,
-            createdAt : new Date().toISOString()
+            createdAt : new Date().toISOString(),
+            reply: onReply && onReply.commentId,
+            tag:onReply && onReply.user
         }
         
         dispatch(createComment({newcomment, post}))
+
+        if(setOnReply) return setOnReply(false)
 
     }
 
