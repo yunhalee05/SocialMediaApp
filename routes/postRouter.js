@@ -119,5 +119,25 @@ postRouter.patch('/:id/unlike',auth, async(req,res)=>{
     }
 } )
 
+postRouter.get('/user/:id', auth, async(req, res)=>{
+    try{
+        const posts = await Post.find({user: req.params.id})
+                                .sort("-createdAt")
+                                .populate("user likes", "avatar username fullname followers following")
+                                .populate({
+                                    path:"comments",
+                                    populate:{
+                                        path:"user likes",
+                                        select:"-password"
+                                    },
+                                    sort:'-createdAt'
+                                })
+
+        res.json({posts})
+    }catch(err){
+        return res.status(500).json({message:err.message})
+    }
+})
+
 module.exports = postRouter
 

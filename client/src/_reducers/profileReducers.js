@@ -1,4 +1,4 @@
-import { PROFILE_GETUSER_FAIL, PROFILE_GETUSER_REQUEST, PROFILE_GETUSER_RESET, PROFILE_GETUSER_SUCCESS, USER_FOLLOW_PROFILE, USER_UNFOLLOW_PROFILE, USER_UPDATE_PROFILE_FAIL, USER_UPDATE_PROFILE_REQUEST, USER_UPDATE_PROFILE_RESET, USER_UPDATE_PROFILE_SUCCESS } from "../_constants/profileConstants";
+import { PROFILE_GETPOST_SUCCESS, PROFILE_GETUSER_FAIL, PROFILE_GETUSER_REQUEST, PROFILE_GETUSER_RESET, PROFILE_GETUSER_SUCCESS, USER_FOLLOW_PROFILE, USER_UNFOLLOW_PROFILE, USER_UPDATE_PROFILE_FAIL, USER_UPDATE_PROFILE_REQUEST, USER_UPDATE_PROFILE_RESET, USER_UPDATE_PROFILE_SUCCESS } from "../_constants/profileConstants";
 
 export const getUserProfileReducer = (state={}, action)=>{
     switch(action.type){
@@ -14,6 +14,8 @@ export const getUserProfileReducer = (state={}, action)=>{
             return {...state, user:action.payload}
         case USER_UNFOLLOW_PROFILE:
             return {...state, user:action.payload}
+        case PROFILE_GETPOST_SUCCESS:
+            return {...state, posts:action.payload}
         default:
             return state;
     }

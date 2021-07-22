@@ -1,6 +1,6 @@
 import axios from "axios"
 import { ALERT } from "../_constants/globalConstants"
-import { PROFILE_GETUSER_FAIL, PROFILE_GETUSER_REQUEST, PROFILE_GETUSER_SUCCESS, USER_FOLLOW_PROFILE, USER_UNFOLLOW_PROFILE, USER_UPDATE_PROFILE_FAIL, USER_UPDATE_PROFILE_REQUEST, USER_UPDATE_PROFILE_SUCCESS } from "../_constants/profileConstants"
+import { PROFILE_GETPOST_SUCCESS, PROFILE_GETUSER_FAIL, PROFILE_GETUSER_REQUEST, PROFILE_GETUSER_SUCCESS, USER_FOLLOW_PROFILE, USER_UNFOLLOW_PROFILE, USER_UPDATE_PROFILE_FAIL, USER_UPDATE_PROFILE_REQUEST, USER_UPDATE_PROFILE_SUCCESS } from "../_constants/profileConstants"
 import { USER_LOGIN_SUCCESS } from "../_constants/userConstants"
 
 export const getProfileUser = (userId)=>async (dispatch, getState)=>{
@@ -13,9 +13,17 @@ export const getProfileUser = (userId)=>async (dispatch, getState)=>{
         const {data} = await axios.get(`/api/users/${userId}`,{headers:{authorization : `Bearer ${userInfo?.token}`}
         })
 
+        const res = await axios.get(`/api/post/user/${userId}`,{headers: {authorization : `Bearer ${userInfo.token}`}})
+
+
         dispatch({
             type:PROFILE_GETUSER_SUCCESS,
             payload:data
+        })
+
+        dispatch({
+            type:PROFILE_GETPOST_SUCCESS,
+            payload:res.data.posts
         })
 
 

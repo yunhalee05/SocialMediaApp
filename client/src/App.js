@@ -10,6 +10,7 @@ import Discover from './pages/Discover';
 import Message from './pages/Message';
 import Profile from './pages/Profile';
 import StatusModal from './component/StatusModal';
+import Post from './pages/Post';
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <div className="main">
           {userInfo && <Header/>}
           {status && <StatusModal/>}
+          <Route exact path="/post/:id" component={Post}/>
           <Route exact path="/profile/:id" component={Profile}/>
           <Route exact path="/message" component={Message}/>
           <Route exact path="/discover" component={Discover}/>

@@ -60,5 +60,8 @@ img{
 /* -------- StatusModal ---------- */
 @import url("./status_modal.css");
 
-/* -------- Commnet ---------- */
+/* -------- Comment ---------- */
 @import url("./comment.css");
+
+/* -------- PostThumb ---------- */
+@import url("./post_thumb.css");
