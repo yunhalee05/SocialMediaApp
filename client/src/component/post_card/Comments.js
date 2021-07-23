@@ -11,9 +11,6 @@ function Comments({post}) {
         const newCm = post.comments.filter(cm=>!cm.reply)        
         setComments(newCm)
         setShowComments(newCm.slice(0,next))
-
-        console.log(newCm.slice(newCm.length -next))
-         console.log(comments)
     }, [post.comments, next])
 
     useEffect(() => {

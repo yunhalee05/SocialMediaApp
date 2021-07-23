@@ -1,5 +1,5 @@
 import axios from "axios"
-import { CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_SUCCESS, DELETE_POST_FAIL, DELETE_POST_REQUEST, DELETE_POST_SUCCESS, GET_HOME_POSTS_FAIL, GET_HOME_POSTS_REQUEST, GET_HOME_POSTS_SUCCESS, GET_PROFILE_POSTS_FAIL, GET_PROFILE_POSTS_REQUEST, GET_PROFILE_POSTS_SUCCESS, LIKE_POST_FAIL, LIKE_POST_REQUEST, LIKE_POST_SUCCESS, UNLIKE_POST_FAIL, UNLIKE_POST_REQUEST, UNLIKE_POST_SUCCESS, UPDATE_POST_FAIL, UPDATE_POST_REQUEST, UPDATE_POST_SUCCESS } from "../_constants/postConstants"
+import { CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_SUCCESS, DELETE_POST_FAIL, DELETE_POST_REQUEST, DELETE_POST_SUCCESS, GET_HOME_POSTS_FAIL, GET_HOME_POSTS_REQUEST, GET_HOME_POSTS_SUCCESS, GET_POST_FAIL, GET_POST_REQUEST, GET_POST_SUCCESS, GET_PROFILE_POSTS_FAIL, GET_PROFILE_POSTS_REQUEST, GET_PROFILE_POSTS_SUCCESS, LIKE_POST_FAIL, LIKE_POST_REQUEST, LIKE_POST_SUCCESS, UNLIKE_POST_FAIL, UNLIKE_POST_REQUEST, UNLIKE_POST_SUCCESS, UPDATE_POST_FAIL, UPDATE_POST_REQUEST, UPDATE_POST_SUCCESS } from "../_constants/postConstants"
 
 export const createPost = ({content, Images})=> async(dispatch, getState)=>{
     const {userLogin:{userInfo}} = getState()
@@ -56,7 +56,6 @@ export const getHomePosts =() => async(dispatch, getState)=>{
     try{
         const res = await axios.get('/api/post',{headers: {authorization : `Bearer ${userInfo.token}`}})
         
-        console.log(res.data.posts)
         dispatch({
             type:GET_HOME_POSTS_SUCCESS,
             payload:res.data.posts
@@ -196,3 +195,34 @@ export const unlikePost = (post) => async (dispatch, getState)=>{
     }
 }
 
+
+
+export const getPostDetail =(postId) => async(dispatch, getState)=>{
+
+    
+    dispatch({
+        type:GET_POST_REQUEST,
+        payload:{loading:true}
+    })
+
+    const {userLogin: {userInfo}} = getState()
+
+    try{
+        const res = await axios.get(`/api/post/${postId}`,{headers: {authorization : `Bearer ${userInfo.token}`}})
+        
+        
+        dispatch({
+            type:GET_POST_SUCCESS,
+            payload:res.data.post
+        })
+
+    }catch(error){
+        dispatch({
+            type:GET_POST_FAIL,
+            payload:                
+            error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message
+        })
+    }
+}

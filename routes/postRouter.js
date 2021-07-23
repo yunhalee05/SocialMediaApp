@@ -139,5 +139,30 @@ postRouter.get('/user/:id', auth, async(req, res)=>{
     }
 })
 
+postRouter.get('/:id', auth, async(req, res)=>{
+
+
+    try{
+        const post = await Post.findById(req.params.id)
+                                .sort('-createdAt')
+                                .populate("user likes", "avatar username fullname followers following")
+                                .populate({
+                                    path:"comments",
+                                    populate:{
+                                        path:"user likes",
+                                        select:"-password"
+                                    },
+                                    sort:'-createdAt'
+                                })
+        if(!post) return res.status(400).json({msg:"This post does not exist."})
+
+        res.json({post})
+
+    }catch(err){
+        return res.status(500).json({message:err.message})
+    }
+    
+})
+
 module.exports = postRouter
 
