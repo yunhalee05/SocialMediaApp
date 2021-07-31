@@ -4,10 +4,13 @@ import {Link} from 'react-router-dom'
 import Send from '../../images/send.svg'
 import { likePost, unlikePost } from '../../_actions/postActions'
 import LikeButton from '../LIkeButton'
+import ShareModal from '../ShareModal'
+import {BASE_URL} from '../../utils'
 
 function CardFooter({post}) {
     const [isLike, setIsLike] = useState(false)
 
+    const [isShare, setIsShare] = useState(false)
     const dispatch = useDispatch()
 
     const userLogin = useSelector(state => state.userLogin)
@@ -40,7 +43,7 @@ function CardFooter({post}) {
                         <i className="far fa-comment"></i>
                     </Link>
 
-                    <img src={Send} alt="Send" />
+                    <img src={Send} alt="Send" onClick={()=>setIsShare(!isShare)}/>
 
                 </div>
 
@@ -51,6 +54,12 @@ function CardFooter({post}) {
                 <h6 style={{padding: '0 25px', cursor:'pointer'}}>{post.likes.length} likes</h6>
                 <h6 style={{padding: '0 25px', cursor:'pointer'}}>{post.comments.length} comments</h6>
             </div>
+
+            {
+
+                isShare &&
+                <ShareModal url={`${BASE_URL}/post/${post._id}`}/>
+            }
         </div>
     )
 }

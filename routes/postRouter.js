@@ -2,6 +2,7 @@ const express = require('express')
 const {Post} = require('../models/Post')
 const {auth} = require('../middleware/auth')
 const {User} = require('../models/User')
+const {Comment} = require('../models/Comment')
 
 
 
@@ -74,6 +75,9 @@ postRouter.patch('/:id', auth,  async(req, res)=>{
 postRouter.delete('/:id', auth, async(req, res)=>{
     try{
         const deletedpost = await Post.findOneAndDelete({_id:req.params.id, user:req.user.id})
+        console.log(deletedpost._id)
+        await Comment.deleteMany({postId: deletedpost._id})
+
         res.json({
             deletedpost
         })

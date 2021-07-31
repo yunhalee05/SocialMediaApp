@@ -1,6 +1,6 @@
 import React from 'react'
 import Avatar from '../Avatar'
-import {Link}  from 'react-router-dom'
+import {Link, useHistory}  from 'react-router-dom'
 import moment from 'moment'
 import { useDispatch, useSelector } from 'react-redux'
 import { EDITSTATUS, STATUS } from '../../_constants/globalConstants'
@@ -11,6 +11,7 @@ function CardHeader({post}) {
     const {userInfo} = userLogin
 
     const dispatch = useDispatch()
+    const history = useHistory()
 
     const handleEditPost = () =>{
         dispatch({
@@ -27,7 +28,10 @@ function CardHeader({post}) {
 
     }
     const handleDeletePost= () =>{
-        dispatch(deletePost(post))
+        if(window.confirm("Are you wure want to delete this post?")){
+            dispatch(deletePost(post))
+            return history.push("/")
+        }
     }
 
     const handleCopyLink= () =>{
