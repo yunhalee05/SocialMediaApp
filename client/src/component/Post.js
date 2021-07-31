@@ -45,7 +45,7 @@ function Post() {
     }, [dispatch, success, updatesuccess, deletesuccess, unlikesuccess, likesuccess])
 
     return (
-        <div className="posts">
+        <div className="posts  ">
             {
                 posts && 
                 posts.map(post=>(

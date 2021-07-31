@@ -45,8 +45,7 @@ function Post(props) {
     }, [dispatch, postId, updatesuccess, deletesuccess, unlikesuccess, likesuccess])
     
     return (
-        <div className="posts">
-            {/* {console.log(postdetail)} */}
+        <div className="posts col-md-8">
             {
                 postdetail &&
                 <PostCard post={postdetail}/>

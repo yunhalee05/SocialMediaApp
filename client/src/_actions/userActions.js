@@ -1,4 +1,4 @@
-import { USER_LOGIN_FAIL, USER_LOGIN_LOGOUT, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_REGISTER_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_VALID_ALERT } from "../_constants/userConstants";
+import { GET_USER_SUGGESTION_FAIL, GET_USER_SUGGESTION_REQUEST, GET_USER_SUGGESTION_SUCCESS, USER_LOGIN_FAIL, USER_LOGIN_LOGOUT, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_REGISTER_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_VALID_ALERT } from "../_constants/userConstants";
 import axios from 'axios'
 import { ALERT } from "../_constants/globalConstants";
 
@@ -117,3 +117,5 @@ const validateEmail = (email)=>{
     const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
 }
+
+

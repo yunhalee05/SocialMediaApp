@@ -173,6 +173,31 @@ userRouter.patch('/:id/unfollow', auth, async(req, res)=>{
     }
 })
 
+userRouter.get('/suggestion/:id', auth, async(req, res)=>{
+    try{
+        const user = await User.findOne({_id:req.user.id})
+        const newArr=[...user.following, req.user.id]
+
+        const num = req.query.num || 10
+
+        const users = await User.aggregate([
+            {$match:{_id:{$nin:newArr}}},
+            {$sample:{size:Number(num)}},
+            {$lookup:{from:'User', localField:'followers', foreignField:'_id', as:'followers'}},
+            {$lookup:{from:'User', localField:'following', foreignField:'_id', as:'following'}},
+
+        ]).project("-password")
+
+        res.json({
+            users,
+            result:users.length
+        })
+
+    }catch(err){
+        return res.status(500).json({message:err.message})
+    }
+})
+
 
 
 module.exports = userRouter

@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import Header from '../component/Haader'
 import Status from '../component/Status'
 import Post from '../component/Post'
+import RightSideBar from '../component/RightSideBar'
 
 function HomePage(props) {
     const userLogin = useSelector(state => state.userLogin)
@@ -18,7 +19,7 @@ function HomePage(props) {
                 <Post />
             </div>
             <div className="col-md-4">
-
+                <RightSideBar/>
             </div>
         </div>
     )

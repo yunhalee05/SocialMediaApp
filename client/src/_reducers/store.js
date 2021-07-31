@@ -4,8 +4,9 @@ import { commentCreateReducer, commentDeleteReducer, commentLikeReducer, comment
 import { postCreateReducer, postDeleteReducer, postDetailReducer, postDiscoverReducer, postGetProfileReducer, postGetReducer, postLikeReducer, postUnlikeReducer, postUpdateReducer } from './postReducers';
 import { getUserProfileReducer, userUpdateProfileReducer } from './profileReducers';
 import { editstatusReducer, statusReducer } from './statusReducers';
+import { suggestionReducer } from './suggestionReducers';
 import { themeReducer } from './themeReducers';
-import { alertReducer, userLoginReducer, userRegisterReducer } from './userReducers';
+import { alertReducer, userLoginReducer, userRegisterReducer, userSuggestionReducer } from './userReducers';
 
 
 const initialState={
@@ -37,6 +38,7 @@ const reducer = combineReducers({
     deletecomment:commentDeleteReducer,
     detailpost:postDetailReducer,
     discoverpost:postDiscoverReducer,
+    suggestion:suggestionReducer,
 
     
 
