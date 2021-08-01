@@ -1,7 +1,7 @@
 import{combineReducers, createStore, compose, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk'
 import { commentCreateReducer, commentDeleteReducer, commentLikeReducer, commentUnlikeReducer, commentUpdateReducer } from './commentReducers';
-import { postCreateReducer, postDeleteReducer, postDetailReducer, postDiscoverReducer, postGetProfileReducer, postGetReducer, postLikeReducer, postUnlikeReducer, postUpdateReducer } from './postReducers';
+import { getSavedPostReducer, postCreateReducer, postDeleteReducer, postDetailReducer, postDiscoverReducer, postGetProfileReducer, postGetReducer, postLikeReducer, postSaveReducer, postUnlikeReducer, postUnsaveReducer, postUpdateReducer } from './postReducers';
 import { getUserProfileReducer, userUpdateProfileReducer } from './profileReducers';
 import { editstatusReducer, statusReducer } from './statusReducers';
 import { suggestionReducer } from './suggestionReducers';
@@ -39,6 +39,9 @@ const reducer = combineReducers({
     detailpost:postDetailReducer,
     discoverpost:postDiscoverReducer,
     suggestion:suggestionReducer,
+    savepost:postSaveReducer,
+    unsavepost:postUnsaveReducer,
+
 
     
 

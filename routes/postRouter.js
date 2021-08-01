@@ -168,6 +168,55 @@ postRouter.get('/:id', auth, async(req, res)=>{
     
 })
 
+postRouter.patch('/save/:id', auth, async(req, res)=>{
+    try{
+        const user = await User.find({_id:req.user.id, saved:req.params.id})
+        if(user.length>0) return res.status(400).json({msg:"You already saved this post."})
+
+        const save = await User.findOneAndUpdate({_id:req.user.id},{
+            $push:{saved:req.params.id}
+        }, {new:true})
+
+        if(!save) return res.status(400).json({msg:'This post does not exist.'})
+
+        res.json({save})
+    }catch(err){
+        return res.status(500).json({message:err.message})
+    }
+})
+
+postRouter.patch('/unsave/:id', auth, async(req, res)=>{
+    try{
+        const unsave = await User.findOneAndUpdate({_id:req.user.id},{
+            $pull:{saved:req.params.id}
+        }, {new:true})
+
+        if(!unsave) return res.status(400).json({msg:'This post does not exist.'})
+
+        res.json({unsave})
+    }catch(err){
+        return res.status(500).json({message:err.message})
+    }
+})
+
+postRouter.get('/profile/savedposts', auth, async(req, res)=>{
+    try{
+        const user = await User.findById({_id:req.user.id})
+
+        const limit = req.query.limit ||9
+
+        const savedposts = await Post.find({
+            _id:{$in:user.saved}
+        }).limit(Number(limit)).sort('-createdAt')
+
+        console.log(savedposts)
+
+        res.json({savedposts, result:savedposts.length})
+    }catch(err){
+        return res.status(500).json({message:err.message})
+    }
+})
+
 // postRouter.get('/discover', auth, async(req, res)=>{
 //     try{
 //         const newArr=[...req.user.following, req.user.id]

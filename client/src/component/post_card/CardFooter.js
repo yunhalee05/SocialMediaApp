@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {Link} from 'react-router-dom'
 import Send from '../../images/send.svg'
-import { likePost, unlikePost } from '../../_actions/postActions'
+import { likePost, setSavePost, setUnsavePost, unlikePost } from '../../_actions/postActions'
 import LikeButton from '../LIkeButton'
 import ShareModal from '../ShareModal'
 import {BASE_URL} from '../../utils'
@@ -15,6 +15,8 @@ function CardFooter({post}) {
 
     const userLogin = useSelector(state => state.userLogin)
     const {userInfo} = userLogin
+
+    const [isSaved, setIsSaved] = useState(false)
 
     useEffect(() => {
         if(post.likes.find(like=> like._id===userInfo.user._id)){
@@ -34,6 +36,24 @@ function CardFooter({post}) {
 
     }
 
+    useEffect(() => {
+        if(userInfo.user.saved.find(id=>id===post._id)){
+            setIsSaved(true)
+        }else{
+            setIsSaved(false)
+        }
+    }, [userInfo.user.saved, post._id])
+
+    const handleSavePost= () =>{
+        if(!isSaved){
+            dispatch(setSavePost(post))
+
+        }else{
+            dispatch(setUnsavePost(post))
+        }
+        setIsSaved(!isSaved)
+    }
+
     return (
         <div className="card_footer">
             <div className="card_icon_menu">
@@ -47,7 +67,12 @@ function CardFooter({post}) {
 
                 </div>
 
-                <i className="far fa-bookmark"></i>
+                {
+                    isSaved
+                    ? <i className="fas fa-bookmark text-info" onClick={handleSavePost}></i>
+                    : <i className="far fa-bookmark " onClick={handleSavePost}></i>
+                }
+
             </div>
 
             <div className="d-flex justify-content-between">

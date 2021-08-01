@@ -1,5 +1,6 @@
 import axios from "axios"
-import { CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_SUCCESS, DELETE_POST_FAIL, DELETE_POST_REQUEST, DELETE_POST_SUCCESS, GET_DISCOVER_POST_FAIL, GET_DISCOVER_POST_REQUEST, GET_DISCOVER_POST_SUCCESS, GET_HOME_POSTS_FAIL, GET_HOME_POSTS_REQUEST, GET_HOME_POSTS_SUCCESS, GET_POST_FAIL, GET_POST_REQUEST, GET_POST_SUCCESS, GET_PROFILE_POSTS_FAIL, GET_PROFILE_POSTS_REQUEST, GET_PROFILE_POSTS_SUCCESS, LIKE_POST_FAIL, LIKE_POST_REQUEST, LIKE_POST_SUCCESS, UNLIKE_POST_FAIL, UNLIKE_POST_REQUEST, UNLIKE_POST_SUCCESS, UPDATE_POST_FAIL, UPDATE_POST_REQUEST, UPDATE_POST_SUCCESS } from "../_constants/postConstants"
+import { CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_SUCCESS, DELETE_POST_FAIL, DELETE_POST_REQUEST, DELETE_POST_SUCCESS, GET_DISCOVER_POST_FAIL, GET_DISCOVER_POST_REQUEST, GET_DISCOVER_POST_SUCCESS, GET_HOME_POSTS_FAIL, GET_HOME_POSTS_REQUEST, GET_HOME_POSTS_SUCCESS, GET_POST_FAIL, GET_POST_REQUEST, GET_POST_SUCCESS, GET_PROFILE_POSTS_FAIL, GET_PROFILE_POSTS_REQUEST, GET_PROFILE_POSTS_SUCCESS, GET_SAVE_POST_FAIL, GET_SAVE_POST_REQUEST, GET_SAVE_POST_SUCCESS, LIKE_POST_FAIL, LIKE_POST_REQUEST, LIKE_POST_SUCCESS, SET_SAVE_POST_FAIL, SET_SAVE_POST_REQUEST, SET_SAVE_POST_SUCCESS, SET_UNSAVE_POST_FAIL, SET_UNSAVE_POST_REQUEST, SET_UNSAVE_POST_SUCCESS, UNLIKE_POST_FAIL, UNLIKE_POST_REQUEST, UNLIKE_POST_SUCCESS, UPDATE_POST_FAIL, UPDATE_POST_REQUEST, UPDATE_POST_SUCCESS } from "../_constants/postConstants"
+import { USER_LOGIN_SUCCESS } from "../_constants/userConstants"
 
 export const createPost = ({content, Images})=> async(dispatch, getState)=>{
     const {userLogin:{userInfo}} = getState()
@@ -255,3 +256,81 @@ export const getDiscoverPost= ()=>async(dispatch, getState)=>{
         })
     }
 }
+
+export const setSavePost=(post) =>async(dispatch, getState)=>{
+    dispatch({
+        type:SET_SAVE_POST_REQUEST,
+        payload:{loading:true}
+    })
+
+    const {userLogin:{userInfo}} = getState();
+
+    try{
+        const res = await axios.patch(`/api/post/save/${post._id}`,null, {
+            headers:{authorization:`Bearer ${userInfo.token}`}
+        })
+
+        dispatch({
+            type:SET_SAVE_POST_SUCCESS,
+            payload:res.data.save
+        })
+
+        dispatch({
+            type:USER_LOGIN_SUCCESS,
+            payload:{user:res.data.save, token:userInfo.token}
+        })
+
+        localStorage.removeItem('userInfo')
+        localStorage.setItem('userInfo',JSON.stringify({user:res.data.save, token:userInfo.token}))
+        
+    }catch(error){
+        dispatch({
+            type:SET_SAVE_POST_FAIL,
+            payload:                
+            error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message
+        })
+    }
+}
+
+
+
+export const setUnsavePost=(post) =>async(dispatch, getState)=>{
+    dispatch({
+        type:SET_UNSAVE_POST_REQUEST,
+        payload:{loading:true}
+    })
+
+    const {userLogin:{userInfo}} = getState();
+
+    try{
+        const res = await axios.patch(`/api/post/unsave/${post._id}`,null, {
+            headers:{authorization:`Bearer ${userInfo.token}`}
+        })
+
+        dispatch({
+            type:SET_UNSAVE_POST_SUCCESS,
+            payload:res.data.unsave
+        })
+
+        dispatch({
+            type:USER_LOGIN_SUCCESS,
+            payload:{user:res.data.unsave, token:userInfo.token}
+        })
+        localStorage.removeItem('userInfo')
+        localStorage.setItem('userInfo',JSON.stringify({user:res.data.unsave, token:userInfo.token}))
+        
+        
+    }catch(error){
+        dispatch({
+            type:SET_UNSAVE_POST_FAIL,
+            payload:                
+            error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message
+        })
+    }
+}
+
+

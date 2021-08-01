@@ -8,7 +8,7 @@ function PostThumb({posts, result}) {
     return (
         <div className="post_thumb">
             {
-                posts.map(post=>(
+                posts?.map(post=>(
                     <Link key={post._id} to={`/post/${post._id}`}>
                         <div className="post_thumb_display">
                             {

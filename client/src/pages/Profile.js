@@ -11,6 +11,7 @@ import Followers from '../component/Followers';
 import Followings from '../component/Followings';
 import Post from '../component/Post';
 import {Link} from 'react-router-dom'
+import SavedPost from '../component/SavedPost'
 
 
 function Profile(props) {
@@ -32,6 +33,8 @@ function Profile(props) {
     
 
     const [onEdit, setOnEdit] = useState(false)
+
+    const [saveTab, setSaveTab] = useState(false)
 
     useEffect(() => {
         if(!user || userId !== user._id || success){
@@ -102,31 +105,46 @@ function Profile(props) {
             }
 
             {
-                posts && posts.length ===0
-                ? <h2 className="text-center text-danger">NO POST</h2>
-                : <>
-                <div className="post_thumb">
-                    {
-                        posts?.map(post=>(
-                            <Link key={post._id} to={`/post/${post._id}`}>
-                                <div className="post_thumb_display">
-                                    {
-                                        post.images[0].config.url.match(/video/i)
-                                        ? <video controls src={post.images[0].data} alt={post.images[0].data}></video>
-                                        : <img src={post.images[0].data} alt={post.images[0].data}></img>
-                                    }
-
-                                    <div className="post_thumb_menu">
-                                        <i className="far fa-heart">{post.likes.length}</i>
-                                        <i className="far fa-comment">{post.comments.length}</i>
-                                    </div>
-                                </div>
-                            </Link>
-                        ))
-                    }
+                <div className="profile_tab">
+                    <button className={saveTab? '': 'active'} onClick={()=>setSaveTab(false)}>Posts</button>
+                    <button className={saveTab? 'active': ''} onClick={()=>setSaveTab(true)}>Saved</button>
                 </div>
-                </>
+            }
 
+
+
+            { 
+                posts && user&& saveTab
+                ? <SavedPost/>
+                :
+                <>
+                {
+                    posts && posts.length ===0
+                    ? <h2 className="text-center text-danger">NO POST</h2>
+                    : <>
+                    <div className="post_thumb">
+                        {
+                            posts?.map(post=>(
+                                <Link key={post._id} to={`/post/${post._id}`}>
+                                    <div className="post_thumb_display">
+                                        {
+                                            post.images[0].config.url.match(/video/i)
+                                            ? <video controls src={post.images[0].data} alt={post.images[0].data}></video>
+                                            : <img src={post.images[0].data} alt={post.images[0].data}></img>
+                                        }
+
+                                        <div className="post_thumb_menu">
+                                            <i className="far fa-heart">{post.likes.length}</i>
+                                            <i className="far fa-comment">{post.comments.length}</i>
+                                        </div>
+                                    </div>
+                                </Link>
+                            ))
+                        }
+                    </div>
+                    </>
+                    }
+                </>
             }
         </div>
     )
