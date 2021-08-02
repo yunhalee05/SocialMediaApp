@@ -8,6 +8,9 @@ function FollowBtn({user, userId }) {
 
     const userLogin = useSelector(state => state.userLogin)
     const {userInfo} =userLogin
+
+    const socket = useSelector(state => state.socket)
+
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -17,12 +20,12 @@ function FollowBtn({user, userId }) {
 
     const handleFollow= async ()=>{
         setFollow(true)
-        await dispatch(followUserProfile(user))
+        await dispatch(followUserProfile(user,socket))
     }
 
     const handleUnfollow = async () =>{
         setFollow(false)
-        await dispatch(unfollowUserProfile(user))
+        await dispatch(unfollowUserProfile(user,socket))
     }
 
     return (

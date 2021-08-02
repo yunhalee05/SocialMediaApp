@@ -10,6 +10,7 @@ function InputComment({children,post , onReply, setOnReply}) {
     const userLogin = useSelector(state => state.userLogin)
     const {userInfo} = userLogin
 
+    const socket = useSelector(state => state.socket)
     const dispatch = useDispatch()
 
     const handleSubmit= (e) =>{
@@ -31,7 +32,7 @@ function InputComment({children,post , onReply, setOnReply}) {
             tag:onReply && onReply.user
         }
         
-        dispatch(createComment({newcomment, post}))
+        dispatch(createComment({newcomment, post, socket}))
 
         if(setOnReply) return setOnReply(false)
 

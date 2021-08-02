@@ -3,6 +3,7 @@ import thunk from 'redux-thunk'
 import { commentCreateReducer, commentDeleteReducer, commentLikeReducer, commentUnlikeReducer, commentUpdateReducer } from './commentReducers';
 import { getSavedPostReducer, postCreateReducer, postDeleteReducer, postDetailReducer, postDiscoverReducer, postGetProfileReducer, postGetReducer, postLikeReducer, postSaveReducer, postUnlikeReducer, postUnsaveReducer, postUpdateReducer } from './postReducers';
 import { getUserProfileReducer, userUpdateProfileReducer } from './profileReducers';
+import socketReducer from './socketReducers';
 import { editstatusReducer, statusReducer } from './statusReducers';
 import { suggestionReducer } from './suggestionReducers';
 import { themeReducer } from './themeReducers';
@@ -41,6 +42,7 @@ const reducer = combineReducers({
     suggestion:suggestionReducer,
     savepost:postSaveReducer,
     unsavepost:postUnsaveReducer,
+    socket:socketReducer,
 
 
     

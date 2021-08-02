@@ -72,7 +72,7 @@ export const updateUserProfile = (user ) =>async (dispatch, getState)=>{
     }
 }
 
-export const followUserProfile = (user)=> async(dispatch, getState)=>{
+export const followUserProfile = (user,socket)=> async(dispatch, getState)=>{
 
     const {userLogin: {userInfo}} = getState()
     let newUser =  {...user, followers:[...user.followers, userInfo.user] }
@@ -82,6 +82,9 @@ export const followUserProfile = (user)=> async(dispatch, getState)=>{
         const {data} = await axios.patch(`/api/users/${user._id}/follow`,userInfo.user,{
             headers:{authorization:`Bearer ${userInfo?.token}`}
         } )
+
+        socket.emit('follow',data)
+
 
         dispatch({
             type:USER_FOLLOW_PROFILE,
@@ -105,16 +108,19 @@ export const followUserProfile = (user)=> async(dispatch, getState)=>{
 
 }
 
-export const unfollowUserProfile = (user)=> async(dispatch, getState)=>{
+export const unfollowUserProfile = (user,socket)=> async(dispatch, getState)=>{
 
     const {userLogin: {userInfo}} = getState()
     let newUser =  {...user, followers: user.followers.filter(x=>x._id !==userInfo.user._id) }
+
 
     try{
         
         const {data} = await axios.patch(`/api/users/${user._id}/unfollow`,userInfo.user,{
             headers:{authorization:`Bearer ${userInfo?.token}`}
         } )
+        socket.emit('unfollow',data)
+
 
         dispatch({
             type:USER_UNFOLLOW_PROFILE,

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import RegisterPage from './pages/RegisterPage';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Header from './component/Haader'
 import Notify from './pages/Notify';
 import Discover from './pages/Discover';
@@ -11,6 +11,9 @@ import Message from './pages/Message';
 import Profile from './pages/Profile';
 import StatusModal from './component/StatusModal';
 import Post from './pages/Post';
+import io from 'socket.io-client'
+import { SOCKET } from './_constants/globalConstants';
+import SocketClient from './SocketClient';
 
 
 function App() {
@@ -18,6 +21,12 @@ function App() {
   const {userInfo} = userLogin
 
   const status = useSelector(state => state.status)
+
+  const dispatch = useDispatch()
+  
+  
+
+
   return (
     <BrowserRouter>
       <input type="checkbox" id="theme"/>
@@ -25,6 +34,7 @@ function App() {
         <div className="main">
           {userInfo && <Header/>}
           {status && <StatusModal/>}
+          {userInfo && <SocketClient/>}
           <Route exact path="/post/:id" component={Post}/>
           <Route exact path="/profile/:id" component={Profile}/>
           <Route exact path="/message" component={Message}/>

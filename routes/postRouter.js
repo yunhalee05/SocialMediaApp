@@ -93,7 +93,17 @@ postRouter.patch('/:id/like',auth, async(req,res)=>{
 
         const likedpost = await Post.findOneAndUpdate({_id:req.params.id},{
             $push:{likes:req.user.id}
-        },{new:true})
+        },{new:true})   .sort('-createdAt')
+                        .populate("user likes", "avatar username fullname followers following")
+                        .populate({
+                            path:"comments",
+                            populate:{
+                                path:"user likes",
+                                select:"-password"
+                            },
+                            sort:'-createdAt'
+                        })
+
 
         if(!likedpost) return res.status(400).json({msg:'This post does not exist.'})
 
@@ -110,7 +120,16 @@ postRouter.patch('/:id/unlike',auth, async(req,res)=>{
     try{
         const unlikedpost = await Post.findOneAndUpdate({_id:req.params.id},{
             $pull:{likes:req.user.id}
-        },{new:true})
+        },{new:true})   .sort('-createdAt')
+                        .populate("user likes", "avatar username fullname followers following")
+                        .populate({
+                            path:"comments",
+                            populate:{
+                                path:"user likes",
+                                select:"-password"
+                            },
+                            sort:'-createdAt'
+                        })
 
         if(!unlikedpost) return res.status(400).json({msg:'This post does not exist.'})
 

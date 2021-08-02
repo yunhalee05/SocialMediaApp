@@ -4,8 +4,8 @@ require('dotenv').config()
 const {User} = require('./models/User')
 const app = express();
 const path = require('path')
-
 const cookieParser = require('cookie-parser')
+const SocketServer = require('./SocketServer')
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
@@ -18,7 +18,23 @@ mongoose.connect(process.env.MONGODB_URI,{
 .catch(err=> console.log(err))
 
 
+//Socket
+const http = require('http').createServer(app)
+const io = require('socket.io')(http)
 
+ 
+io.on('connection', socket=>{
+    console.log(socket.id + ' Connected')
+    SocketServer(socket)
+})
+
+
+
+
+
+
+
+//Route
 app.get('/',(req, res)=>{
     res.send('hello world')
 })
@@ -40,4 +56,4 @@ app.use('/api/discover', require('./routes/discoverRouter'));
 
 
 const port = process.env.port || 5000
-app.listen(port, ()=> console.log(`Server is listening on port ${port}.`))
+http.listen(port, ()=> console.log(`Server is listening on port ${port}.`))

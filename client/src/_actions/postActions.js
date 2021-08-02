@@ -142,17 +142,23 @@ export const deletePost = (post) => async (dispatch, getState)=>{
     }
 }
 
-export const likePost = (post) => async (dispatch, getState)=>{
+export const likePost = (post, socket) => async (dispatch, getState)=>{
+
     dispatch({
         type:LIKE_POST_REQUEST,
         payload:{loading:true}
     })
-
     const {userLogin:{userInfo}} = getState()
+
     try{
         const res = await axios.patch(`/api/post/${post._id}/like`,null, {
             headers:{authorization:`Bearer ${userInfo.token}`}
         })
+        
+        socket.emit('likePost', res.data.likedpost)
+
+
+
         dispatch({
             type:LIKE_POST_SUCCESS,
             payload:res.data.likedpost
@@ -169,7 +175,7 @@ export const likePost = (post) => async (dispatch, getState)=>{
     }
 }
 
-export const unlikePost = (post) => async (dispatch, getState)=>{
+export const unlikePost = (post, socket) => async (dispatch, getState)=>{
     dispatch({
         type:UNLIKE_POST_REQUEST,
         payload:{loading:true}
@@ -180,6 +186,9 @@ export const unlikePost = (post) => async (dispatch, getState)=>{
         const res = await axios.patch(`/api/post/${post._id}/unlike`,null, {
             headers:{authorization:`Bearer ${userInfo.token}`}
         })
+
+        socket.emit('unlikePost', res.data.unlikedpost)
+
         dispatch({
             type:UNLIKE_POST_SUCCESS,
             payload:res.data.unlikedpost

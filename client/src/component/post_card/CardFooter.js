@@ -18,6 +18,8 @@ function CardFooter({post}) {
 
     const [isSaved, setIsSaved] = useState(false)
 
+    const socket = useSelector(state => state.socket)
+
     useEffect(() => {
         if(post.likes.find(like=> like._id===userInfo.user._id)){
             setIsLike(true)
@@ -28,9 +30,9 @@ function CardFooter({post}) {
 
     const handleLike = () =>{
         if(!isLike){
-            dispatch(likePost(post))
+            dispatch(likePost(post,socket))
         }else{
-            dispatch(unlikePost(post))
+            dispatch(unlikePost(post, socket))
         }
         setIsLike(!isLike)
 

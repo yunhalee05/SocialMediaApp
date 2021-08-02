@@ -7,11 +7,13 @@ function CommentMenu({post,comment, setOnEdit}) {
     const userLogin = useSelector(state => state.userLogin)
     const {userInfo} = userLogin
 
+    const socket = useSelector(state => state.socket)
+
     const dispatch = useDispatch()
 
     const handleRemove = () =>{
         if(post.user._id === userInfo.user._id || comment.user._id ===userInfo.user._id){
-            dispatch(deleteComment({post, comment}))
+            dispatch(deleteComment({post, comment,socket}))
         }
     }
     return (

@@ -2,7 +2,7 @@ import axios from "axios"
 import { CREATE_COMMENT_FAIL, CREATE_COMMENT_REQUEST, CREATE_COMMENT_SUCCESS, DELETE_COMMENT_FAIL, DELETE_COMMENT_REQUEST, DELETE_COMMENT_SUCCESS, LIKE_COMMENT_FAIL, LIKE_COMMENT_REQUEST, LIKE_COMMENT_SUCCESS, UNLIKE_COMMENT_FAIL, UNLIKE_COMMENT_REQUEST, UNLIKE_COMMENT_SUCCESS, UPDATE_COMMENT_FAIL, UPDATE_COMMENT_REQUEST, UPDATE_COMMENT_SUCCESS } from "../_constants/commentConstants"
 import { UPDATE_POST_SUCCESS } from "../_constants/postConstants"
 
-export const createComment = ({newcomment, post})=> async(dispatch, getState)=>{
+export const createComment = ({newcomment, post, socket})=> async(dispatch, getState)=>{
 
     dispatch({
         type:CREATE_COMMENT_REQUEST,
@@ -17,6 +17,8 @@ export const createComment = ({newcomment, post})=> async(dispatch, getState)=>{
             headers:{authorization:`Bearer ${userInfo.token}`}
         })
         const newpost = {...post, comments:[...post.comments, newcomment]}
+
+        socket.emit('createComment', newpost)
 
         dispatch({
             type:CREATE_COMMENT_SUCCESS,
@@ -158,7 +160,7 @@ export const unlikeComment = ({comment, post})=>async(dispatch, getState)=>{
     }}
 
 
-export const deleteComment= ({post, comment})=>async(dispatch, getState)=>{
+export const deleteComment= ({post, comment, socket})=>async(dispatch, getState)=>{
 
     dispatch({
         type:DELETE_COMMENT_REQUEST,
@@ -178,6 +180,8 @@ export const deleteComment= ({post, comment})=>async(dispatch, getState)=>{
             })
 
         })
+
+        socket.emit('deleteComment', newpost)
 
         dispatch({
             type:DELETE_COMMENT_SUCCESS,
