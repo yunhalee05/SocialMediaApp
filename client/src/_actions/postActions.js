@@ -1,8 +1,9 @@
 import axios from "axios"
 import { CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_SUCCESS, DELETE_POST_FAIL, DELETE_POST_REQUEST, DELETE_POST_SUCCESS, GET_DISCOVER_POST_FAIL, GET_DISCOVER_POST_REQUEST, GET_DISCOVER_POST_SUCCESS, GET_HOME_POSTS_FAIL, GET_HOME_POSTS_REQUEST, GET_HOME_POSTS_SUCCESS, GET_POST_FAIL, GET_POST_REQUEST, GET_POST_SUCCESS, GET_PROFILE_POSTS_FAIL, GET_PROFILE_POSTS_REQUEST, GET_PROFILE_POSTS_SUCCESS, GET_SAVE_POST_FAIL, GET_SAVE_POST_REQUEST, GET_SAVE_POST_SUCCESS, LIKE_POST_FAIL, LIKE_POST_REQUEST, LIKE_POST_SUCCESS, SET_SAVE_POST_FAIL, SET_SAVE_POST_REQUEST, SET_SAVE_POST_SUCCESS, SET_UNSAVE_POST_FAIL, SET_UNSAVE_POST_REQUEST, SET_UNSAVE_POST_SUCCESS, UNLIKE_POST_FAIL, UNLIKE_POST_REQUEST, UNLIKE_POST_SUCCESS, UPDATE_POST_FAIL, UPDATE_POST_REQUEST, UPDATE_POST_SUCCESS } from "../_constants/postConstants"
 import { USER_LOGIN_SUCCESS } from "../_constants/userConstants"
+import { createNotify, removeNotify } from "./NotifyActions"
 
-export const createPost = ({content, Images})=> async(dispatch, getState)=>{
+export const createPost = ({content, Images, socket})=> async(dispatch, getState)=>{
     const {userLogin:{userInfo}} = getState()
     dispatch({
         type:CREATE_POST_REQUEST,
@@ -31,6 +32,20 @@ export const createPost = ({content, Images})=> async(dispatch, getState)=>{
             type:CREATE_POST_SUCCESS,
             payload:res.data.newPost
         })
+
+
+        // console.log(res)
+        // // Notify
+        const msg={
+            id:res.data.newPost._id,
+            text:'added a new post.',
+            recipients:res.data.newPost.user.followers,
+            url:`/post/${res.data.newPost._id}`,
+            content,
+            image: imgArr[0].data
+        }
+
+        dispatch(createNotify({msg, socket}))
 
     }catch(error){
         dispatch({
@@ -117,7 +132,7 @@ export const updatePost = ({content, Images, editstatus}) =>async(dispatch, getS
     }
 }
 
-export const deletePost = (post) => async (dispatch, getState)=>{
+export const deletePost = ({post,socket}) => async (dispatch, getState)=>{
     dispatch({
         type:DELETE_POST_REQUEST,
         payload:{loading:true}
@@ -131,6 +146,19 @@ export const deletePost = (post) => async (dispatch, getState)=>{
             type:DELETE_POST_SUCCESS,
             payload:res.data.deletedpost
         })
+
+        console.log(res)
+
+        const msg={
+            id:post._id,
+            text:'deleted a post.',
+            recipients:res.data.deletedpost.user.followers,
+            url:`/post/${post._id}`,
+            // content:res.data.deletedpost.content,
+            // image: res.data.deletedpost.images[0].data
+        }
+
+        dispatch(removeNotify({msg, socket}))
     }catch(error){
         dispatch({
             type:DELETE_POST_FAIL,

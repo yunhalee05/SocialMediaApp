@@ -13,9 +13,15 @@ postRouter.post('/', auth,  async(req, res)=>{
     try{
         const newPost = new Post({'content':req.body.content, 'images':req.body.images,'user':req.body.userId})
 
+        const user = await User.findOne({_id:req.user.id})
         await newPost.save()
 
-        res.send({newPost})
+        res.send({
+            newPost:{
+                ...newPost._doc,
+                user
+            }
+        })
 
     }catch(err){
         return res.status(500).json({message:err.message})
@@ -78,8 +84,13 @@ postRouter.delete('/:id', auth, async(req, res)=>{
         console.log(deletedpost._id)
         await Comment.deleteMany({postId: deletedpost._id})
 
+        const user = await User.findOne({_id:req.user.id})
+
         res.json({
-            deletedpost
+            deletedpost:{
+                ...deletedpost._doc,
+                user
+            }
         })
     }catch(err){
         return res.status(500).json({message:err.message})

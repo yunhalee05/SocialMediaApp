@@ -9,6 +9,7 @@ function StatusModal() {
     const userLogin = useSelector(state => state.userLogin)
     const {userInfo} = userLogin
     const theme = useSelector(state => state.theme)
+    const socket = useSelector(state => state.socket)
 
     const [content, setcontent] = useState('')
     const dispatch = useDispatch()
@@ -99,7 +100,7 @@ function StatusModal() {
         if(editstatus.onEdit){
             dispatch(updatePost({content, Images, editstatus}))
         }else{
-        dispatch(createPost({content, Images}))
+        dispatch(createPost({content, Images, socket}))
         }
         setcontent('')
         setImages([])

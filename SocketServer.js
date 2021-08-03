@@ -5,12 +5,12 @@ const SocketServer = (socket) =>{
     //Connect -Disconnect
     socket.on('joinUser', id=>{
         users.push({id, socketId:socket.id})
-        console.log({users})
+        // console.log({users})
     } )
 
     socket.on('disconnect', ()=>{
         users = users.filter(user=>user.socketId !== socket.id)
-        console.log({users})
+        // console.log({users})
     })
 
     //likes
@@ -63,7 +63,7 @@ const SocketServer = (socket) =>{
     // Follow
     socket.on('follow', data=>{
         const user = users.find(user=>user.id ===data.user._id)
-        console.log(user)
+        // console.log(user)
         user &&  socket.to(`${user.socketId}`).emit('followToClient', data)
     })
 
