@@ -62,19 +62,19 @@ function EditProfile({setOnEdit}) {
         return err
     }
 
-    const userUpdateProfile = useSelector(state => state.userUpdateProfile)
-    const {loading:loadingUpdate, error:errorUpdate, success:successUpdate} = userUpdateProfile
+    const userProfile = useSelector(state => state.userProfile)
+    const {loading, error, updateSuccess} = userProfile
 
     const dispatch = useDispatch()
 
     useEffect(() => {
-        if(successUpdate){
-            dispatch({
-                type:USER_UPDATE_PROFILE_RESET,
-            })
+        if(updateSuccess){
+            // dispatch({
+            //     type:USER_UPDATE_PROFILE_RESET,
+            // })
             setOnEdit(false)
         }
-    }, [dispatch, userInfo.user._id, successUpdate, setOnEdit])
+    }, [dispatch, userInfo.user._id, updateSuccess, setOnEdit])
 
     const handleSubmit = (e) =>{
         e.preventDefault()
@@ -83,10 +83,10 @@ function EditProfile({setOnEdit}) {
     return (
         <div className="edit_profile">
             {
-                errorUpdate && <Alert variant="danger">{errorUpdate}</Alert>
+                error && <Alert variant="danger">{error}</Alert>
             }
             {
-                loadingUpdate && <Loading></Loading>
+                error && <Loading></Loading>
             }
             <button className="btn btn-danger btn_close" onClick={()=>setOnEdit(false)}>
                 Close

@@ -14,6 +14,8 @@ import Post from './pages/Post';
 import io from 'socket.io-client'
 import { SOCKET } from './_constants/globalConstants';
 import SocketClient from './SocketClient';
+import { getProfileUser } from './_actions/profileActions';
+import { getUser } from './_actions/userActions';
 
 
 function App() {
@@ -24,7 +26,8 @@ function App() {
 
   const dispatch = useDispatch()
   
-  
+
+
 
 
   return (
@@ -34,7 +37,7 @@ function App() {
         <div className="main">
           {userInfo && <Header/>}
           {status && <StatusModal/>}
-          {userInfo && <SocketClient/>}
+          {/* {userInfo && <SocketClient/>} */}
           <Route exact path="/post/:id" component={Post}/>
           <Route exact path="/profile/:id" component={Profile}/>
           <Route exact path="/message" component={Message}/>

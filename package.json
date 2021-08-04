@@ -4,6 +4,7 @@
   "description": "social media app",
   "main": "index.js",
   "scripts": {
+    "predev": "kill -9 $(lsof -i :5000 | grep -i -E -o '\\s[0-9]+\\s') || true",
     "start": "node server.js",
     "backend": "nodemon server.js",
     "frontend": "npm run start --prefix client",

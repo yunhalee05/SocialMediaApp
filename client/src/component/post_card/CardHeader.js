@@ -32,8 +32,8 @@ function CardHeader({post}) {
     const handleDeletePost= () =>{
         if(window.confirm("Are you wure want to delete this post?")){
             dispatch(deletePost({post,socket}))
-            return history.push("/")
         }
+
     }
 
     const handleCopyLink= () =>{

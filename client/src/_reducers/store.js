@@ -1,6 +1,5 @@
 import{combineReducers, createStore, compose, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk'
-import { commentCreateReducer, commentDeleteReducer, commentLikeReducer, commentUnlikeReducer, commentUpdateReducer } from './commentReducers';
 import { getSavedPostReducer, postCreateReducer, postDeleteReducer, postDetailReducer, postDiscoverReducer, postGetProfileReducer, postGetReducer, postLikeReducer, postSaveReducer, postUnlikeReducer, postUnsaveReducer, postUpdateReducer } from './postReducers';
 import { getUserProfileReducer, userUpdateProfileReducer } from './profileReducers';
 import socketReducer from './socketReducers';
@@ -19,29 +18,29 @@ const initialState={
 
 const reducer = combineReducers({
     userLogin:userLoginReducer,
-    userRegister:userRegisterReducer,
+    // userRegister:userRegisterReducer,
     alert:alertReducer,
     theme:themeReducer,
     userProfile:getUserProfileReducer,
-    userUpdateProfile:userUpdateProfileReducer,
+    // userUpdateProfile:userUpdateProfileReducer,
     status:statusReducer,
-    createpost:postCreateReducer,
+    // createpost:postCreateReducer,
     getposts:postGetReducer,
     editstatus:editstatusReducer,
-    updatepost:postUpdateReducer,
-    deletepost:postDeleteReducer,
-    likepost:postLikeReducer,
-    unlikepost:postUnlikeReducer,
-    createcomment:commentCreateReducer,
-    likecomment:commentLikeReducer,
-    unlikecomment:commentUnlikeReducer,
-    updatecomment:commentUpdateReducer,
-    deletecomment:commentDeleteReducer,
+    // updatepost:postUpdateReducer,
+    // deletepost:postDeleteReducer,
+    // likepost:postLikeReducer,
+    // unlikepost:postUnlikeReducer,
+    // createcomment:commentCreateReducer,
+    // likecomment:commentLikeReducer,
+    // unlikecomment:commentUnlikeReducer,
+    // updatecomment:commentUpdateReducer,
+    // deletecomment:commentDeleteReducer,
     detailpost:postDetailReducer,
     discoverpost:postDiscoverReducer,
     suggestion:suggestionReducer,
     savepost:postSaveReducer,
-    unsavepost:postUnsaveReducer,
+    // unsavepost:postUnsaveReducer,
     socket:socketReducer,
 
 

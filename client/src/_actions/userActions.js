@@ -31,10 +31,12 @@ export const login = (email, password)=>async (dispatch)=>{
 }
 
 export const logout = () =>(dispatch) =>{
-    localStorage.removeItem("userInfo")
     dispatch({
-        type:USER_LOGIN_LOGOUT
+        type:USER_LOGIN_LOGOUT,
+        payload:"User logout successfully."
     })
+    localStorage.removeItem("userInfo")
+
 
 }
 
@@ -44,7 +46,7 @@ export const register = (fullname, username, email, password,confirmPassword, ge
 
     dispatch({
         type:USER_REGISTER_REQUEST,
-        payload:{fullname, username, email, password, gender}
+        payload:{loading:true}
     })
     try{
         const {data} = await axios.post('/api/users/register', {fullname,username, email, password, gender})
@@ -56,10 +58,10 @@ export const register = (fullname, username, email, password,confirmPassword, ge
             payload:data
         })
 
-        dispatch({
-            type:USER_LOGIN_SUCCESS,
-            payload:data
-        })
+        // dispatch({
+        //     type:USER_LOGIN_SUCCESS,
+        //     payload:data
+        // })
 
         localStorage.setItem("userInfo", JSON.stringify(data))
 

@@ -27,7 +27,9 @@ commentRouter.post('/', auth, async(req, res)=>{
 
         await newcomment.save()
 
-        res.json({newcomment})
+        const comment = await Comment.findById(newcomment._id).populate("user", "avatar username")
+
+        res.json({comment})
 
     }catch(err){
         return res.status(500).json({message:err.message})

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { getProfileUser } from '../_actions/profileActions';
 import Avatar from '../component/Avatar'
-import { PROFILE_GETUSER_RESET, USER_UPDATE_PROFILE_RESET } from '../_constants/profileConstants';
 import Loading from '../component/Loading';
 import Alert from '../component/Alert'
 import EditProfile from '../component/EditProfile'
@@ -20,13 +19,12 @@ function Profile(props) {
 
     const userLogin = useSelector(state => state.userLogin)
     const {userInfo} = userLogin
+
     const dispatch = useDispatch()
 
     const userProfile = useSelector(state => state.userProfile)
     const {loading, error, user, posts} = userProfile
 
-    const userUpdateProfile = useSelector(state => state.userUpdateProfile)
-    const {success}  = userUpdateProfile
 
     const [showFollowers, setShowFollowers] = useState(false)
     const [showFollowing, setShowFollowing] = useState(false)
@@ -37,16 +35,8 @@ function Profile(props) {
     const [saveTab, setSaveTab] = useState(false)
 
     useEffect(() => {
-        if(!user || userId !== user._id || success){
-            dispatch({
-                type:PROFILE_GETUSER_RESET
-            })
-            dispatch({
-                type:USER_UPDATE_PROFILE_RESET
-            })
-            dispatch(getProfileUser(userId))
-        }
-    }, [dispatch, userId, user, userInfo.token,success])
+        dispatch(getProfileUser(userId))
+    }, [dispatch, userId])
 
     return (
         <div className="profile">

@@ -14,35 +14,35 @@ function Post() {
     const getposts = useSelector(state => state.getposts)
     const {posts} = getposts
 
-    const createpost = useSelector(state => state.createpost)
-    const {success} = createpost
+    // const createpost = useSelector(state => state.createpost)
+    // const {success} = createpost
     
-    const updatepost = useSelector(state => state.updatepost)
-    const{success:updatesuccess}  = updatepost
+    // const updatepost = useSelector(state => state.updatepost)
+    // const{success:updatesuccess}  = updatepost
 
-    const deletepost = useSelector(state => state.deletepost)
-    const {success:deletesuccess} = deletepost
+    // const deletepost = useSelector(state => state.deletepost)
+    // const {success:deletesuccess} = deletepost
     
-    const likepost = useSelector(state => state.likepost)
-    const {success:likesuccess} = likepost
+    // const likepost = useSelector(state => state.likepost)
+    // const {success:likesuccess} = likepost
 
-    const unlikepost = useSelector(state => state.unlikepost)
-    const {success:unlikesuccess} = unlikepost
+    // const unlikepost = useSelector(state => state.unlikepost)
+    // const {success:unlikesuccess} = unlikepost
 
 
 
     useEffect(() => {
-        if(success||updatesuccess ||deletesuccess ||unlikesuccess ||likesuccess){
-            dispatch({type:GET_POSTS_RESET})
-            dispatch({type:CREATE_POST_RESET})
-            dispatch({type:UPDATE_POST_RESET})
-            dispatch({type:DELETE_POST_RESET})
-            dispatch({type:LIKE_POST_RESET})
-            dispatch({type:UNLIKE_POST_RESET})
-        }
+        // if(unlikesuccess ||likesuccess){
+        //     dispatch({type:GET_POSTS_RESET})
+        //     // dispatch({type:CREATE_POST_RESET})
+        //     // dispatch({type:UPDATE_POST_RESET})
+        //     // dispatch({type:DELETE_POST_RESET})
+        //     dispatch({type:LIKE_POST_RESET})
+        //     dispatch({type:UNLIKE_POST_RESET})
+        // }
 
         dispatch(getHomePosts())
-    }, [dispatch, success, updatesuccess, deletesuccess, unlikesuccess, likesuccess])
+    }, [dispatch])
 
     return (
         <div className="posts  ">

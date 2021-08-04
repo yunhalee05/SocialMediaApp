@@ -41,7 +41,7 @@ postRouter.get('/', auth, async(req, res)=>{
                                         path:"user likes",
                                         select:"-password"
                                     },
-                                    sort:'-createdAt'
+                                    options:{sort:'-createdAt'}
                                 })
 
         res.json({
@@ -58,19 +58,19 @@ postRouter.get('/', auth, async(req, res)=>{
 postRouter.patch('/:id', auth,  async(req, res)=>{
     // console.log(req.body)
     try{
-        const updatedPost = await Post.findOneAndUpdate({_id:req.params.id},{'content':req.body.content, 'images':req.body.images})
+        const updatedPost = await Post.findOneAndUpdate({_id:req.params.id},{'content':req.body.content, 'images':req.body.images}, {new:true})
                                     .populate("user likes", "avatar username fullname")
                                     .populate({
                                         path:"comments",
                                         populate:{
                                             path:"user likes",
                                             select:"-password"
-                                        }
+                                        },
+                                        options:{sort:'-createdAt'}
+
                                     })
 
 
-
-        console.log(updatedPost)
         res.send({updatedPost})
 
     }catch(err){
@@ -81,7 +81,6 @@ postRouter.patch('/:id', auth,  async(req, res)=>{
 postRouter.delete('/:id', auth, async(req, res)=>{
     try{
         const deletedpost = await Post.findOneAndDelete({_id:req.params.id, user:req.user.id})
-        console.log(deletedpost._id)
         await Comment.deleteMany({postId: deletedpost._id})
 
         const user = await User.findOne({_id:req.user.id})
@@ -112,7 +111,8 @@ postRouter.patch('/:id/like',auth, async(req,res)=>{
                                 path:"user likes",
                                 select:"-password"
                             },
-                            sort:'-createdAt'
+                            // options:{sort:'-createdAt'}
+
                         })
 
 
@@ -139,7 +139,8 @@ postRouter.patch('/:id/unlike',auth, async(req,res)=>{
                                 path:"user likes",
                                 select:"-password"
                             },
-                            sort:'-createdAt'
+                            // options:{sort:'-createdAt'}
+
                         })
 
         if(!unlikedpost) return res.status(400).json({msg:'This post does not exist.'})
@@ -164,7 +165,8 @@ postRouter.get('/user/:id', auth, async(req, res)=>{
                                         path:"user likes",
                                         select:"-password"
                                     },
-                                    sort:'-createdAt'
+                                    // options:{sort:'-createdAt'}
+
                                 })
 
         res.json({posts})
@@ -186,7 +188,8 @@ postRouter.get('/:id', auth, async(req, res)=>{
                                         path:"user likes",
                                         select:"-password"
                                     },
-                                    sort:'-createdAt'
+                                    // options:{sort:'-createdAt'}
+
                                 })
         if(!post) return res.status(400).json({msg:"This post does not exist."})
 

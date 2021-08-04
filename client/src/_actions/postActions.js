@@ -5,6 +5,8 @@ import { createNotify, removeNotify } from "./NotifyActions"
 
 export const createPost = ({content, Images, socket})=> async(dispatch, getState)=>{
     const {userLogin:{userInfo}} = getState()
+    const {getposts:{posts}} = getState()
+
     dispatch({
         type:CREATE_POST_REQUEST,
         payload:{loading:true}
@@ -28,6 +30,7 @@ export const createPost = ({content, Images, socket})=> async(dispatch, getState
         const res = await axios.post('/api/post', {content, images:imgArr, userId:userInfo.user._id,user:userInfo.user},{
             headers:{authorization:`Bearer ${userInfo.token}`}
         })
+
         dispatch({
             type:CREATE_POST_SUCCESS,
             payload:res.data.newPost
@@ -90,6 +93,7 @@ export const getHomePosts =() => async(dispatch, getState)=>{
 
 export const updatePost = ({content, Images, editstatus}) =>async(dispatch, getState)=>{
     const {userLogin:{userInfo}} = getState()
+    const {getposts:{posts}} = getState()
     dispatch({
         type:UPDATE_POST_REQUEST,
         payload:{loading:true}
@@ -115,7 +119,6 @@ export const updatePost = ({content, Images, editstatus}) =>async(dispatch, getS
         const res = await axios.patch(`/api/post/${editstatus._id}`, {content, images:[...imgOldUrl,...imgArr]},{
             headers:{authorization:`Bearer ${userInfo.token}`}
         })
-        console.log(res)
         dispatch({
             type:UPDATE_POST_SUCCESS,
             payload:res.data.updatedPost
@@ -138,27 +141,29 @@ export const deletePost = ({post,socket}) => async (dispatch, getState)=>{
         payload:{loading:true}
     })
     const {userLogin:{userInfo}} = getState()
+
     try{
         const res = await axios.delete(`/api/post/${post._id}`, {
             headers:{authorization:`Bearer ${userInfo.token}`}
         })
+
         dispatch({
             type:DELETE_POST_SUCCESS,
-            payload:res.data.deletedpost
+            payload:post._id
         })
 
-        console.log(res)
+        // console.log(res)
 
-        const msg={
-            id:post._id,
-            text:'deleted a post.',
-            recipients:res.data.deletedpost.user.followers,
-            url:`/post/${post._id}`,
-            // content:res.data.deletedpost.content,
-            // image: res.data.deletedpost.images[0].data
-        }
+        // const msg={
+        //     id:post._id,
+        //     text:'deleted a post.',
+        //     recipients:res.data.deletedpost.user.followers,
+        //     url:`/post/${post._id}`,
+        //     // content:res.data.deletedpost.content,
+        //     // image: res.data.deletedpost.images[0].data
+        // }
 
-        dispatch(removeNotify({msg, socket}))
+        // dispatch(removeNotify({msg, socket}))
     }catch(error){
         dispatch({
             type:DELETE_POST_FAIL,
@@ -177,13 +182,16 @@ export const likePost = (post, socket) => async (dispatch, getState)=>{
         payload:{loading:true}
     })
     const {userLogin:{userInfo}} = getState()
+    const {getposts:{posts}} = getState()
+
 
     try{
         const res = await axios.patch(`/api/post/${post._id}/like`,null, {
             headers:{authorization:`Bearer ${userInfo.token}`}
         })
         
-        socket.emit('likePost', res.data.likedpost)
+        // socket.emit('likePost', res.data.likedpost)
+        const newposts = posts.map(item =>(item._id ===post._id? res.data.likedpost:item))
 
 
 
@@ -204,18 +212,23 @@ export const likePost = (post, socket) => async (dispatch, getState)=>{
 }
 
 export const unlikePost = (post, socket) => async (dispatch, getState)=>{
+
     dispatch({
         type:UNLIKE_POST_REQUEST,
         payload:{loading:true}
     })
 
     const {userLogin:{userInfo}} = getState()
+    const {getposts:{posts}} = getState()
+
     try{
         const res = await axios.patch(`/api/post/${post._id}/unlike`,null, {
             headers:{authorization:`Bearer ${userInfo.token}`}
         })
 
-        socket.emit('unlikePost', res.data.unlikedpost)
+        // socket.emit('unlikePost', res.data.unlikedpost)
+        const newposts = posts.map(item =>(item._id ===post._id? res.data.unlikedpost:item))
+
 
         dispatch({
             type:UNLIKE_POST_SUCCESS,

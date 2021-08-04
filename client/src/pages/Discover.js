@@ -23,7 +23,7 @@ function Discover({props}) {
     const dispatch = useDispatch();    
 
     const discoverpost = useSelector(state => state.discoverpost)
-    const {discoverpost:discoveredpost, loading, result, firstLoad} = discoverpost;
+    const {posts:discoveredpost, loading, result, firstLoad} = discoverpost;
 
     useEffect(() => {
         if(!firstLoad){

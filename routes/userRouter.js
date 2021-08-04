@@ -23,6 +23,7 @@ userRouter.post('/login', async (req, res)=>{
         if(!isMatch) return res.status(400).json({message:"Password is incorrect."})
 
         const token = generateToken(user)
+
         res.status(200)
             // .json({
             //     message:"login Success",
@@ -37,7 +38,8 @@ userRouter.post('/login', async (req, res)=>{
                     ...user._doc,
                     password:''
                 },
-                token
+                token,
+                msg:"Login Success"
             })
 
     }catch(err){
@@ -62,6 +64,7 @@ userRouter.post('/register', async(req, res)=>{
         const newUser = new User({fullname, username:newUserName, email, password:passwordHash, gender})
 
         const createdUser = await newUser.save()
+        const token = generateToken({id:createdUser._id})
 
         res.status(200)
             // .json({
@@ -73,11 +76,12 @@ userRouter.post('/register', async(req, res)=>{
             // }
             // })
             .send({
-                token:generateToken({id:createdUser._id}),
+                token,
                 user:{
                     ...newUser._doc,
                     password:''
-                }
+                },
+                msg:"Register Success"
             })
  
     }catch(err){
@@ -91,7 +95,7 @@ userRouter.get('/:id',auth,  async(req, res)=>{
                                 .select('-password')
                                 .populate("followers following", "-password")
         if(user){
-            res.send(user)
+            res.send({user})
         }else{
             res.status(404).send({message:'User Not Found.'})
         }
@@ -114,8 +118,7 @@ userRouter.put('/:id', auth, async(req, res)=>{
         }
         const updatedUser = await user.save()
         res.send({
-            user:updatedUser,
-            token:generateToken(updatedUser)
+            user:updatedUser
         })
     }catch(err){
         return res.status(500).json({message:err.message})
@@ -137,12 +140,11 @@ userRouter.patch('/:id/follow', auth, async(req, res)=>{
         }, {new: true}).populate("followers following", "-password")
         
         await User.findOneAndUpdate({_id: req.params.id}, { 
-            $push: {'followers':req.body}
+            $push: {'followers':req.body._id}
         }, {new: true})
 
         res.send({
-            user : newUser,
-            token:generateToken(newUser)
+            newUser
         })
 
     } catch (err) {
@@ -164,8 +166,7 @@ userRouter.patch('/:id/unfollow', auth, async(req, res)=>{
         }, {new:true})
 
         res.json({
-            user:newUser,
-            token:generateToken(newUser)
+            newUser
         })
 
     }catch(err){
@@ -176,16 +177,15 @@ userRouter.patch('/:id/unfollow', auth, async(req, res)=>{
 userRouter.get('/suggestion/:id', auth, async(req, res)=>{
     try{
         const user = await User.findOne({_id:req.user.id})
-        const newArr=[...user.following, req.user.id]
+        const newArr=[...user.following, user._id]
 
         const num = req.query.num || 10
 
         const users = await User.aggregate([
-            {$match:{_id:{$nin:newArr}}},
+            { $match: { _id: { $nin: newArr } } },
             {$sample:{size:Number(num)}},
             {$lookup:{from:'User', localField:'followers', foreignField:'_id', as:'followers'}},
             {$lookup:{from:'User', localField:'following', foreignField:'_id', as:'following'}},
-
         ]).project("-password")
 
         res.json({

@@ -35,7 +35,7 @@ function RightSideBar() {
                     {
                         suggestion.users.map(user=>(
                             <UserCard key={user._id}  user={user}>
-                                <FollowBtn user={user}/>
+                                <FollowBtn user={user} userId={user._id}/>
                             </UserCard>
                         ))
                     }
