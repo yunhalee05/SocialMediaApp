@@ -23,6 +23,8 @@ export const createComment = ({newcomment, post, socket})=> async(dispatch, getS
             payload:newpost
         })
 
+        socket.emit('createComment', newpost)
+
 
 
     }catch(error){
@@ -158,7 +160,7 @@ export const deleteComment= ({post, comment, socket})=>async(dispatch, getState)
 
         })
 
-        // socket.emit('deleteComment', newpost)
+        socket.emit('deleteComment', newpost)
 
 
         dispatch({

@@ -3,9 +3,10 @@ let users = []
 const SocketServer = (socket) =>{
 
     //Connect -Disconnect
-    socket.on('joinUser', id=>{
-        users.push({id, socketId:socket.id})
+    socket.on('joinUser', user=>{
+        users.push({id:user._id, socketId:socket.id, followers:user.followers})
         // console.log({users})
+        console.log({users})
     } )
 
     socket.on('disconnect', ()=>{
@@ -71,6 +72,20 @@ const SocketServer = (socket) =>{
         const user = users.find(user=>user.id ===data.user._id)
         user &&  socket.to(`${user.socketId}`).emit('unfollowToClient', data)
     })
+
+    // Notification
+    socket.on('createNotify', msg=>{
+        const client = users.find(user=>msg.recipients.includes(user.id))
+        console.log(msg)
+        client && socket.to(`${client.socketId}`).emit('createNotifyToClient', msg)
+    })
+
+    socket.on('removeNotify', msg=>{
+        const client = users.find(user=>msg.recipients.includes(user.id))
+        // console.log(client)
+        client && socket.to(`${client.socketId}`).emit('removeNotifyToClient', msg)
+    })
+
 
     
 }

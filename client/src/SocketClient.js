@@ -3,9 +3,10 @@ import io from 'socket.io-client'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { SOCKET } from './_constants/globalConstants'
-import { UPDATE_POST_SUCCESS } from './_constants/postConstants'
+import { LIKE_POST_SUCCESS, UNLIKE_POST_SUCCESS, UPDATE_POST_SUCCESS } from './_constants/postConstants'
 import { USER_LOGIN_SUCCESS } from './_constants/userConstants'
 import { USER_FOLLOW_PROFILE, USER_UNFOLLOW_PROFILE, USER_UPDATE_PROFILE_SUCCESS } from './_constants/profileConstants'
+import { CREATE_NOTIFY_SUCCESS, REMOVE_NOTIFY_SUCCESS } from './_constants/notifyConstants'
 
 
 function SocketClient() {
@@ -13,34 +14,31 @@ function SocketClient() {
     const userLogin = useSelector(state => state.userLogin)
     const {userInfo} = userLogin
 
-    // const socket = useSelector(state => state.socket)
     const dispatch = useDispatch()
 
     const socket = io();
 
     useEffect(() => {
         dispatch({
-            type:SOCKET,
-            payload:socket
+          type:SOCKET,
+          payload:socket
         })
-
-        return () =>socket.close()
-    }, [socket, dispatch])
-
+        return ()=>socket.close()
+      }, [dispatch, socket])
+    
     //JoinUser
     useEffect(() => {
-        socket.emit('joinUser', userInfo.user._id)
+        socket.emit('joinUser', userInfo.user)
       }, [socket, userInfo.user])
     
     //likes
     useEffect(() => {
         socket.on('likeToClient', likedpost=>{
             dispatch({
-                type:UPDATE_POST_SUCCESS,
+                type:LIKE_POST_SUCCESS,
                 payload:likedpost
             })
         })
-
         return () =>socket.off('likeToClient')
       }, [socket, dispatch])
 
@@ -48,10 +46,11 @@ function SocketClient() {
         socket.on('unlikeToClient', unlikedpost=>{
             console.log(unlikedpost)
             dispatch({
-                type:UPDATE_POST_SUCCESS,
+                type:UNLIKE_POST_SUCCESS,
                 payload:unlikedpost
             })
         })
+        return () =>socket.off('likeToClient')
         }, [socket,dispatch])
     
 
@@ -59,29 +58,28 @@ function SocketClient() {
     //Comments
     useEffect(() => {
         socket.on('createCommentToClient', newpost=>{
-            console.log(newpost)
             dispatch({
                 type:UPDATE_POST_SUCCESS,
                 payload:newpost
             })
         })
-        }, [socket,dispatch])
+        return socket.off('createCommentToClient')
+    }, [socket,dispatch])
     
     useEffect(() => {
         socket.on('deleteCommentToClient', newpost=>{
-            console.log(newpost)
             dispatch({
                 type:UPDATE_POST_SUCCESS,
                 payload:newpost
             })
         })
-        }, [socket,dispatch])
+        return () =>socket.off('deleteCommentToClient')
+    }, [socket,dispatch])
     
     // Follow
 
     useEffect(() => {
         socket.on('followToClient', data =>{
-            console.log(data)
             dispatch({
                 type:USER_LOGIN_SUCCESS,
                 payload:data
@@ -95,12 +93,11 @@ function SocketClient() {
                 payload:data
             })
         })
-        
+        return () => socket.off('followToClient')
     }, [socket, dispatch, userInfo])
 
     useEffect(() => {
         socket.on('unfollowToClient', data =>{
-            console.log(data)
 
             dispatch({
                 type:USER_LOGIN_SUCCESS,
@@ -115,8 +112,29 @@ function SocketClient() {
                 payload:data
             })
         })
+        return () =>socket.off('unfollowToClient')
     }, [socket, dispatch, userInfo])
 
+    //Notification
+    useEffect(() => {
+        socket.on('createNotifyToClient', msg=>{
+            dispatch({
+                type:CREATE_NOTIFY_SUCCESS,
+                payload:msg
+            })
+        })
+        return () => socket.off('removeNotifyToClient')
+    }, [socket, dispatch])
+
+    useEffect(() => {
+        socket.on('removeNotifyToClient', msg=>{
+            dispatch({
+                type:REMOVE_NOTIFY_SUCCESS,
+                payload:msg
+            })
+        })
+        return () => socket.off('removeNotifyToClient')
+    }, [socket, dispatch])
 
     return <> </>
 

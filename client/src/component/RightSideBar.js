@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import UserCard from './UserCard'
 import LoadIcon from '../images/loading.gif'
@@ -13,6 +13,14 @@ function RightSideBar() {
     const suggestion = useSelector(state => state.suggestion)
 
     const dispatch = useDispatch()
+
+    
+    useEffect(() => {
+        if(userInfo.token){
+            dispatch(getSuggestions())
+        }
+    }, [userInfo.token, dispatch])
+
 
     return (
         <div className="mt-3">

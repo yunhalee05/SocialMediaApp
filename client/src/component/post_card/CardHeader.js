@@ -10,7 +10,6 @@ function CardHeader({post}) {
     const userLogin = useSelector(state => state.userLogin)
     const {userInfo} = userLogin
 
-    const socket = useSelector(state => state.socket)
 
     const dispatch = useDispatch()
     const history = useHistory()
@@ -31,7 +30,7 @@ function CardHeader({post}) {
     }
     const handleDeletePost= () =>{
         if(window.confirm("Are you wure want to delete this post?")){
-            dispatch(deletePost({post,socket}))
+            dispatch(deletePost({post}))
         }
 
     }

@@ -7,18 +7,22 @@ import { ALERT, THEME } from '../_constants/globalConstants'
 import Avatar from './Avatar'
 import LoadIcon from '../images/loading.gif'
 import UserCard from './UserCard'
+import NotifyModal from './NotifyModal'
+import { getNotify } from '../_actions/NotifyActions'
+import { getSuggestions } from '../_actions/suggestionActions'
 
 function Haader() {
     const navLinks = [
         { label: 'Home', icon: 'home', path: '/'},
         { label: 'Message', icon: 'near_me', path: '/message'},
         { label: 'Discover', icon: 'explore', path: '/discover'},
-        {label:'Notify', icon:'favorite', path:'/notify'},
+        // {label:'Notify', icon:'favorite', path:'/notify'},
     ]
 
     const userLogin = useSelector(state => state.userLogin)
     const {userInfo, loading, error} = userLogin;
     const {theme} = useSelector(state => state.theme)
+    const notify = useSelector(state => state.notify)
 
 
     const [search, setSearch] = useState('')
@@ -26,6 +30,13 @@ function Haader() {
     const [load, setLoad] = useState(false)
 
     const dispatch = useDispatch()
+
+
+    useEffect(() => {
+        dispatch(getNotify())
+    }, [dispatch])
+
+
 
     useEffect(() => {
         if(search && userInfo.token){
@@ -97,6 +108,26 @@ function Haader() {
                                 </li>
                             ))
                         }
+
+
+                        <li className="nav-item dropdown" style={{opacity:1}}>
+                            <span className="nav-link position-relative" id="navbarDropdown"
+                            role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span className="material-icons" style={{color:notify.notify.length>0? 'crimson':''}}>
+                                    favorite
+                                </span>
+
+                                {
+                                    notify.notify.length>0 &&
+                                        <span className="notify_length">{notify.notify.length}</span>
+                                }
+                            </span>
+
+                            <div className="dropdown-menu" aria-labelledby="navbarDropdown" style={{transform:'translateX(75px)'}}>
+                                <NotifyModal/>
+                            </div>
+                        </li>
+
 
                         <li className="nav-item dropdown" style={{opacity: 1}} >
                             <span className="nav-link dropdown-toggle" id="navbarDropdown" 

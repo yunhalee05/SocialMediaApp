@@ -3,10 +3,9 @@ import { CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_SUCCESS, DELETE_POST
 import { USER_LOGIN_SUCCESS } from "../_constants/userConstants"
 import { createNotify, removeNotify } from "./NotifyActions"
 
-export const createPost = ({content, Images, socket})=> async(dispatch, getState)=>{
+export const createPost = ({content, Images})=> async(dispatch, getState)=>{
     const {userLogin:{userInfo}} = getState()
-    const {getposts:{posts}} = getState()
-
+ 
     dispatch({
         type:CREATE_POST_REQUEST,
         payload:{loading:true}
@@ -37,7 +36,6 @@ export const createPost = ({content, Images, socket})=> async(dispatch, getState
         })
 
 
-        // console.log(res)
         // // Notify
         const msg={
             id:res.data.newPost._id,
@@ -48,7 +46,7 @@ export const createPost = ({content, Images, socket})=> async(dispatch, getState
             image: imgArr[0].data
         }
 
-        dispatch(createNotify({msg, socket}))
+        dispatch(createNotify({msg}))
 
     }catch(error){
         dispatch({
@@ -135,7 +133,7 @@ export const updatePost = ({content, Images, editstatus}) =>async(dispatch, getS
     }
 }
 
-export const deletePost = ({post,socket}) => async (dispatch, getState)=>{
+export const deletePost = ({post}) => async (dispatch, getState)=>{
     dispatch({
         type:DELETE_POST_REQUEST,
         payload:{loading:true}
@@ -154,16 +152,16 @@ export const deletePost = ({post,socket}) => async (dispatch, getState)=>{
 
         // console.log(res)
 
-        // const msg={
-        //     id:post._id,
-        //     text:'deleted a post.',
-        //     recipients:res.data.deletedpost.user.followers,
-        //     url:`/post/${post._id}`,
-        //     // content:res.data.deletedpost.content,
-        //     // image: res.data.deletedpost.images[0].data
-        // }
+        const msg={
+            id:post._id,
+            text:'deleted a post.',
+            recipients:res.data.deletedpost.user.followers,
+            url:`/post/${post._id}`,
+            // content:res.data.deletedpost.content,
+            // image: res.data.deletedpost.images[0].data
+        }
 
-        // dispatch(removeNotify({msg, socket}))
+        dispatch(removeNotify({msg}))
     }catch(error){
         dispatch({
             type:DELETE_POST_FAIL,
@@ -182,7 +180,6 @@ export const likePost = (post, socket) => async (dispatch, getState)=>{
         payload:{loading:true}
     })
     const {userLogin:{userInfo}} = getState()
-    const {getposts:{posts}} = getState()
 
 
     try{
@@ -190,10 +187,7 @@ export const likePost = (post, socket) => async (dispatch, getState)=>{
             headers:{authorization:`Bearer ${userInfo.token}`}
         })
         
-        // socket.emit('likePost', res.data.likedpost)
-        const newposts = posts.map(item =>(item._id ===post._id? res.data.likedpost:item))
-
-
+        socket.emit('likePost', res.data.likedpost)
 
         dispatch({
             type:LIKE_POST_SUCCESS,
@@ -219,16 +213,13 @@ export const unlikePost = (post, socket) => async (dispatch, getState)=>{
     })
 
     const {userLogin:{userInfo}} = getState()
-    const {getposts:{posts}} = getState()
 
     try{
         const res = await axios.patch(`/api/post/${post._id}/unlike`,null, {
             headers:{authorization:`Bearer ${userInfo.token}`}
         })
 
-        // socket.emit('unlikePost', res.data.unlikedpost)
-        const newposts = posts.map(item =>(item._id ===post._id? res.data.unlikedpost:item))
-
+        socket.emit('unlikePost', res.data.unlikedpost)
 
         dispatch({
             type:UNLIKE_POST_SUCCESS,

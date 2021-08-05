@@ -1,5 +1,6 @@
 import{combineReducers, createStore, compose, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk'
+import { notifyReducer } from './notifyReducers';
 import { getSavedPostReducer, postCreateReducer, postDeleteReducer, postDetailReducer, postDiscoverReducer, postGetProfileReducer, postGetReducer, postLikeReducer, postSaveReducer, postUnlikeReducer, postUnsaveReducer, postUpdateReducer } from './postReducers';
 import { getUserProfileReducer, userUpdateProfileReducer } from './profileReducers';
 import socketReducer from './socketReducers';
@@ -42,6 +43,8 @@ const reducer = combineReducers({
     savepost:postSaveReducer,
     // unsavepost:postUnsaveReducer,
     socket:socketReducer,
+    notify:notifyReducer,
+    
 
 
     

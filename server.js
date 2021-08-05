@@ -1,7 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 require('dotenv').config()
-const {User} = require('./models/User')
+// const {User} = require('./models/User')
 const app = express();
 const path = require('path')
 const cookieParser = require('cookie-parser')

@@ -1,4 +1,4 @@
-import  {BrowserRouter,Route} from 'react-router-dom'
+import  {BrowserRouter ,Route} from 'react-router-dom'
 import React, { useEffect, useState } from 'react';
 import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
@@ -11,23 +11,18 @@ import Message from './pages/Message';
 import Profile from './pages/Profile';
 import StatusModal from './component/StatusModal';
 import Post from './pages/Post';
-import io from 'socket.io-client'
-import { SOCKET } from './_constants/globalConstants';
 import SocketClient from './SocketClient';
-import { getProfileUser } from './_actions/profileActions';
-import { getUser } from './_actions/userActions';
+import { getSuggestions } from './_actions/suggestionActions';
+import { io } from 'socket.io-client';
+import { SOCKET } from './_constants/globalConstants';
+import PrivateRouter from './customRouter/PrivateRouter';
 
 
 function App() {
+  
   const userLogin = useSelector(state => state.userLogin)
   const {userInfo} = userLogin
-
   const status = useSelector(state => state.status)
-
-  const dispatch = useDispatch()
-  
-
-
 
 
   return (
@@ -37,15 +32,15 @@ function App() {
         <div className="main">
           {userInfo && <Header/>}
           {status && <StatusModal/>}
-          {/* {userInfo && <SocketClient/>} */}
-          <Route exact path="/post/:id" component={Post}/>
-          <Route exact path="/profile/:id" component={Profile}/>
-          <Route exact path="/message" component={Message}/>
-          <Route exact path="/discover" component={Discover}/>
-          <Route exact path="/notify" component={Notify}/>
+          {userInfo && <SocketClient/>}
+          <PrivateRouter exact path="/post/:id" component={Post}/>
+          <PrivateRouter exact path="/profile/:id" component={Profile}/>
+          <PrivateRouter exact path="/message" component={Message}/>
+          <PrivateRouter exact path="/discover" component={Discover}/>
+          <PrivateRouter exact path="/notify" component={Notify}/>
           <Route exact path="/register" component={RegisterPage}/>
           <Route exact path="/login" component={LoginPage}/>
-          <Route exact path="/home" component={HomePage}/>
+          <Route exact path="/home" component={userInfo? HomePage: LoginPage}/>
           <Route exact path="/" component={LoginPage}/>
         </div>
       </div>
