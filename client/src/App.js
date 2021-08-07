@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Header from './component/Haader'
 import Notify from './pages/Notify';
 import Discover from './pages/Discover';
-import Message from './pages/Message';
+import MessagePage from './pages/MessagePage';
 import Profile from './pages/Profile';
 import StatusModal from './component/StatusModal';
 import Post from './pages/Post';
@@ -16,6 +16,7 @@ import { getSuggestions } from './_actions/suggestionActions';
 import { io } from 'socket.io-client';
 import { SOCKET } from './_constants/globalConstants';
 import PrivateRouter from './customRouter/PrivateRouter';
+import Message from './component/messages/Message';
 
 
 function App() {
@@ -35,7 +36,8 @@ function App() {
           {userInfo && <SocketClient/>}
           <PrivateRouter exact path="/post/:id" component={Post}/>
           <PrivateRouter exact path="/profile/:id" component={Profile}/>
-          <PrivateRouter exact path="/message" component={Message}/>
+          <PrivateRouter exact path="/message" component={MessagePage}/>
+          <PrivateRouter exact path="/message/:id" component={Message}/>
           <PrivateRouter exact path="/discover" component={Discover}/>
           <PrivateRouter exact path="/notify" component={Notify}/>
           <Route exact path="/register" component={RegisterPage}/>

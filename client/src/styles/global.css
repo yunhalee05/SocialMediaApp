@@ -65,3 +65,9 @@ img{
 
 /* -------- PostThumb ---------- */
 @import url("./post_thumb.css");
+
+/* -------- Message ---------- */
+@import url("./messages.css");
+
+/* -------- Icon ---------- */
+@import url("./icon.css");

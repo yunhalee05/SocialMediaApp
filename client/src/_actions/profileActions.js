@@ -72,7 +72,7 @@ export const updateUserProfile = (user ) =>async (dispatch, getState)=>{
 export const followUserProfile = (user,socket)=> async(dispatch, getState)=>{
 
     const {userLogin: {userInfo}} = getState()
-    let newUser =  {...user, followers:[...user.followers, userInfo.user] }
+    // let newUser =  {...user, followers:[...user.followers, userInfo.user] }
 
     try{
         
@@ -80,7 +80,7 @@ export const followUserProfile = (user,socket)=> async(dispatch, getState)=>{
             headers:{authorization:`Bearer ${userInfo?.token}`}
         } )
 
-        // socket.emit('follow',res.data.user)
+        socket.emit('follow', res.data.followedUser)
 
 
         dispatch({
@@ -95,9 +95,7 @@ export const followUserProfile = (user,socket)=> async(dispatch, getState)=>{
             }
         })
         
-        // localStorage.removeItem('userInfo')
         localStorage.setItem('userInfo',JSON.stringify({token:userInfo.token, user:res.data.newUser}))
-        console.log(res.data.newUser)
 
     }catch(err){
         dispatch({
@@ -112,7 +110,7 @@ export const followUserProfile = (user,socket)=> async(dispatch, getState)=>{
 export const unfollowUserProfile = (user,socket)=> async(dispatch, getState)=>{
 
     const {userLogin: {userInfo}} = getState()
-    let newUser =  {...user, followers: user.followers.filter(x=>x._id !==userInfo.user._id) }
+    // let newUser =  {...user, followers: user.followers.filter(x=>x._id !==userInfo.user._id) }
 
 
     try{
@@ -120,8 +118,8 @@ export const unfollowUserProfile = (user,socket)=> async(dispatch, getState)=>{
         const res = await axios.patch(`/api/users/${user._id}/unfollow`,userInfo.user,{
             headers:{authorization:`Bearer ${userInfo?.token}`}
         } )
-        // socket.emit('unfollow',data)
 
+        socket.emit('unfollow', res.data.unfollowedUser)
 
 
         dispatch({
@@ -136,9 +134,7 @@ export const unfollowUserProfile = (user,socket)=> async(dispatch, getState)=>{
             }
         })
 
-        // localStorage.removeItem('userInfo')
         localStorage.setItem('userInfo',JSON.stringify({token:userInfo.token, user:res.data.newUser}))
-        console.log(res.data.newUser)
 
     }catch(err){
         dispatch({

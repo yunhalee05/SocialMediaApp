@@ -139,12 +139,13 @@ userRouter.patch('/:id/follow', auth, async(req, res)=>{
             $push: {following: req.params.id}
         }, {new: true}).populate("followers following", "-password")
         
-        await User.findOneAndUpdate({_id: req.params.id}, { 
+        const followedUser = await User.findOneAndUpdate({_id: req.params.id}, { 
             $push: {'followers':req.body._id}
-        }, {new: true})
+        }, {new: true}).populate("followers following", "avatar username fullname followers following")
 
         res.send({
-            newUser
+            newUser,
+            followedUser
         })
 
     } catch (err) {
@@ -161,12 +162,13 @@ userRouter.patch('/:id/unfollow', auth, async(req, res)=>{
             $pull: {following: req.params.id}
         }, {new: true}).populate("followers following", "-password")
 
-        await User.findOneAndUpdate({_id:req.params.id}, {
+        const unfollowedUser =  await User.findOneAndUpdate({_id:req.params.id}, {
             $pull:{'followers':req.body._id}
-        }, {new:true})
+        }, {new:true}).populate("followers following", "avatar username fullname followers following")
 
         res.json({
-            newUser
+            newUser,
+            unfollowedUser
         })
 
     }catch(err){

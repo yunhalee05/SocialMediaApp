@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { createComment } from '../../_actions/commentActions'
+import Icons from '../Icons'
 
 function InputComment({children,post , onReply, setOnReply}) {
 
@@ -42,6 +43,11 @@ function InputComment({children,post , onReply, setOnReply}) {
         <form className="card-footer comment_input" onSubmit={handleSubmit} >
             {children}
             <input type="text" placeholder="Add your comments ..." value={content} onChange={e=>setContent(e.target.value)} style={{filter: theme? 'invert(1)': 'invert(0)', color: theme? 'white':'#111', background:theme? 'rgba(0,0,0,.03)':''}}/>
+           
+            <div className="d-flex">
+                <div className="flex-fill"></div>
+                <Icons setContent={setContent} content={content} />
+            </div>
 
             <button type="submit" className="postBtn">
                 Post

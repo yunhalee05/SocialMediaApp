@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { createPost, updatePost } from '../_actions/postActions'
 import { ALERT, EDITSTATUS, STATUS } from '../_constants/globalConstants'
 import Alert from './Alert'
+import Icons from './Icons'
 
 function StatusModal() {
 
@@ -30,8 +31,11 @@ function StatusModal() {
 
         files.forEach(file=>{
             if(!file) return err = "File doesn't exist."
-            if(file.type !== 'image/jpeg' && file.type !=='image/png'){
-                return err = "Image format is incorrect."
+            // if(file.size >1024*1024*5){
+            //     return err = "The image largest is 5mb."
+            // }
+            if(file.type !== 'image/jpeg' && file.type !=='image/png' && file.type !== 'video/mp4' && file.type !== 'video/avi' && file.type !== 'video/wmv' && file.type !=='video/mov'){
+                return err = "File format is incorrect."
             }
             return newImages.push(file)
         })
@@ -39,7 +43,6 @@ function StatusModal() {
         if(err) dispatch({type:ALERT, payload:{error:err}})
 
         setImages([...Images, ...newImages])
-        
     }
 
     const deleteImage=(index)=>{
@@ -117,6 +120,20 @@ function StatusModal() {
         }
     }, [editstatus])
 
+    const imageShow=(src) =>{
+        return (
+            <img src={src} alt="images" className="img-thumbnail" 
+            style={{filter:  theme? 'invert(1)' : 'invert(0)'}}/>
+        )
+    }
+
+    const videoShow=(src) =>{
+        return (
+            <video src={src} alt="images" className="img-thumbnail" 
+            style={{filter:  theme? 'invert(1)' : 'invert(0)'}}/>
+        )
+    }
+
     return (
         <div className="status_modal">
             <form onSubmit={handleSubmit}>
@@ -127,17 +144,42 @@ function StatusModal() {
 
                 <div className="status_body">
                     <textarea name="content" value = {content} placeholder={`${userInfo.user.username}, what are you thinking?`} onChange={(e)=>setcontent(e.target.value)} />
-
+                    
+                    <div className="d-flex">
+                        <div className="flex-fill"></div>
+                        <Icons setContent={setcontent} content={content} />
+                    </div>
+                    
                     <div className="show_images">
                         {
                             Images && Images.map((image, index)=>(
                                 <div key={index} id="file_img">
-                                    <img src={image.camera
+                                    {/* <img src={image.camera
                                             ? image.camera 
                                             : image.data 
                                             ? image.data
                                             : URL.createObjectURL(image)} 
-                                    alt="images" className="img-thumbnail rounded" style={{filter:theme? 'invert(1)':'inver(0)'}} />
+                                    alt="images" className="img-thumbnail rounded" style={{filter:theme? 'invert(1)':'inver(0)'}} /> */}
+
+                                    {
+                                        image.camera 
+                                        ? imageShow(image.camera)
+                                        : image.data
+                                            ? <>
+                                                {
+                                                    image.data.match(/video/i)
+                                                    ? videoShow(image.data)
+                                                    : imageShow(image.data)
+                                                }
+                                            </>
+                                            : <>
+                                                {
+                                                    image.type.match(/video/i)
+                                                    ? videoShow(URL.createObjectURL(image))
+                                                    : imageShow(URL.createObjectURL(image))
+                                                }
+                                            </>
+                                    }
                                     <span onClick={()=>deleteImage(index)}>&times;</span>
                                 </div>
                             ))
@@ -161,7 +203,7 @@ function StatusModal() {
                                 <i className="fas fa-camera" onClick={handleStream}></i>
                                 <div className="file_upload">
                                     <i className="fas fa-image"></i>
-                                    <input type="file" name="file" id="file_up" multiple accept="image/*" onChange={handleChangeImages}/>
+                                    <input type="file" name="file" id="file_up" multiple accept="image/*, video/*" onChange={handleChangeImages}/>
                                 </div>
                             </>
                         }

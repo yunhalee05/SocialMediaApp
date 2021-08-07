@@ -1,5 +1,6 @@
 import{combineReducers, createStore, compose, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk'
+import { messageReducer } from './messageReducers';
 import { notifyReducer } from './notifyReducers';
 import { getSavedPostReducer, postCreateReducer, postDeleteReducer, postDetailReducer, postDiscoverReducer, postGetProfileReducer, postGetReducer, postLikeReducer, postSaveReducer, postUnlikeReducer, postUnsaveReducer, postUpdateReducer } from './postReducers';
 import { getUserProfileReducer, userUpdateProfileReducer } from './profileReducers';
@@ -8,7 +9,7 @@ import { editstatusReducer, statusReducer } from './statusReducers';
 import { suggestionReducer } from './suggestionReducers';
 import { themeReducer } from './themeReducers';
 import { alertReducer, userLoginReducer, userRegisterReducer, userSuggestionReducer } from './userReducers';
-
+import { onlineReducer } from './onlineCheckReducers'
 
 const initialState={
     userLogin:{
@@ -44,6 +45,9 @@ const reducer = combineReducers({
     // unsavepost:postUnsaveReducer,
     socket:socketReducer,
     notify:notifyReducer,
+    message:messageReducer,
+    online:onlineReducer,
+
     
 
 

@@ -16,9 +16,9 @@ export const createPost = ({content, Images})=> async(dispatch, getState)=>{
             for(const item of Images){
                 const bodyFormData = new FormData()
                 if(item.camera){
-                    bodyFormData.append("image", item.camera)
+                    bodyFormData.append("file", item.camera)
                 }else{
-                    bodyFormData.append("image", item)
+                    bodyFormData.append("file", item)
                 }
                 const data = await axios.post('/api/postuploads', bodyFormData,{
                     headers:{'Content-Type' : 'multipart/form-data', authorization:`Bearer ${userInfo.token}`}
@@ -104,9 +104,9 @@ export const updatePost = ({content, Images, editstatus}) =>async(dispatch, getS
             for(const item of imgNewUrl){
                 const bodyFormData = new FormData()
                 if(item.camera){
-                    bodyFormData.append("image", item.camera)
+                    bodyFormData.append("file", item.camera)
                 }else{
-                    bodyFormData.append("image", item)
+                    bodyFormData.append("file", item)
                 }
                 const data = await axios.post('/api/postuploads', bodyFormData,{
                     headers:{'Content-Type' : 'multipart/form-data', authorization:`Bearer ${userInfo.token}`}

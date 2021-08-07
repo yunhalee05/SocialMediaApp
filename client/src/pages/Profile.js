@@ -118,7 +118,7 @@ function Profile(props) {
                                 <Link key={post._id} to={`/post/${post._id}`}>
                                     <div className="post_thumb_display">
                                         {
-                                            post.images[0].config.url.match(/video/i)
+                                            post.images[0]?.data.match(/video/i)||post.images[0]?.data.match(/mp4/i)||post.images[0]?.data.match(/avi/i)||post.images[0]?.data.match(/mov/i)||post.images[0]?.data.match(/wmv/i)
                                             ? <video controls src={post.images[0].data} alt={post.images[0].data}></video>
                                             : <img src={post.images[0].data} alt={post.images[0].data}></img>
                                         }

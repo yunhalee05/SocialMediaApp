@@ -6,10 +6,19 @@ const SocketServer = (socket) =>{
     socket.on('joinUser', user=>{
         users.push({id:user._id, socketId:socket.id, followers:user.followers})
         // console.log({users})
-        console.log({users})
+        // console.log({users})
     } )
 
     socket.on('disconnect', ()=>{
+        const data = users.find(user=>user.socketId === socket.id)
+        if(data){
+            const clients = users.filter(user=>data.followers.find(item=>item._id ===user.id))
+            if(clients.length>0){
+                clients.forEach(client=>{
+                    socket.to(`${client.socketId}`).emit('checkUserOffline', data.id)
+                })
+            }
+        }
         users = users.filter(user=>user.socketId !== socket.id)
         // console.log({users})
     })
@@ -63,13 +72,15 @@ const SocketServer = (socket) =>{
 
     // Follow
     socket.on('follow', data=>{
-        const user = users.find(user=>user.id ===data.user._id)
+        const user = users.find(user=>user.id ===data._id)
         // console.log(user)
+        // console.log(data)
         user &&  socket.to(`${user.socketId}`).emit('followToClient', data)
     })
 
     socket.on('unfollow', data=>{
-        const user = users.find(user=>user.id ===data.user._id)
+        const user = users.find(user=>user.id ===data._id)
+        // console.log(data)
         user &&  socket.to(`${user.socketId}`).emit('unfollowToClient', data)
     })
 
@@ -86,6 +97,27 @@ const SocketServer = (socket) =>{
         client && socket.to(`${client.socketId}`).emit('removeNotifyToClient', msg)
     })
 
+
+    //Message
+    socket.on('addMessage', msg=>{
+        const user = users.find(user=>msg.recipient === user.id)
+        user && socket.to(`${user.socketId}`).emit('addMessageToClient', msg)
+    })
+
+    //Check User Online/Offline
+    socket.on('checkUserOnline', data=>{
+        // console.log(user)
+        const following = users.filter(user=>data.following.find(item=>item._id ===user.id))
+
+        socket.emit('checkUserOnlineToMe', following)
+
+        const clients = users.filter(user=>data.followers.find(item => item._id ===user.id))
+        if(clients.length >0){
+            clients.forEach(client=>{
+                socket.to(`${client.socketId}`).emit('checkUserOnlineToClient', data._id)
+            })
+        }
+    })
 
     
 }

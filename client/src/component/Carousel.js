@@ -25,7 +25,7 @@ function Carousel({images, id}) {
                     images.map((img, index) => (
                         <div key={index} className={`carousel-item ${isActive(index)}`}>
                             {
-                                img.data.match(/video/i)
+                                img.data.match(/video/i)||img.data.match(/mp4/i)||img.data.match(/avi/i)||img.data.match(/mov/i)||img.data.match(/wmv/i)
                                 ? <video controls src={img.data} className="d-block w-100" alt={img.data}
                                 style={{filter: theme ? 'invert(1)' : 'invert(0)'}} />
 
