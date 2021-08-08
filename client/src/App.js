@@ -17,6 +17,9 @@ import { io } from 'socket.io-client';
 import { SOCKET } from './_constants/globalConstants';
 import PrivateRouter from './customRouter/PrivateRouter';
 import Message from './component/messages/Message';
+import CallModal from './component/messages/CallModal';
+import Peer from 'peerjs'
+import { PEER } from './_constants/callConstants';
 
 
 function App() {
@@ -24,7 +27,34 @@ function App() {
   const userLogin = useSelector(state => state.userLogin)
   const {userInfo} = userLogin
   const status = useSelector(state => state.status)
+  const call = useSelector(state => state.call)
 
+  const socket = useSelector(state => state.socket)
+
+  const dispatch = useDispatch()
+
+
+
+  useEffect(() => {
+    const socket = io();
+
+      dispatch({
+        type:SOCKET,
+        payload:socket
+      })
+      return ()=>socket.close()
+    }, [dispatch])
+
+    
+  useEffect(() => {
+    const newPeer = new Peer(undefined,{
+      host:'/', port:'3001'
+    })
+    dispatch({
+      type:PEER,
+      payload:newPeer
+    })
+  }, [])
 
   return (
     <BrowserRouter>
@@ -33,7 +63,8 @@ function App() {
         <div className="main">
           {userInfo && <Header/>}
           {status && <StatusModal/>}
-          {userInfo && <SocketClient/>}
+          {(userInfo && socket.io) && <SocketClient/>}
+          {call && <CallModal/>}
           <PrivateRouter exact path="/post/:id" component={Post}/>
           <PrivateRouter exact path="/profile/:id" component={Profile}/>
           <PrivateRouter exact path="/message" component={MessagePage}/>

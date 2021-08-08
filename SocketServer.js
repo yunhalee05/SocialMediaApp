@@ -5,8 +5,7 @@ const SocketServer = (socket) =>{
     //Connect -Disconnect
     socket.on('joinUser', user=>{
         users.push({id:user._id, socketId:socket.id, followers:user.followers})
-        // console.log({users})
-        // console.log({users})
+        console.log({users})
     } )
 
     socket.on('disconnect', ()=>{
@@ -17,6 +16,14 @@ const SocketServer = (socket) =>{
                 clients.forEach(client=>{
                     socket.to(`${client.socketId}`).emit('checkUserOffline', data.id)
                 })
+            }
+            if(data.call){
+                const callUser = users.find(user=>user.id===data.call)
+                if(callUser){
+                    console.log({callUser})
+                    users = users.map(user=>user.id ===callUser.id ? {...user, call:null}:user)
+                    socket.to(`${callUser.socketId}`).emit('callerDisconnect')
+                }
             }
         }
         users = users.filter(user=>user.socketId !== socket.id)
@@ -117,6 +124,41 @@ const SocketServer = (socket) =>{
                 socket.to(`${client.socketId}`).emit('checkUserOnlineToClient', data._id)
             })
         }
+    })
+
+    //Call
+    socket.on('callUser', data=>{
+        users = users.map(user=>user.id===data.sender? {...user, call:data.recipient} : user )
+        const client = users.find(user=>user.id ===data.recipient)
+
+        // console.log('oldUsers:' + users)
+        if(client){
+            if(client.call){
+                socket.emit('userBusy',data)
+                users=users.map(user=>user.id===data.sender?{...user, call:null }: user )
+            }else{
+                users = users.map(user=>user.id===data.recipient? {...user, call:data.sender}: user)
+                socket.to(`${client.socketId}`).emit('callUserToClient', data)
+            }
+        }
+
+    })
+
+    socket.on('endCall', data=>{
+        const client = users.find(user=>user.id===data.sender)
+        console.log({sender:client})
+        if(client){
+            socket.to(`${client.socketId}`).emit('endCallToClient', data)
+            users=users.map(user=>user.id===client.id?{...user, call:null }: user )
+            if(client.call){
+                const clientCall = users.find(user=>user.id===client.call)
+                console.log({receiver:clientCall})
+                clientCall && socket.to(`${clientCall.socketId}`).emit('endCallToClient', data)
+                users=users.map(user=>user.id===data.recipient?{...user, call:null }: user )
+            }
+        }
+
+        console.log({endUser:users})
     })
 
     

@@ -10,6 +10,7 @@ import { suggestionReducer } from './suggestionReducers';
 import { themeReducer } from './themeReducers';
 import { alertReducer, userLoginReducer, userRegisterReducer, userSuggestionReducer } from './userReducers';
 import { onlineReducer } from './onlineCheckReducers'
+import { callReducer, peerReducer } from './callReducers';
 
 const initialState={
     userLogin:{
@@ -47,6 +48,9 @@ const reducer = combineReducers({
     notify:notifyReducer,
     message:messageReducer,
     online:onlineReducer,
+    call:callReducer,
+    peer:peerReducer
+
 
     
 

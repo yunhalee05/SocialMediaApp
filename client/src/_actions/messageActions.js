@@ -27,7 +27,7 @@ export const addMessage = ({msg})=>async(dispatch, getState)=>{
             }
         }
 
-        const res = await axios.post('/api/message', {recipient:msg.recipient, text:msg.text, media:imgArr}, {
+        const res = await axios.post('/api/message', {sender:msg.sender, recipient:msg.recipient, text:msg.text, media:imgArr, call:msg.call}, {
             headers:{authorization:`Bearer ${userInfo.token}`}
         })
 

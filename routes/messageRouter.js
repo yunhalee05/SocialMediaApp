@@ -8,27 +8,28 @@ const messageRouter = express.Router()
 
 messageRouter.post('/', auth, async(req, res)=>{
     try{
-        const {recipient, text, media} = req.body
+        const {sender, recipient, text, media, call} = req.body
 
-        if(!recipient || (!text.trim() && media.length===0))  return;
+        if(!recipient || (!text.trim() && media.length===0 && !call))  return;
 
         const newConversation = await Conversation.findOneAndUpdate({
             $or:[
-                {recipients:[req.user.id, recipient]},
-                {recipients:[recipient, req.user.id]}
+                {recipients:[sender, recipient]},
+                {recipients:[recipient, sender]}
             ]
         },{
-            recipients:[req.user.id, recipient],
-            text, media
+            recipients:[sender, recipient],
+            text, media,call
         },{new:true, upsert:true})
 
 
         const newMessage = new Message({
             conversation:newConversation,
-            sender:req.user.id,
+            sender,
             recipient,
             text,
-            media
+            media,
+            call
         })
         await newMessage.save()
 

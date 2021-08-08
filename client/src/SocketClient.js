@@ -2,13 +2,14 @@ import io from 'socket.io-client'
 
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { SOCKET } from './_constants/globalConstants'
+import { ALERT, SOCKET } from './_constants/globalConstants'
 import { LIKE_POST_SUCCESS, UNLIKE_POST_SUCCESS, UPDATE_POST_SUCCESS } from './_constants/postConstants'
 import { USER_LOGIN_SUCCESS } from './_constants/userConstants'
 import { PROFILE_GETUSER_SUCCESS, USER_FOLLOW_PROFILE, USER_UNFOLLOW_PROFILE, USER_UPDATE_PROFILE_SUCCESS } from './_constants/profileConstants'
 import { CREATE_NOTIFY_SUCCESS, REMOVE_NOTIFY_SUCCESS } from './_constants/notifyConstants'
 import { MESSAGE_ADD_SUCCESS, MESSAGE_ADD_USER } from './_constants/messageConstants'
 import { CHECK_ONLINE_SUCCESS, OFFLINE, ONLINE } from './_constants/onlineCheckConstants'
+import { CALL } from './_constants/callConstants'
 
 
 function SocketClient() {
@@ -18,17 +19,21 @@ function SocketClient() {
     
     const online = useSelector(state => state.online)
 
+    const call = useSelector(state => state.call)
+
+    const socket = useSelector(state => state.socket)
+
     const dispatch = useDispatch()
 
-    const socket = io();
+    // const socket = io();
 
-    useEffect(() => {
-        dispatch({
-          type:SOCKET,
-          payload:socket
-        })
-        return ()=>socket.close()
-      }, [dispatch, socket])
+    // useEffect(() => {
+    //     dispatch({
+    //       type:SOCKET,
+    //       payload:socket
+    //     })
+    //     return ()=>socket.close()
+    //   }, [dispatch])
     
     //JoinUser
     useEffect(() => {
@@ -205,6 +210,46 @@ function SocketClient() {
         return () => socket.off('checkUserOffline')
 
     }, [socket, dispatch, online])
+
+    //Call User
+    useEffect(() => {
+        socket.on('callUserToClient', data=>{
+            dispatch({
+                type:CALL,
+                payload:data
+            })
+        })
+
+        return () => socket.off('callUserToClient')
+
+    }, [socket, dispatch])
+
+    useEffect(() => {
+        socket.on('endCallToClient', data=>{
+
+            dispatch({
+                type:CALL,
+                payload:null
+            })
+        })
+
+        return () =>socket.off('endCallToClient')
+    }, [socket, dispatch])
+
+    useEffect(() => {
+        socket.on('userBusy', data=>{
+            dispatch({
+                type:ALERT,
+                payload:{error:`${call.username} is busy.`}
+            })
+        })
+        return () =>socket.off('userBusy')
+
+    }, [socket, dispatch, call])
+    
+
+
+
     return <> </>
 
 }

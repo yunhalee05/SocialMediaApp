@@ -6,6 +6,7 @@ const app = express();
 const path = require('path')
 const cookieParser = require('cookie-parser')
 const SocketServer = require('./SocketServer')
+const {PeerServer} = require('peer')
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
@@ -30,7 +31,8 @@ io.on('connection', socket=>{
 
 
 
-
+//Create peer server
+PeerServer({port:3001, path:'/'})
 
 
 

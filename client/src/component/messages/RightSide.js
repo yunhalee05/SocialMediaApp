@@ -7,6 +7,7 @@ import UserCard from '../UserCard'
 import Display from './Display'
 import LoadIcon from '../../images/loading.gif'
 import { useHistory } from 'react-router-dom'
+import { CALL } from '../../_constants/callConstants'
 
 function RightSide({id}) {
 
@@ -16,6 +17,9 @@ function RightSide({id}) {
     const {userInfo} = userLogin
 
     const message = useSelector(state => state.message)
+
+    const socket = useSelector(state => state.socket)
+    const peer = useSelector(state => state.peer)
 
     const [user, setUser] = useState([])
     const [text, setText] = useState("")
@@ -95,9 +99,7 @@ function RightSide({id}) {
         }
     }, [isLoadMore])
 
-    // const handleScroll = (preScrollHeight)=>{
-    //     ref.current.scrollTop= ref.current.scrollHeight - preScrollHeight
-    // }
+
 
 
     const handleChangeMedia=(e) =>{
@@ -176,6 +178,52 @@ function RightSide({id}) {
         }
     }
 
+    const caller=({video})=>{
+        const {_id, avatar, username, fullname} = user
+        const msg = {
+            sender: userInfo.user._id,
+            recipient:_id,
+            avatar,
+            username, 
+            fullname,
+            video
+        }
+        dispatch({
+            type:CALL,
+            payload:msg
+        })
+    }
+
+    const callUser = ({video})=>{
+        const {_id, avatar, username, fullname} = userInfo.user
+        const msg = {
+            sender: _id,
+            recipient:user._id,
+            avatar,
+            username, 
+            fullname,
+            video
+        }
+        if(peer.open){
+            msg.peerId = peer._id
+        }
+        socket.emit('callUser', msg)
+
+        
+
+    }
+
+    const handleAudioCall=() =>{
+        caller({video:false})
+        callUser({video:false})
+    }
+
+    const handleVideoCall= () =>{
+        caller({video:true})
+        callUser({video:true})
+
+    }
+
 
     return (
         <>
@@ -183,7 +231,11 @@ function RightSide({id}) {
                 {
                     user.length !== 0 &&
                     <UserCard user={user} id = {id}>
-                        <i className="fas fa-trash text-danger" onClick={handleDeleteConversation}></i>
+                        <div>
+                            <i className="fas fa-phone-alt" onClick={handleAudioCall}></i>
+                            <i className="fas fa-video mx-3" onClick={handleVideoCall}></i>
+                            <i className="fas fa-trash text-danger" onClick={handleDeleteConversation}></i>
+                        </div>
                     </UserCard>
                 }
             </div>
