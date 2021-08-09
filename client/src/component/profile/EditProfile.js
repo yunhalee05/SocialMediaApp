@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import Alert from '../component/Alert'
-import { updateUserProfile } from '../_actions/profileActions'
-import { USER_UPDATE_PROFILE_RESET } from '../_constants/profileConstants'
-import Loading from '../component/Loading'
+import Alert from '../Alert'
+import { updateUserProfile } from '../../_actions/profileActions'
+import { USER_UPDATE_PROFILE_RESET } from '../../_constants/profileConstants'
+import Loading from '../Loading'
 import axios from 'axios'
 
 function EditProfile({setOnEdit}) {

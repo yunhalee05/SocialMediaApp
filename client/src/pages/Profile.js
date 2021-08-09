@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { getProfileUser } from '../_actions/profileActions';
-import Avatar from '../component/Avatar'
 import Loading from '../component/Loading';
 import Alert from '../component/Alert'
-import EditProfile from '../component/EditProfile'
-import FollowBtn from '../component/FollowBtn';
-import Followers from '../component/Followers';
-import Followings from '../component/Followings';
-import Post from '../component/Post';
-import {Link} from 'react-router-dom'
+
 import SavedPost from '../component/SavedPost'
+import UserInfo from '../component/profile/UserInfo';
+import PostThumb from '../component/PostThumb';
 
 
 function Profile(props) {
@@ -26,12 +22,6 @@ function Profile(props) {
     const {loading, error, user, posts} = userProfile
 
 
-    const [showFollowers, setShowFollowers] = useState(false)
-    const [showFollowing, setShowFollowing] = useState(false)
-    
-
-    const [onEdit, setOnEdit] = useState(false)
-
     const [saveTab, setSaveTab] = useState(false)
 
     useEffect(() => {
@@ -42,62 +32,13 @@ function Profile(props) {
         <div className="profile">
             {loading&& <Loading></Loading>}
             {error && <Alert variant="danger">{error}</Alert>}
-
-            {
-                user && 
-                <div className="info">
-                <div className="info_container" key={user?._id}>
-                    <Avatar src={user?.avatar} size="supper-avatar" />
-                    <div className="info_content">
-                        <div className="info_content_title">
-                            <h2>{user?.username}</h2>
-                            {
-                                user?._id === userInfo.user._id 
-                                ? <button className="btn btn-outline-info" onClick={()=>setOnEdit(true)}>Edit Profile</button>
-                                :   <FollowBtn user={user} userId={user?._id}/>
-                            }
-                        </div>
-
-                        <div className="follow_btn">
-                            <span className="mr-4" onClick={()=>setShowFollowers(true)}>
-                                {user?.followers.length} Followers
-                            </span>
-                            <span className="mr-4" onClick={()=>setShowFollowing(true)}>
-                                {user?.following.length} Following
-                            </span>
-                        </div>
-
-                            <h6>{user?.fullname} <span className="text-danger">{user?.mobile}</span></h6>
-                            <p className="m-0">{user?.address}</p>
-                            <h6 className="m-0">{user?.email}</h6>
-                            <a href={user?.website} target="_blank"  rel="noreferrer">{user?.website}</a>
-                            <p>{user?.story}</p>
-                        </div>
-
-
-                        {
-                            onEdit && <EditProfile setOnEdit = {setOnEdit}/>
-                        }
-
-                        {
-                            showFollowers &&
-                            <Followers user = {user} setShowFollowers={setShowFollowers} />
-
-                        }
-                        {
-                            showFollowing &&
-                            <Followings user = {user} setShowFollowing={setShowFollowing}/>
-
-                        }
-
-                </div>
-            </div>
-            }
+            <UserInfo user={user}/>
+            
 
             {
                 <div className="profile_tab">
-                    <button className={saveTab? '': 'active'} onClick={()=>setSaveTab(false)}>Posts</button>
-                    <button className={saveTab? 'active': ''} onClick={()=>setSaveTab(true)}>Saved</button>
+                    <button className={saveTab? '': 'active'} onClick={()=>setSaveTab(false)}><i className="far fa-images fa-2x"></i></button>
+                    <button className={saveTab? 'active': ''} onClick={()=>setSaveTab(true)}><i className="far fa-save fa-2x"></i></button>
                 </div>
             }
 
@@ -106,35 +47,8 @@ function Profile(props) {
             { 
                 posts && user&& saveTab
                 ? <SavedPost/>
-                :
-                <>
-                {
-                    posts && posts.length ===0
-                    ? <h2 className="text-center text-danger">NO POST</h2>
-                    : <>
-                    <div className="post_thumb">
-                        {
-                            posts?.map(post=>(
-                                <Link key={post._id} to={`/post/${post._id}`}>
-                                    <div className="post_thumb_display">
-                                        {
-                                            post.images[0]?.data.match(/video/i)||post.images[0]?.data.match(/mp4/i)||post.images[0]?.data.match(/avi/i)||post.images[0]?.data.match(/mov/i)||post.images[0]?.data.match(/wmv/i)
-                                            ? <video controls src={post.images[0].data} alt={post.images[0].data}></video>
-                                            : <img src={post.images[0].data} alt={post.images[0].data}></img>
-                                        }
-
-                                        <div className="post_thumb_menu">
-                                            <i className="far fa-heart">{post.likes.length}</i>
-                                            <i className="far fa-comment">{post.comments.length}</i>
-                                        </div>
-                                    </div>
-                                </Link>
-                            ))
-                        }
-                    </div>
-                    </>
-                    }
-                </>
+                : <PostThumb posts={posts}/>
+                
             }
         </div>
     )

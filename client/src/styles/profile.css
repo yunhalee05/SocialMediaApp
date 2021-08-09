@@ -13,6 +13,11 @@
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
+    align-items: center;
+    width: 100%;
+    flex: 1;
+
+
 }
 
 .info_content{
@@ -28,17 +33,14 @@
     align-items: center;
     flex-wrap: wrap;
 }
-.info_content_title h2{
-    font-size: 2rem;
-    font-weight: 400;
-    transform: translateY(4px);
-    flex: 3;
-}
+
 .info_content_title button{
     flex: 2;
+    margin-top: 20px;
 }
 .info_container .follow_btn{
-    color: teal;
+    color:black;
+    font-size: 1.1rem;
     cursor: pointer;
 }
 .info_container .follow_btn span:hover{
@@ -150,9 +152,8 @@
 .profile_tab{
     width: 100%;
     display: flex;
-    justify-content: center;
-    border-top: 1px solid #eee;
-    border-bottom: 1px solid #eee;
+    justify-content: space-around;
+
 }
 .profile_tab button{
     outline: none;
@@ -166,7 +167,6 @@
     opacity: 0.5;
 }
 .profile_tab button.active{
-    border-top: 1px solid #000;
-    border-bottom: 1px solid #000;
-    opacity: 0.8;
+
+    opacity: 1;
 }

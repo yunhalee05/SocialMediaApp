@@ -12,7 +12,7 @@ function HomePage(props) {
         props.history.push('/login')
     }
     return (
-        <div className="home row mx-0">
+        <div className="home mx-0">
             <div >
                 <Status/>
                 <SuggestionBox/>
