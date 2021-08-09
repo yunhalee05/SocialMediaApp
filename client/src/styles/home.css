@@ -1,28 +1,35 @@
 /* --------- Status ---------- */
 .status{
     background: white;
-    box-shadow: 0 0 5px #ddd;
+    /* box-shadow: 0 0 5px #ddd; */
     padding: 20px;
     border-radius: 5px;
-    border: 1px solid rgb(0, 0, 0, .125);
+    border: 1px dashed black;
 }
 .status .statusBtn{
-    background: #f1f1f1;
+    background: #f7da31;
     border: none;
     outline: none;
     border-radius: 30px;
-    color: #555;
-    padding: 0 10px;
-    text-align: left;
+    color: #24231c;
+    padding: 0px 30px;
+    text-align: center;
     margin: 0 5px;
+    font-family: 'Qahiri', sans-serif;
+    font-size: 1.6rem;
+
 }
 .status .statusBtn:hover{
-    background: #ddd;
+    background: #fff2a8;
+    
 }
+
+
 
 /* ------------Posts ------ */
 .posts .card{
-    box-shadow: 0 0 4px #ddd;
+    border: none;
+    padding-bottom: 30px;
 }
 /* --------- Post Card Header --------- */
 .posts .card_header{
@@ -31,6 +38,7 @@
     align-items: center;
     cursor: pointer;
     padding: 15px 25px;
+    border-bottom: 1px solid #dbdbdb;
 }
 .posts .card_header .card_name{
     transform: translateY(3px);
@@ -47,12 +55,11 @@
 
 /* ---------- Post Card Body ---------- */
 .posts .card_body-content{
-    padding: 0 25px;
-    margin-top: -10px;
-    margin-bottom: 10px;
+    padding: 15px 30px 0px 30px;
+    width: 100vw;
 }
 .posts .card_body-content .readMore{
-    color: crimson;
+    color: #969696;
     cursor: pointer;
 }
 

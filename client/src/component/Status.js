@@ -13,8 +13,8 @@ function Status() {
         <div className="status my-3 d-flex">
             <Avatar src={userInfo.user.avatar} size="big-avatar"/>
 
-            <button className="statusBtn flex-fill" onClick={()=>dispatch({type:STATUS, payload:true})}>
-                {userInfo.user.username}, what are you thinking?
+            <button className="statusBtn flex-fill " onClick={()=>dispatch({type:STATUS, payload:true})}>
+                {userInfo.user.username}, What are you thinking?
             </button>
         </div>
     )

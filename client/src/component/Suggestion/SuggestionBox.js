@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import UserCard from './UserCard'
-import LoadIcon from '../images/loading.gif'
-import FollowBtn from './FollowBtn'
-import { getSuggestions } from '../_actions/suggestionActions'
+import LoadIcon from '../../images/loading.gif'
+import FollowBtn from '../FollowBtn'
+import { getSuggestions } from '../../_actions/suggestionActions'
+import SuggestionCard from './SuggestionCard'
 
-function RightSideBar() {
+function SuggestionBox() {
 
     const userLogin = useSelector(state => state.userLogin)
     const {userInfo} = userLogin
@@ -23,28 +23,29 @@ function RightSideBar() {
 
 
     return (
-        <div className="mt-3">
+        <div className="mt-3" style={{background:'#f2f2f2'}}>
 
-            <UserCard user={userInfo.user}/>
+            {/* <UserCard user={userInfo.user}/> */}
 
-            <div className="d-flex justify-content-between align-items-center my-2">
-                <h5 className="text-danger">Suggestions for you </h5>
+            <div className=" text-center p-2">
+                <h5 >Suggestions for you 
                 {
                     !suggestion.loading &&
-                    <i className="fas fa-redo" style={{cursor:'pointer'}} onClick={()=>dispatch(getSuggestions())}/>
+                    <i className="fas fa-redo ml-3" style={{cursor:'pointer'}} onClick={()=>dispatch(getSuggestions())}/>
                 }
+                </h5>
             </div>
 
             {
                 suggestion.loading
                 ? <img src={LoadIcon} alt="loading" className="d-block mx-auto my-4"/>
                 : suggestion.users &&
-                <div className="suggeston">
+                <div className="suggestion" style={{display:'flex', justifyContent:'space-between', overflow:'scroll'}}>
                     {
                         suggestion.users.map(user=>(
-                            <UserCard key={user._id}  user={user}>
+                            <SuggestionCard key={user._id}  user={user}>
                                 <FollowBtn user={user} userId={user._id}/>
-                            </UserCard>
+                            </SuggestionCard>
                         ))
                     }
                 </div>
@@ -55,4 +56,4 @@ function RightSideBar() {
     )
 }
 
-export default RightSideBar
+export default SuggestionBox
