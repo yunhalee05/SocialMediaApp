@@ -42,8 +42,9 @@ function RegisterPage(props) {
     
     return (
 <div className="auth_page">
+
             <form onSubmit={handleSubmit}>
-                <h3 className="text-uppercase text-center mb-4">SocialMediaApp</h3>
+            <h3 className="text-center mb-4" style={{backgroundColor:"#ffcd38"}}><strong>REGISTER</strong></h3>
 
                     <div>
                     {loading && <Loading></Loading>}
@@ -140,7 +141,7 @@ function RegisterPage(props) {
                     </button>
 
                     <p className="my-2">
-                        Already have an account? <Link to="/login" style={{color: "crimson"}}>Login Now</Link>
+                    <strong>Already have an account? <Link to="/login" style={{color: "crimson"}}>Login Now</Link></strong>
                     </p>
                 </div>
             </form>

@@ -1,24 +1,33 @@
+.welcome{
+    text-align: center;
+    padding-top: 12vh;
+    font-size: 3.5vh;
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
+}
+
 
 .auth_page{
     width: 100%;
     min-height: 100vh;
     background-color: #fdfdfd;
-    /* display: flex;
+    background-image: url('../images/background.jpg');
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    display: flex;
     justify-content: center;
-    align-items: center; */
     position: relative;
 }
 
 .auth_page form{
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.65);
     max-width: 400px;
-    width: 100%;
+    width: 90%;
     border: 1px solid #ddd;
     padding: 50px 25px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    border-radius: 12%;
     
 }
 

@@ -33,8 +33,9 @@ function LoginPage(props) {
     }
     return (
         <div className="auth_page">
+            <div className="welcome">Welcome to Social Media App</div>
             <form onSubmit={handleSubmit}>
-                <h3 className="text-uppercase text-center mb-4">SocialMediaApp</h3>
+                <h3 className="text-center mb-4" style={{backgroundColor:"#ffcd38"}}><strong>LOGIN</strong></h3>
 
                     <div>
                     {loading && <Loading></Loading>}
@@ -70,7 +71,7 @@ function LoginPage(props) {
                     </button>
 
                     <p className="my-2">
-                        You don't have an account? <Link to="/register" style={{color: "crimson"}}>Register Now</Link>
+                        <strong>You don't have an account? <Link to="/register" style={{color: "crimson"}}>Register Now</Link></strong>
                     </p>
                 </div>
             </form>
