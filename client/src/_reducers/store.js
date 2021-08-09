@@ -2,13 +2,13 @@ import{combineReducers, createStore, compose, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk'
 import { messageReducer } from './messageReducers';
 import { notifyReducer } from './notifyReducers';
-import { getSavedPostReducer, postCreateReducer, postDeleteReducer, postDetailReducer, postDiscoverReducer, postGetProfileReducer, postGetReducer, postLikeReducer, postSaveReducer, postUnlikeReducer, postUnsaveReducer, postUpdateReducer } from './postReducers';
-import { getUserProfileReducer, userUpdateProfileReducer } from './profileReducers';
+import { postDetailReducer, postDiscoverReducer, postGetReducer, postSaveReducer } from './postReducers';
+import { getUserProfileReducer } from './profileReducers';
 import socketReducer from './socketReducers';
 import { editstatusReducer, statusReducer } from './statusReducers';
 import { suggestionReducer } from './suggestionReducers';
 import { themeReducer } from './themeReducers';
-import { alertReducer, userLoginReducer, userRegisterReducer, userSuggestionReducer } from './userReducers';
+import { alertReducer, userLoginReducer } from './userReducers';
 import { onlineReducer } from './onlineCheckReducers'
 import { callReducer, peerReducer } from './callReducers';
 
@@ -21,43 +21,22 @@ const initialState={
 
 const reducer = combineReducers({
     userLogin:userLoginReducer,
-    // userRegister:userRegisterReducer,
     alert:alertReducer,
     theme:themeReducer,
     userProfile:getUserProfileReducer,
-    // userUpdateProfile:userUpdateProfileReducer,
     status:statusReducer,
-    // createpost:postCreateReducer,
     getposts:postGetReducer,
     editstatus:editstatusReducer,
-    // updatepost:postUpdateReducer,
-    // deletepost:postDeleteReducer,
-    // likepost:postLikeReducer,
-    // unlikepost:postUnlikeReducer,
-    // createcomment:commentCreateReducer,
-    // likecomment:commentLikeReducer,
-    // unlikecomment:commentUnlikeReducer,
-    // updatecomment:commentUpdateReducer,
-    // deletecomment:commentDeleteReducer,
     detailpost:postDetailReducer,
     discoverpost:postDiscoverReducer,
     suggestion:suggestionReducer,
     savepost:postSaveReducer,
-    // unsavepost:postUnsaveReducer,
     socket:socketReducer,
     notify:notifyReducer,
     message:messageReducer,
     online:onlineReducer,
     call:callReducer,
     peer:peerReducer
-
-
-    
-
-
-    
-
-    
 
 })
 

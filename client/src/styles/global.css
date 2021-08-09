@@ -25,13 +25,16 @@ code {
 .App {
   width: 100%;
   min-height: 100vh;
-  background: white;
+  /* background:  #fff2cf; */
+  background-image: url('../images/background.jpg');
+  background-attachment: fixed;
 }
 
 .main{
-  max-width: 1000px;
+  max-width: 1200px;
   width: 100%;
   margin:auto;
+  background-color:  white;
 }
 
 img{

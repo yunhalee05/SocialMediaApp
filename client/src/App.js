@@ -60,8 +60,10 @@ function App() {
     <BrowserRouter>
       <input type="checkbox" id="theme"/>
       <div className="App">
-        <div className="main">
+        <div className="main-header">
           {userInfo && <Header/>}
+        </div>
+        <div className="main">
           {status && <StatusModal/>}
           {(userInfo && socket.io) && <SocketClient/>}
           {call && <CallModal/>}

@@ -1,10 +1,10 @@
 import { GET_USER_SUGGESTION_FAIL, GET_USER_SUGGESTION_REQUEST, GET_USER_SUGGESTION_SUCCESS } from "../_constants/userConstants";
-const initialState={
-    users:[],
-    loading:false
-}
+// const initialState={
+//     users:[],
+//     loading:false
+// }
 
-export const suggestionReducer = (state={}, action)=>{
+export const suggestionReducer = (state={users:[]}, action)=>{
     switch(action.type){
         case GET_USER_SUGGESTION_REQUEST:
             return {...state, loading:true}

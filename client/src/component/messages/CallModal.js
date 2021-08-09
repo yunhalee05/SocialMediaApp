@@ -185,23 +185,23 @@ function CallModal() {
     }, [socket, dispatch, tracks, call, addCallMessage, answer, total])
     
 
-    const playAudio = (newAudio)=>{
-        newAudio.play()
-    }
+    // const playAudio = (newAudio)=>{
+    //     newAudio.play()
+    // }
 
-    const pauseAudio = (newAudio)=>{
-        newAudio.pause()
-        newAudio.currentTime = 0
-    }
+    // const pauseAudio = (newAudio)=>{
+    //     newAudio.pause()
+    //     newAudio.currentTime = 0
+    // }
 
-    useEffect(() => {
-        let newAudio = new Audio(ring)
-        if(answer){
-            pauseAudio(newAudio)
-        }else{
-            playAudio(newAudio)
-        }
-    }, [])
+    // useEffect(() => {
+    //     let newAudio = new Audio(ring)
+    //     if(answer || call===[]){
+    //         pauseAudio(newAudio)
+    //     }else{
+    //         playAudio(newAudio)
+    //     }
+    // }, [])
 
     return (
         <div className="call_modal">

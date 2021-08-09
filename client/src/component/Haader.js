@@ -69,19 +69,18 @@ function Haader() {
     }
 
     return (
-        <div className="header bg-light">
-            <nav className="navbar navbar-expand-lg navbar-light bg-light justify-content-between align-middle">
+        <div className="header">
+            <nav className="navbar navbar-expand-lg navbar-light justify-content-between align-middle">
                 
                 <Link  to="/">
-                    <h1 className="navbar-brand text-uppercase p-0 m-0" style={{fontSize:"2rem"}} >Social Media</h1>
+                    <h1 className="brand navbar-brand text-uppercase p-0 m-0" >Social Media</h1>
                 </Link>
 
                 <form className="search_form">
                     <input type="text" name = "search" value={search} id="search"
                     onChange={e=>setSearch(e.target.value.toLowerCase().replace(/ /g, ''))} />
-                    <div className="search_icon" style={{opacity:search? 0:0.3}}>
+                    <div className="search_icon" style={{opacity:search? 0:1}}>
                         <span className="material-icons" >search</span>
-                        <span>Search</span>
                     </div>
                     <div className="close_search" style={{opacity:users.length===0? 0:1}} onClick={handleClose}>&times;</div>
                     <button className="submit" style={{display:'none'}}>Search</button>
@@ -98,7 +97,7 @@ function Haader() {
                 </form>
 
                 <div className="menu">
-                    <ul className="navbar-nav flex-row">
+                    <ul className="navbar-nav flex-row mt-2">
                         {
                             navLinks.map((link, index) => (
                                 <li className={`nav-item px-2 ${isActive(link.path)}`} key={index}>
