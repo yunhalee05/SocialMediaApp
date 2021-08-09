@@ -47,21 +47,6 @@ function UserInfo({user}) {
                             <div>Following</div>
                         </div>
 
-                        {/* <div className="info_content">
-                            <div className="follow_btn">
-                                <span className="mr-4" onClick={()=>setShowFollowers(true)}>
-                                    <strong>{user.followers.length} </strong>Followers
-                                </span>
-                                <span className="mr-4" onClick={()=>setShowFollowing(true)}>
-                                    <strong>{user.following.length}</strong> Following
-                                </span>
-                            </div>
-
-
-
-                        </div>
-
- */}
 
                             {
                                 onEdit && <EditProfile setOnEdit = {setOnEdit}/>

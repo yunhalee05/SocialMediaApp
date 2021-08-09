@@ -1,7 +1,7 @@
 .message{
     width: 100%;
     height: calc(100vh - 100px);
-    border: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
     margin-top: 15px;
     border-radius: 3px;
     background: #fbfbfb;
@@ -9,19 +9,20 @@
 
 .message_header{
     width: 100%;
-    height: 60px;
+    height: 70px;
     border-bottom: 1px solid #ddd;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
-    background: #f8f8f8;
+    background: white;
+    
 }
 .message_header input{
     flex: 1;
     height: 100%;
     border: none;
     outline: none;
-    background: #f8f8f8;
+    background: white;
     padding: 0 5px;
 }
 .message_chat_list{

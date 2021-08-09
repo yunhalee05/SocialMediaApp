@@ -34,13 +34,13 @@ function NotifyModal() {
     return (
         <div style={{minWidth:'300px'}}>
             <div className="d-flex justify-content-between align-items-center px-3">
-                <h3>Notification</h3>
+                <h4 ><strong>Notification</strong></h4>
                 {
                     notify.sound
                     ? <i className="fas fa-bell text-danger"
                     style={{fontSize: '1.2rem', cursor:'pointer'}}
                     ></i>
-                    : <i className="fas fa-bell-slash text-danger"
+                    : <i className="fas fa-bell-slash "
                     style={{fontSize: '1.2rem', cursor:'pointer'}}
                     ></i>
                 }
@@ -48,7 +48,8 @@ function NotifyModal() {
             <hr className="mt-0" />
             {
                 notify.notify.length ===0 &&
-                <img src={NoNotice} alt="NoNotice" className="w-50"/>
+                <div className="text-center p-3" style={{fontSize:"1.3rem"}}><strong style={{backgroundColor:"#fad920"}}>No notify yet.</strong></div>
+                // <img src={NoNotice} alt="NoNotice" className="w-50"/>
             }
 
             <div style={{maxHeight:'calc(100vh-200px)', overflow:'auto'}}>
@@ -91,7 +92,7 @@ function NotifyModal() {
             <hr className="my-1" />
 
             <div className="text-right text-danger mr-2" style={{cursor:'pointer'}} onClick={handleDeleteAll}>
-                Delete All
+                <strong>Delete All</strong>
             </div>
             
         </div>

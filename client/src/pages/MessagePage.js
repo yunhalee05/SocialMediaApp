@@ -15,13 +15,10 @@ function Message(props) {
             <div className="col-md-4 border-right px-0 left-mess">
                 <LeftSide/>
             </div>
-            {/* <div className="col-md-8 px-0">
-                <RightSide/>
-            </div> */}
             <div className="col-md-8 px-0 right_mess">
                 <div className="d-flex justify-content-center align-items-center flex-column h-100">
                     <i className="fab fa-facebook-messenger text-primary" style={{fontSize:'5rem'}}></i>
-                    <h4>Messenger</h4>
+                    <h4><strong>Messenger</strong></h4>
                 </div>
             </div>
         </div>

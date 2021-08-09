@@ -38,15 +38,15 @@ function Display({user, msg, data}) {
         <div className="you_content">
             {
                 user._id === userInfo.user._id &&
-                <i className="fas fa-trash text-danger" onClick={handleDeleteMessage}></i>
+                <i className="fas fa-trash" style={{color:"#858585"}} onClick={handleDeleteMessage}></i>
 
             }
             
             <div>
                 {
                     msg.call &&
-                    <button className="btn d-flex align-items-center py-3" style={{background:'#eee', borderRadius:'10px'}}>
-                        <span className="material-icons font-weight-bold mr-1" style={{fontSize:'2.5rem', color: msg.call.times ===0? 'crimson':'green'}}>
+                    <button className="btn d-flex align-items-center py-3" style={{background:'#fff4d4', borderRadius:'10px'}}>
+                        <span className="material-icons font-weight-bold mr-1" style={{fontSize:'2.5rem', color: msg.call.times ===0? '#c9141a':'green'}}>
                             {
                                 msg.call.times ===0
                                 ? msg.call.video 

@@ -14,8 +14,8 @@ function UserCard({children, user, border, handleClose, setShowFollowers, setSho
             <div>
                 <Link to={`/profile/${user._id}`} onClick = {handleCloseAll} className="d-flex align-items-center">
                     <Avatar src={user.avatar} size="big-avatar"/>
-                    <div className="ml-1">
-                        <span className="d-block">{user.username}</span>
+                    <div className="ml-1 pl-1" style={{color:"black"}}>
+                        <span className="d-block" >{user.username}</span>
 
                         <small style={{opacity:0.7}}>
                             {

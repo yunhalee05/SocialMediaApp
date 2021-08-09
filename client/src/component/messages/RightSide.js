@@ -8,6 +8,9 @@ import Display from './Display'
 import LoadIcon from '../../images/loading.gif'
 import { useHistory } from 'react-router-dom'
 import { CALL } from '../../_constants/callConstants'
+import {Link} from 'react-router-dom'
+import Avatar from '../Avatar'
+
 
 function RightSide({id}) {
 
@@ -232,9 +235,9 @@ function RightSide({id}) {
                     user.length !== 0 &&
                     <UserCard user={user} id = {id}>
                         <div>
-                            <i className="fas fa-phone-alt" onClick={handleAudioCall}></i>
-                            <i className="fas fa-video mx-3" onClick={handleVideoCall}></i>
-                            <i className="fas fa-trash text-danger" onClick={handleDeleteConversation}></i>
+                            <i className="fas fa-phone-alt p-1" onClick={handleAudioCall}></i>
+                            <i className="fas fa-video mx-3 p-1" onClick={handleVideoCall}></i>
+                            <i className="fas fa-trash p-1" style={{color:"#6e6e6e"}} onClick={handleDeleteConversation}></i>
                         </div>
                     </UserCard>
                 }
