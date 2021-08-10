@@ -9,7 +9,7 @@
 .auth_page{
     width: 100%;
     min-height: 100vh;
-    background-color: #fdfdfd;
+    /* background-color: #fdfdfd; */
     background-image: url('../images/background.jpg');
     font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     display: flex;

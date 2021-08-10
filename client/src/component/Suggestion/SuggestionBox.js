@@ -4,6 +4,7 @@ import LoadIcon from '../../images/loading.gif'
 import FollowBtn from '../FollowBtn'
 import { getSuggestions } from '../../_actions/suggestionActions'
 import SuggestionCard from './SuggestionCard'
+import Alert from '../Alert'
 
 function SuggestionBox() {
 
@@ -24,9 +25,10 @@ function SuggestionBox() {
 
     return (
         <div className="mt-3" style={{background:'#f2f2f2'}}>
-
-            {/* <UserCard user={userInfo.user}/> */}
-
+            {
+                suggestion.error
+                && <Alert variant="danger">{suggestion.error}</Alert>
+            }
             <div className=" text-center p-2">
                 <h5 >Suggestions for you 
                 {

@@ -4,8 +4,7 @@ import { ALERT } from "../_constants/globalConstants";
 
 export const login = (email, password)=>async (dispatch)=>{
     dispatch({
-        type:USER_LOGIN_REQUEST,
-        payload:{email, password}
+        type:USER_LOGIN_REQUEST
     })
 
     try{
@@ -45,8 +44,7 @@ export const register = (fullname, username, email, password,confirmPassword, ge
     if(check.errLength>0)return dispatch({type:ALERT, payload:check.errMsg})
 
     dispatch({
-        type:USER_REGISTER_REQUEST,
-        payload:{loading:true}
+        type:USER_REGISTER_REQUEST
     })
     try{
         const {data} = await axios.post('/api/users/register', {fullname,username, email, password, gender})

@@ -41,13 +41,12 @@ function RegisterPage(props) {
 
     
     return (
-<div className="auth_page">
-
+        <div className="auth_page">
+        {loading && <Loading></Loading>}
             <form onSubmit={handleSubmit}>
-            <h3 className="text-center mb-4" style={{backgroundColor:"#ffcd38"}}><strong>REGISTER</strong></h3>
-
+            {error && <Alert variant="danger">{error}</Alert>}
+                <h3 className="text-center mb-4" style={{backgroundColor:"#ffcd38"}}><strong>REGISTER</strong></h3>
                     <div>
-                    {loading && <Loading></Loading>}
                     {error && <Alert variant="danger">{error}</Alert>}
 
                     <div className="form-group">

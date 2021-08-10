@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom'
 import NoNotice from '../images/no-alarm.png'
 import { BASE_URL } from '../utils'
 import { deleteAllNotifies, readNotify } from '../_actions/NotifyActions'
+import LoadIcon from '../images/loading.gif'
+import Alert from './Alert'
 
 function NotifyModal() {
 
@@ -46,6 +48,16 @@ function NotifyModal() {
                 }
             </div>
             <hr className="mt-0" />
+            {
+                notify.loading
+                && <img class="pl-5"src={LoadIcon} alt="loading" />
+
+            }
+            {
+                notify.error
+                && <Alert variant="danger">sdf</Alert>
+            }
+
             {
                 notify.notify.length ===0 &&
                 <div className="text-center p-3" style={{fontSize:"1.3rem"}}><strong style={{backgroundColor:"#fad920"}}>No notify yet.</strong></div>

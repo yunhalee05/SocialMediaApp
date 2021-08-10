@@ -33,13 +33,13 @@ function LoginPage(props) {
     }
     return (
         <div className="auth_page">
+            {loading && <Loading></Loading>}
             <div className="welcome">Welcome to Social Media App</div>
             <form onSubmit={handleSubmit}>
+                {error && <Alert variant="danger">{error}</Alert>}
                 <h3 className="text-center mb-4" style={{backgroundColor:"#ffcd38"}}><strong>LOGIN</strong></h3>
 
                     <div>
-                    {loading && <Loading></Loading>}
-                    {error && <Alert variant="danger">{error}</Alert>}
                     <div className="form-group">
                         <label htmlFor="email">Email</label>
                         <input type="email" className="form-control" id="email" name="email"

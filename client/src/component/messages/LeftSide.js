@@ -6,6 +6,7 @@ import { getConversation } from '../../_actions/messageActions'
 import { ALERT } from '../../_constants/globalConstants'
 import { CHECK_ONLINE, MESSAGE_ADD_USER } from '../../_constants/messageConstants'
 import UserCard from '../UserCard'
+import LoadIcon from '../../images/loading.gif'
 
 function LeftSide({id}) {
 
@@ -95,8 +96,10 @@ function LeftSide({id}) {
                 {
                     users.length !== 0
                     ? <>
-                        {
-                            users.map(user=>(
+                        {   
+                            load 
+                            ? <img src={LoadIcon} alt="loading" />
+                            : users.map(user=>(
                                 <div key={user._id} className={`message_user ${isActive(user)}`} onClick={()=>handleAddUser(user)}>
                                     <UserCard user={user} id={user._id}  />
                                 </div>

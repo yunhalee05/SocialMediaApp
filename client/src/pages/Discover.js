@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import Alert from '../component/Alert'
 import Loading from '../component/Loading'
 import PostThumb from '../component/PostThumb'
 import { getDiscoverPost } from '../_actions/postActions'
@@ -23,7 +24,7 @@ function Discover({props}) {
     const dispatch = useDispatch();    
 
     const discoverpost = useSelector(state => state.discoverpost)
-    const {posts:discoveredpost, loading, result, firstLoad} = discoverpost;
+    const {posts:discoveredpost, loading, result, firstLoad,error} = discoverpost;
 
     useEffect(() => {
         if(!firstLoad){
@@ -53,16 +54,16 @@ function Discover({props}) {
     return (
         <div>
             {
+                error &&
+                <Alert variant="danger">{error}</Alert>
+            }
+            {
                 
-                loading
+                (loading || load)
                 ? <Loading></Loading>
                 : discoveredpost && <PostThumb posts={discoveredpost} result={discoveredpost} />
 
             }
-            {
-                load && <Loading></Loading>
-            }
-
             {
                 !loading &&
                 result<9*(page-1) ? '':
