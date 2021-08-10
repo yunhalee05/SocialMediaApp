@@ -212,7 +212,7 @@ function CallModal() {
                     <h6>{call.fullname}</h6>
                     {
                         answer
-                        ? <div className="timer">
+                        ? <div className="timer mt-2">
                             <span>{hours.toString().length<2 ? '0'+ hours : hours }</span>
                             <span>:</span>
                             <span>{mins.toString().length<2 ? '0'+ mins : mins }</span>
@@ -229,11 +229,14 @@ function CallModal() {
                     }
                 </div>
 
-                <div className="timer">
-                    <small>{mins.toString().length<2 ? '0'+ mins : mins }</small>
-                    <small>:</small>
-                    <small>{seconds.toString().length<2 ? '0' + seconds : seconds}</small>
-                </div>
+                    {
+                        !answer &&
+                        <div className="timer">
+                            <small>{mins.toString().length<2 ? '0'+ mins : mins }</small>
+                            <small>:</small>
+                            <small>{seconds.toString().length<2 ? '0' + seconds : seconds}</small>
+                        </div>
+                    }
 
                 <div className="call_menu">
                     <button className="material-icons text-danger" onClick={handleEndCall}>
