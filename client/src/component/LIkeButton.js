@@ -7,7 +7,7 @@ function LIkeButton({isLike, handleLike}) {
     
     return (
         <>
-{            console.log(isLike)
+{            
 }            {
                 isLike
                 ? <i className="fas fa-heart" onClick={handleLike} style={{filter: theme? 'invert(1)': 'invert(0)'}}></i>

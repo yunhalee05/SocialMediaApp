@@ -31,6 +31,10 @@ postRouter.post('/', auth,  async(req, res)=>{
 postRouter.get('/', auth, async(req, res)=>{
     try{
 
+        const page = req.query.page || 1
+        const limit = req.query.limit || 9
+
+
         const user = await User.findOne({_id:req.user.id})
         const posts = await Post.find({user:[...user.following, user._id]})
                                 .sort('-createdAt')
@@ -43,7 +47,8 @@ postRouter.get('/', auth, async(req, res)=>{
                                     },
                                     options:{sort:'-createdAt'}
                                 })
-
+                                .skip(Number(page-1)*Number(limit))
+                                .limit(Number(limit))
         res.json({
             msg:'Get posts successfully',
             result:posts.length,

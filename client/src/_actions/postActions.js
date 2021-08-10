@@ -1,5 +1,5 @@
 import axios from "axios"
-import { CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_SUCCESS, DELETE_POST_FAIL, DELETE_POST_REQUEST, DELETE_POST_SUCCESS, GET_DISCOVER_POST_FAIL, GET_DISCOVER_POST_REQUEST, GET_DISCOVER_POST_SUCCESS, GET_HOME_POSTS_FAIL, GET_HOME_POSTS_REQUEST, GET_HOME_POSTS_SUCCESS, GET_POST_FAIL, GET_POST_REQUEST, GET_POST_SUCCESS, GET_PROFILE_POSTS_FAIL, GET_PROFILE_POSTS_REQUEST, GET_PROFILE_POSTS_SUCCESS, GET_SAVE_POST_FAIL, GET_SAVE_POST_REQUEST, GET_SAVE_POST_SUCCESS, LIKE_POST_FAIL, LIKE_POST_REQUEST, LIKE_POST_SUCCESS, SET_SAVE_POST_FAIL, SET_SAVE_POST_REQUEST, SET_SAVE_POST_SUCCESS, SET_UNSAVE_POST_FAIL, SET_UNSAVE_POST_REQUEST, SET_UNSAVE_POST_SUCCESS, UNLIKE_POST_FAIL, UNLIKE_POST_REQUEST, UNLIKE_POST_SUCCESS, UPDATE_POST_FAIL, UPDATE_POST_REQUEST, UPDATE_POST_SUCCESS } from "../_constants/postConstants"
+import { GET_MORE_POST_SUCCESS,GET_MORE_POST_FAIL,GET_MORE_POST_REQUEST,CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_SUCCESS, DELETE_POST_FAIL, DELETE_POST_REQUEST, DELETE_POST_SUCCESS, GET_DISCOVER_POST_FAIL, GET_DISCOVER_POST_REQUEST, GET_DISCOVER_POST_SUCCESS, GET_HOME_POSTS_FAIL, GET_HOME_POSTS_REQUEST, GET_HOME_POSTS_SUCCESS, GET_POST_FAIL, GET_POST_REQUEST, GET_POST_SUCCESS, GET_PROFILE_POSTS_FAIL, GET_PROFILE_POSTS_REQUEST, GET_PROFILE_POSTS_SUCCESS, GET_SAVE_POST_FAIL, GET_SAVE_POST_REQUEST, GET_SAVE_POST_SUCCESS, LIKE_POST_FAIL, LIKE_POST_REQUEST, LIKE_POST_SUCCESS, SET_SAVE_POST_FAIL, SET_SAVE_POST_REQUEST, SET_SAVE_POST_SUCCESS, SET_UNSAVE_POST_FAIL, SET_UNSAVE_POST_REQUEST, SET_UNSAVE_POST_SUCCESS, UNLIKE_POST_FAIL, UNLIKE_POST_REQUEST, UNLIKE_POST_SUCCESS, UPDATE_POST_FAIL, UPDATE_POST_REQUEST, UPDATE_POST_SUCCESS } from "../_constants/postConstants"
 import { USER_LOGIN_SUCCESS } from "../_constants/userConstants"
 import { createNotify, removeNotify } from "./NotifyActions"
 
@@ -75,7 +75,10 @@ export const getHomePosts =() => async(dispatch, getState)=>{
         
         dispatch({
             type:GET_HOME_POSTS_SUCCESS,
-            payload:res.data.posts
+            payload:{
+                posts:res.data.posts,
+                result:res.data.result
+            }
         })
 
     }catch(error){
@@ -366,6 +369,40 @@ export const setUnsavePost=(post) =>async(dispatch, getState)=>{
     }catch(error){
         dispatch({
             type:SET_UNSAVE_POST_FAIL,
+            payload:                
+            error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message
+        })
+    }
+}
+
+export const getMorePost = ({page, limit})=>async(dispatch,getState)=>{
+    
+    const {userLogin:{userInfo}} = getState()
+    const {getposts:{posts}} = getState()
+
+    dispatch({
+        type:GET_MORE_POST_REQUEST
+    })
+
+    try{
+
+        const res = await axios.get(`/api/post?page=${page}&limit=${limit}`, {
+            headers:{authorization:`Bearer ${userInfo.token}`}
+        })
+
+        dispatch({
+            type:GET_MORE_POST_SUCCESS,
+            payload:{
+                posts:res.data.posts,
+                result:res.data.result
+            }
+        })
+
+    }catch(error){
+        dispatch({
+            type:GET_MORE_POST_FAIL,
             payload:                
             error.response && error.response.data.message
             ? error.response.data.message
