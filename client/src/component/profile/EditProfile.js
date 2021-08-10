@@ -41,6 +41,7 @@ function EditProfile({setOnEdit}) {
             const {data} = await axios.post('/api/profileuploads', bodyFormData,{
                 headers:{'Content-Type' : 'multipart/form-data', authorization:`Bearer ${userInfo.token}`}
             })
+            console.log(data)
             setAvatar(data)
             setLoadingUpload(false)
         }catch(error){
@@ -69,9 +70,9 @@ function EditProfile({setOnEdit}) {
 
     useEffect(() => {
         if(updateSuccess){
-            // dispatch({
-            //     type:USER_UPDATE_PROFILE_RESET,
-            // })
+            dispatch({
+                type:USER_UPDATE_PROFILE_RESET
+            })
             setOnEdit(false)
         }
     }, [dispatch, userInfo.user._id, updateSuccess, setOnEdit])

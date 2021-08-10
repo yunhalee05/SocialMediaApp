@@ -47,19 +47,20 @@ export const register = (fullname, username, email, password,confirmPassword, ge
         type:USER_REGISTER_REQUEST
     })
     try{
-        const {data} = await axios.post('/api/users/register', {fullname,username, email, password, gender})
+         await axios.post('/api/users/register', {fullname,username, email, password, gender})
+        const {data} = await axios.post('/api/users/login',{email, password});
 
-        dispatch({type:ALERT, payload:{}})
+        // dispatch({type:ALERT, payload:{}})
 
         dispatch({
             type:USER_REGISTER_SUCCESS,
             payload:data
         })
 
-        // dispatch({
-        //     type:USER_LOGIN_SUCCESS,
-        //     payload:data
-        // })
+        dispatch({
+            type:USER_LOGIN_SUCCESS,
+            payload:data
+        })
 
         localStorage.setItem("userInfo", JSON.stringify(data))
 

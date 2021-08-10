@@ -57,6 +57,7 @@ app.use('/api/discover', require('./routes/discoverRouter'));
 app.use('/api/notify', require('./routes/notifyRouter'));
 app.use('/api/message', require('./routes/messageRouter'));
 app.use('/api/messageuploads', require('./routes/messageUploadRouter'));
+app.use('/api/profileuploads', require('./routes/profileUploadRouter'));
 
 
 

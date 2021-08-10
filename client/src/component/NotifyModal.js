@@ -50,7 +50,7 @@ function NotifyModal() {
             <hr className="mt-0" />
             {
                 notify.loading
-                && <img class="pl-5"src={LoadIcon} alt="loading" />
+                && <img className="pl-5"src={LoadIcon} alt="loading" />
 
             }
             {

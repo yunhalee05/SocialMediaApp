@@ -12,11 +12,15 @@ import PostThumb from '../component/PostThumb';
 function Profile(props) {
     const userId = props.match.params.id;
     
-
-    const userLogin = useSelector(state => state.userLogin)
-    const {userInfo} = userLogin
-
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(getProfileUser(userId))
+    }, [dispatch, userId])
+
+    // const userLogin = useSelector(state => state.userLogin)
+    // const {userInfo} = userLogin
+
 
     const userProfile = useSelector(state => state.userProfile)
     const {loading, error, user, posts} = userProfile
@@ -24,9 +28,7 @@ function Profile(props) {
 
     const [saveTab, setSaveTab] = useState(false)
 
-    useEffect(() => {
-        dispatch(getProfileUser(userId))
-    }, [dispatch, userId])
+
 
     return (
         <div className="profile">
@@ -34,15 +36,12 @@ function Profile(props) {
             {error && <Alert variant="danger">{error}</Alert>}
             <UserInfo user={user}/>
             
-
             {
                 <div className="profile_tab">
                     <button className={saveTab? '': 'active'} onClick={()=>setSaveTab(false)}><i className="far fa-images fa-2x"></i></button>
                     <button className={saveTab? 'active': ''} onClick={()=>setSaveTab(true)}><i className="far fa-save fa-2x"></i></button>
                 </div>
             }
-
-
 
             { 
                 posts && user&& saveTab

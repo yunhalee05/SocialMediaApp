@@ -47,8 +47,6 @@ function RegisterPage(props) {
             {error && <Alert variant="danger">{error}</Alert>}
                 <h3 className="text-center mb-4" style={{backgroundColor:"#ffcd38"}}><strong>REGISTER</strong></h3>
                     <div>
-                    {error && <Alert variant="danger">{error}</Alert>}
-
                     <div className="form-group">
                         <label htmlFor="fullname">Full Name</label>
                         <input type="text" className="form-control" id="fullname" name="fullname"

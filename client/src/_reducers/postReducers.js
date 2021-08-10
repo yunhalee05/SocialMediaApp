@@ -35,7 +35,7 @@ export const postGetReducer = (state={ posts:[]}, action)=>{
         case CREATE_POST_REQUEST:
             return {...state, loading:true}
         case CREATE_POST_SUCCESS:
-            return {...state, loading:false, posts:[ action.payload,...state.posts]}
+            return {...state, loading:false, posts:[action.payload,...state.posts]}
         case CREATE_POST_FAIL:
             return {...state,loading:false, error:action.payload}
   
