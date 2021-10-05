@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import { login } from '../_actions/userActions'
 import Loading from '../component/Loading'
 import Alert from '../component/Alert'
+import logo from '../images/logo.png'
 
 
 function LoginPage(props) {
@@ -34,7 +35,9 @@ function LoginPage(props) {
     return (
         <div className="auth_page">
             {loading && <Loading></Loading>}
-            <div className="welcome">Welcome to Social Media App</div>
+            <div className="welcome">
+                <img src={logo} alt="" />
+            </div>
             <form onSubmit={handleSubmit}>
                 {error && <Alert variant="danger">{error}</Alert>}
                 <h3 className="text-center mb-4" style={{backgroundColor:"#ffcd38"}}><strong>LOGIN</strong></h3>

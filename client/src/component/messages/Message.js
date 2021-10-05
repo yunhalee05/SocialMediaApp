@@ -12,7 +12,7 @@ function Message(props) {
     const message = useSelector(state => state.message)
 
     return (
-        <div>
+        <div style={{padding:"2rem"}}>
             {
                 message.error
                 &&<Alert variant="danger">{message.error}</Alert>

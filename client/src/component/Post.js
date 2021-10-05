@@ -23,14 +23,7 @@ function Post() {
     const [isLoadMore, setIsLoadMore] = useState(false)
 
     
-    
-
     const pageEnd = useRef()
-
-
-    // useEffect(() => {
-    //     dispatch(getHomePosts())
-    // }, [dispatch])
 
     useEffect(() => {
         const observer = new IntersectionObserver(entries=>{
@@ -75,7 +68,10 @@ function Post() {
             }
             
             <button style={{marginBottom:'100px', opacity:'0'}} ref={pageEnd}>loadmore</button>
-
+            {
+                getposts.loadMoreLoading  &&
+                <Loading></Loading>
+            }
         </div>
     )
 }

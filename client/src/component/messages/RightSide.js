@@ -230,7 +230,7 @@ function RightSide({id}) {
 
     return (
         <>
-            <div className="message_header" style={{cursor:'pointer'}}>
+            <div className="message_header" style={{cursor:'pointer', borderRadius:"0 20px 0 0"}}>
                 {
                     user.length !== 0 &&
                     <UserCard user={user} id = {id}>
@@ -242,7 +242,7 @@ function RightSide({id}) {
                     </UserCard>
                 }
             </div>
-            <div className="chat_container" style={{height: media.length >0? 'calc(100%-180px)':''}} >
+            <div className="chat_container" style={{height: media.length >0? 'calc(100% - 180px)':''}} >
                 <div className="chat_display" ref={ref}  >
                     <button style={{marginTop:'-25px', opacity:0}} ref={pageEnd}>
                         Loadmore

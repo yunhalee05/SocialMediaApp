@@ -1,7 +1,6 @@
 /* --------- Status ---------- */
 .status{
     background: white;
-    /* box-shadow: 0 0 5px #ddd; */
     padding: 20px;
     border-radius: 5px;
     border: 1px dashed black;
@@ -15,8 +14,8 @@
     padding: 0px 30px;
     text-align: center;
     margin: 0 5px;
-    font-family: 'Qahiri', sans-serif;
-    font-size: 1.6rem;
+    font-size: 1.3rem;
+    font-weight: 800;
 
 }
 .status .statusBtn:hover{

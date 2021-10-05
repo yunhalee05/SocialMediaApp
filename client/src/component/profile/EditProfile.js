@@ -11,7 +11,6 @@ function EditProfile({setOnEdit}) {
 
     const userLogin = useSelector(state => state.userLogin)
     const {userInfo} = userLogin
-    const theme = useSelector(state => state.theme)
 
     const [fullname, setFullname] = useState(userInfo.user.fullname)
     const [mobile, setMobile] = useState(userInfo.user.mobile)
@@ -95,7 +94,7 @@ function EditProfile({setOnEdit}) {
 
             <form onSubmit={handleSubmit}>
                 <div className="info_avatar">
-                    <img id="preview" src={userInfo.user?.avatar} alt="avatar" style={{filter:theme? 'invert(1)':'inver(0)'}}/>
+                    <img id="preview" src={userInfo.user?.avatar} alt="avatar"/>
                     <span>
                         <i className="fas fa-camera"></i>
                         <p>Change</p>

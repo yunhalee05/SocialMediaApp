@@ -9,7 +9,6 @@ function StatusModal() {
 
     const userLogin = useSelector(state => state.userLogin)
     const {userInfo} = userLogin
-    const theme = useSelector(state => state.theme)
     // const socket = useSelector(state => state.socket)
 
     const [content, setcontent] = useState('')
@@ -122,15 +121,13 @@ function StatusModal() {
 
     const imageShow=(src) =>{
         return (
-            <img src={src} alt="images" className="img-thumbnail" 
-            style={{filter:  theme? 'invert(1)' : 'invert(0)'}}/>
+            <img src={src} alt="images" className="img-thumbnail" />
         )
     }
 
     const videoShow=(src) =>{
         return (
-            <video src={src} alt="images" className="img-thumbnail" 
-            style={{filter:  theme? 'invert(1)' : 'invert(0)'}}/>
+            <video src={src} alt="images" className="img-thumbnail" />
         )
     }
 
@@ -154,12 +151,6 @@ function StatusModal() {
                         {
                             Images && Images.map((image, index)=>(
                                 <div key={index} id="file_img">
-                                    {/* <img src={image.camera
-                                            ? image.camera 
-                                            : image.data 
-                                            ? image.data
-                                            : URL.createObjectURL(image)} 
-                                    alt="images" className="img-thumbnail rounded" style={{filter:theme? 'invert(1)':'inver(0)'}} /> */}
 
                                     {
                                         image.camera 
@@ -189,7 +180,7 @@ function StatusModal() {
                     {
                         stream &&
                         <div className="stream position-relative">
-                            <video autoPlay muted  style={{filter:theme? 'invert(1)':'inver(0)'}} ref={videoRef} width='100%' height='100%'></video>
+                            <video autoPlay muted ref={videoRef} width='100%' height='100%'></video>
                             <span onClick={handleStopStream}>&times;</span>
                             <canvas ref={canvasRef} style={{display:'none'}}></canvas>
                         </div>

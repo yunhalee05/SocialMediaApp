@@ -5,7 +5,7 @@ const SocketServer = (socket) =>{
     //Connect -Disconnect
     socket.on('joinUser', user=>{
         users.push({id:user._id, socketId:socket.id, followers:user.followers})
-        console.log({users})
+        // console.log({users})
     } )
 
     socket.on('disconnect', ()=>{
@@ -20,7 +20,7 @@ const SocketServer = (socket) =>{
             if(data.call){
                 const callUser = users.find(user=>user.id===data.call)
                 if(callUser){
-                    console.log({callUser})
+                    // console.log({callUser})
                     users = users.map(user=>user.id ===callUser.id ? {...user, call:null}:user)
                     socket.to(`${callUser.socketId}`).emit('callerDisconnect')
                 }
@@ -94,7 +94,7 @@ const SocketServer = (socket) =>{
     // Notification
     socket.on('createNotify', msg=>{
         const client = users.find(user=>msg.recipients.includes(user.id))
-        console.log(msg)
+        // console.log(msg)
         client && socket.to(`${client.socketId}`).emit('createNotifyToClient', msg)
     })
 
@@ -146,19 +146,19 @@ const SocketServer = (socket) =>{
 
     socket.on('endCall', data=>{
         const client = users.find(user=>user.id===data.sender)
-        console.log({sender:client})
+        // console.log({sender:client})
         if(client){
             socket.to(`${client.socketId}`).emit('endCallToClient', data)
             users=users.map(user=>user.id===client.id?{...user, call:null }: user )
             if(client.call){
                 const clientCall = users.find(user=>user.id===client.call)
-                console.log({receiver:clientCall})
+                // console.log({receiver:clientCall})
                 clientCall && socket.to(`${clientCall.socketId}`).emit('endCallToClient', data)
                 users=users.map(user=>user.id===data.recipient?{...user, call:null }: user )
             }
         }
 
-        console.log({endUser:users})
+        // console.log({endUser:users})
     })
 
     

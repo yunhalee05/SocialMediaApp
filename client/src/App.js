@@ -5,7 +5,6 @@ import HomePage from './pages/HomePage';
 import RegisterPage from './pages/RegisterPage';
 import { useDispatch, useSelector } from 'react-redux';
 import Header from './component/Haader'
-import Notify from './pages/Notify';
 import Discover from './pages/Discover';
 import MessagePage from './pages/MessagePage';
 import Profile from './pages/Profile';
@@ -58,7 +57,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <input type="checkbox" id="theme"/>
+      {/* <input type="checkbox" id="theme"/> */}
       <div className="App">
         <div className="main-header">
           {userInfo && <Header/>}
@@ -72,7 +71,6 @@ function App() {
           <PrivateRouter exact path="/message" component={MessagePage}/>
           <PrivateRouter exact path="/message/:id" component={Message}/>
           <PrivateRouter exact path="/discover" component={Discover}/>
-          <PrivateRouter exact path="/notify" component={Notify}/>
           <Route exact path="/register" component={RegisterPage}/>
           <Route exact path="/login" component={LoginPage}/>
           <Route exact path="/home" component={userInfo? HomePage: LoginPage}/>

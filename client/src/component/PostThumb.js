@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 
 function PostThumb({posts, result}) {
 
-    if(result ===0) return <h2 className="text-center text-danger">No Post</h2>
+    if(result ===0) return <div className="text-center no-post">No Post</div>
 
     return (
         <div className="post_thumb">
@@ -17,19 +17,6 @@ function PostThumb({posts, result}) {
                                 : <img src={post.images[0]?.data} alt={post.images[0]?.data}></img>
                             }
 
-{/*                                 
-                            <div className="post_thumb_menu ">
-                                <span className="pr-3">
-                                    <div><i className="far fa-heart"></i></div>
-                                    <div>{post.likes.length}</div>
-                                </span>
-
-                                <span className="pl-3">
-                                    <div><i className="far fa-comment"></i></div>
-                                    <div>{post.comments.length}</div>
-                                </span>
-
-                            </div> */}
                         </div>
                     </Link>
                 ))

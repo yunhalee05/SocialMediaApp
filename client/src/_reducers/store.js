@@ -7,7 +7,6 @@ import { getUserProfileReducer } from './profileReducers';
 import socketReducer from './socketReducers';
 import { editstatusReducer, statusReducer } from './statusReducers';
 import { suggestionReducer } from './suggestionReducers';
-import { themeReducer } from './themeReducers';
 import { alertReducer, userLoginReducer } from './userReducers';
 import { onlineReducer } from './onlineCheckReducers'
 import { callReducer, peerReducer } from './callReducers';
@@ -22,7 +21,6 @@ const initialState={
 const reducer = combineReducers({
     userLogin:userLoginReducer,
     alert:alertReducer,
-    theme:themeReducer,
     userProfile:getUserProfileReducer,
     status:statusReducer,
     getposts:postGetReducer,

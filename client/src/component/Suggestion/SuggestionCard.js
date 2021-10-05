@@ -11,7 +11,6 @@ function SuggestionCard({user, children}) {
                         <Avatar src={user.avatar} size="super-avatar"/>
                     </div>
                     <div className="mt-1 text-center">
-                        {/* <span className="d-block">{user.username}</span> */}
                         <span className="text-center" style={{color:'black', fontSize:'1rem'}}>{user.username}</span>
                     </div>
                 </Link>

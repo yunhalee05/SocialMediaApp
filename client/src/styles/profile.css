@@ -16,8 +16,10 @@
     align-items: center;
     width: 100%;
     flex: 1;
+}
 
-
+.follow_btn{
+    font-weight: 800;
 }
 
 .info_content{

@@ -247,7 +247,7 @@ postRouter.get('/profile/savedposts', auth, async(req, res)=>{
             _id:{$in:user.saved}
         }).limit(Number(limit)).sort('-createdAt')
 
-        console.log(savedposts)
+        // console.log(savedposts)
 
         res.json({savedposts, result:savedposts.length})
     }catch(err){
@@ -255,27 +255,5 @@ postRouter.get('/profile/savedposts', auth, async(req, res)=>{
     }
 })
 
-// postRouter.get('/discover', auth, async(req, res)=>{
-//     try{
-//         const newArr=[...req.user.following, req.user.id]
-
-//         const num = req.query.num || 9;
-
-//         const posts= await Post.aggregate([
-//             {$match: {user:{$nin: newArr}}},
-//             {$sample: {size:Number(num)}}
-//         ])
-
-//         return res.json({
-//             result:posts.length,
-//             posts
-//         })
-
-
-//     }catch(err){
-//         return res.status(500).json({message:err.message})
-//     }
-    
-// })
 module.exports = postRouter
 

@@ -3,13 +3,13 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {Link, useLocation} from 'react-router-dom'
 import { logout } from '../_actions/userActions'
-import { ALERT, THEME } from '../_constants/globalConstants'
+import { ALERT } from '../_constants/globalConstants'
 import Avatar from './Avatar'
 import LoadIcon from '../images/loading.gif'
 import UserCard from './UserCard'
 import NotifyModal from './NotifyModal'
 import { getNotify } from '../_actions/NotifyActions'
-import { getSuggestions } from '../_actions/suggestionActions'
+import headerlogo from '../images/headerlogo.png'
 
 function Haader() {
     const navLinks = [
@@ -21,7 +21,6 @@ function Haader() {
 
     const userLogin = useSelector(state => state.userLogin)
     const {userInfo, loading, error} = userLogin;
-    const {theme} = useSelector(state => state.theme)
     const notify = useSelector(state => state.notify)
 
 
@@ -73,7 +72,9 @@ function Haader() {
             <nav className="navbar navbar-expand-lg navbar-light justify-content-between align-middle">
                 
                 <Link  to="/">
-                    <h1 className="brand navbar-brand text-uppercase p-0 m-0" >Social Media</h1>
+                    <div className="brand navbar-brand" >
+                        <img src={headerlogo} alt="" />
+                    </div>
                 </Link>
 
                 <form className="search_form">
@@ -109,6 +110,7 @@ function Haader() {
                         }
 
 
+                        
                         <li className="nav-item dropdown" style={{opacity:1}}>
                             <span className="nav-link position-relative" id="navbarDropdown"
                             role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -136,7 +138,6 @@ function Haader() {
 
                             <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <Link className="dropdown-item" to={`/profile/${userInfo.user._id}`}>Profile</Link>
-                                <label className="dropdown-item" htmlFor="theme" onClick={()=>dispatch({type:THEME, payload:!theme})}>{theme ? 'Light mode':'Dark mode'}</label>
                                 <div className="dropdown-divider"></div>
                                 <Link className="dropdown-item" to="/" onClick={()=>dispatch(logout())}>Logout</Link>
                             </div>

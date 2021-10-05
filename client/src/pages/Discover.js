@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Alert from '../component/Alert'
 import Loading from '../component/Loading'
@@ -15,26 +15,34 @@ function Discover({props}) {
         props.history.push('/login')
     }
 
-    const [skip, setSkip] = useState(0)
-    const [limit, setLimit] = useState(3)
     const [load, setLoad] = useState(false)
-    const [page, setPage] = useState(2)
-    const [posts, setPosts] = useState([])
+    const [page, setPage] = useState(1)
 
     const dispatch = useDispatch();    
 
     const discoverpost = useSelector(state => state.discoverpost)
-    const {posts:discoveredpost, loading, result, firstLoad,error} = discoverpost;
+    const {posts:discoveredpost, loading,error} = discoverpost;
 
     useEffect(() => {
-        if(!firstLoad){
-            dispatch(getDiscoverPost())
-        }
-    },[dispatch, firstLoad,page, limit])
+        dispatch(getDiscoverPost())
+    },[dispatch])
+
+    const pageEnd = useRef()
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(entries=>{
+            if(entries[0].isIntersecting){
+                onLoadMore()
+            }
+        },{
+            threshold:0.1
+        })
+        observer.observe(pageEnd.current)
+    }, [])
 
     const onLoadMore = async() =>{
         setLoad(true)
-        const res = await axios.get(`/api/discover?num=${page*9}`,{
+        const res = await axios.get(`/api/discover?page=${page+1}`,{
         headers:{authorization:`Bearer ${userInfo.token}`},
         })
 
@@ -45,10 +53,7 @@ function Discover({props}) {
         
         setPage(page+1)
         setLoad(false)
-
     }
-
-
 
 
     return (
@@ -59,16 +64,15 @@ function Discover({props}) {
             }
             {
                 
-                (loading || load)
+                loading
                 ? <Loading></Loading>
                 : discoveredpost && <PostThumb posts={discoveredpost} result={discoveredpost} />
 
             }
+            <button className="btn btn-dark mx-auto d-block" style={{marginBottom:'100px', opacity:'0'}} ref={pageEnd}>LoadMore</button>
             {
-                !loading &&
-                result<9*(page-1) ? '':
-                    <button className="btn btn-dark mx-auto d-block" onClick={onLoadMore}>LoadMore</button>
-
+                load &&
+                <Loading></Loading>
             }
         </div>
 

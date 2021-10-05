@@ -5,8 +5,6 @@ function Carousel({images, id}) {
     const isActive = index=>{
         if(index===0) return "active"
     }
-
-    const theme = useSelector(state => state.theme)
     
     return (
         <div id={`image${id}`} className="carousel slide" data-ride="carousel">
@@ -26,11 +24,9 @@ function Carousel({images, id}) {
                         <div key={index} className={`carousel-item ${isActive(index)}`}>
                             {
                                 img.data.match(/video/i)||img.data.match(/mp4/i)||img.data.match(/avi/i)||img.data.match(/mov/i)||img.data.match(/wmv/i)
-                                ? <video controls src={img.data} className="d-block w-100" alt={img.data}
-                                style={{filter: theme ? 'invert(1)' : 'invert(0)'}} />
+                                ? <video controls src={img.data} className="d-block w-100" alt={img.data}/>
 
-                                : <img src={img.data} className="d-block w-100" alt={img.data}
-                                style={{filter: theme ? 'invert(1)' : 'invert(0)'}} />
+                                : <img src={img.data} className="d-block w-100" alt={img.data}/>
                             }
                            
                         </div>

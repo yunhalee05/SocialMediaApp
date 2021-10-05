@@ -35,16 +35,16 @@ function UserInfo({user}) {
 
                         <div className="follow_btn text-center"onClick={()=>setShowFollowers(true)}>
                             <div >
-                                <strong>{user.followers.length} </strong>
+                                {user.followers.length}
                             </div>
-                            <div>Followers</div>
+                            <div style={{color:"#eb8f17", textTransform:"uppercase", WebkitTextStroke:"1px black"}}>Followers</div>
                         </div>
 
                         <div className="follow_btn text-center" onClick={()=>setShowFollowing(true)}>
                             <div>
-                                    <strong>{user.following.length}</strong> 
+                                {user.following.length}
                             </div>
-                            <div>Following</div>
+                            <div style={{color:"#0f876b", textTransform:"uppercase", WebkitTextStroke:"1px black"}}>Following</div>
                         </div>
 
 

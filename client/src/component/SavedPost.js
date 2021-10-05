@@ -46,7 +46,6 @@ function SavedPost() {
         setResult(res.data.result)
         setPage(page+1)
         setLoad(false)
-
     }
 
     return (
