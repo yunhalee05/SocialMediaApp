@@ -9,7 +9,7 @@
     "backend": "nodemon server.js",
     "frontend": "npm run start --prefix client",
     "dev": "concurrently \"npm run backend\" \"npm run start --prefix client\"",
-    "build": "cd client && npm install && npm run build"
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "author": "",
   "license": "ISC",

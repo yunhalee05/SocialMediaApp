@@ -12,12 +12,6 @@ app.use(express.urlencoded({extended:true}))
 app.use(cookieParser())
 
 
-mongoose.connect(process.env.MONGODB_URI,{
-    useNewUrlParser:true, useUnifiedTopology:true, useCreateIndex:true, useFindAndModify:false
-}).then(()=>console.log('MongoDB connected.'))
-.catch(err=> console.log(err))
-
-
 //Socket
 const http = require('http').createServer(app)
 const io = require('socket.io')(http)
@@ -46,10 +40,6 @@ app.use('/profileuploads', express.static(path.join(__variableOfChoice, '/profil
 app.use('/postuploads', express.static(path.join(__variableOfChoice, '/postuploads')))
 app.use('/messageuploads', express.static(path.join(__variableOfChoice, '/messageuploads')))
 
-app.use(express.static(path.join(__dirname, 'client/build')));
-app.get('*', (req, res) =>
-  res.sendFile(path.join(__dirname, 'client/build/index.html'))
-);
 
 
 
@@ -65,6 +55,18 @@ app.use('/api/messageuploads', require('./routes/messageUploadRouter'));
 app.use('/api/profileuploads', require('./routes/profileUploadRouter'));
 
 
+mongoose.connect(process.env.MONGODB_URI,{
+    useNewUrlParser:true, useUnifiedTopology:true, useCreateIndex:true, useFindAndModify:false
+}).then(()=>console.log('MongoDB connected.'))
+.catch(err=> console.log(err))
+
+
+if(process.env.NODE_ENV === 'production'){
+    app.use(express.static('client/build'))
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))
+    })
+}
 
 
 const port = process.env.PORT || 5000
