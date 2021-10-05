@@ -119,7 +119,7 @@ function Haader() {
                                 </span>
 
                                 {
-                                    notify.notify.length>0 &&
+                                    notify.notify?.length>0 &&
                                         <span className="notify_length">{notify.notify.length}</span>
                                 }
                             </span>
