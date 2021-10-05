@@ -83,7 +83,7 @@ function Haader() {
                     <div className="search_icon" style={{opacity:search? 0:1}}>
                         <span className="material-icons" >search</span>
                     </div>
-                    <div className="close_search" style={{opacity:users?.length===0? 0:1}} onClick={handleClose}>&times;</div>
+                    <div className="close_search" style={{opacity:users.length===0? 0:1}} onClick={handleClose}>&times;</div>
                     <button className="submit" style={{display:'none'}}>Search</button>
                     {
                         load && <img  className = "loading" src={LoadIcon} alt="loading" />
@@ -110,24 +110,27 @@ function Haader() {
                         }
 
 
-                        
-                        <li className="nav-item dropdown" style={{opacity:1}}>
-                            <span className="nav-link position-relative" id="navbarDropdown"
-                            role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span className="material-icons" style={{color:notify.notify?.length>0? 'crimson':''}}>
-                                    favorite
+                        {
+                            notify.loading===false && notify.notify &&
+                            <li className="nav-item dropdown" style={{opacity:1}}>
+                                <span className="nav-link position-relative" id="navbarDropdown"
+                                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span className="material-icons" style={{color:notify.notify.length>0? 'crimson':''}}>
+                                        favorite
+                                    </span>
+
+                                    {
+                                        notify.notify.length>0 &&
+                                            <span className="notify_length">{notify.notify.length}</span>
+                                    }
                                 </span>
 
-                                {
-                                    notify.notify?.length>0 &&
-                                        <span className="notify_length">{notify.notify.length}</span>
-                                }
-                            </span>
-
-                            <div className="dropdown-menu" aria-labelledby="navbarDropdown" style={{transform:'translateX(75px)'}}>
-                                <NotifyModal/>
-                            </div>
-                        </li>
+                                <div className="dropdown-menu" aria-labelledby="navbarDropdown" style={{transform:'translateX(75px)'}}>
+                                    <NotifyModal/>
+                                </div>
+                            </li>
+                        }
+                        
 
 
                         <li className="nav-item dropdown" style={{opacity: 1}} >

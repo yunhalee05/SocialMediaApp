@@ -59,7 +59,7 @@ function NotifyModal() {
             }
 
             {
-                notify.notify.length ===0 &&
+                notify.notify?.length ===0 &&
                 <div className="text-center p-3" style={{fontSize:"1.3rem"}}><strong style={{backgroundColor:"#fad920"}}>No notify yet.</strong></div>
                 // <img src={NoNotice} alt="NoNotice" className="w-50"/>
             }
