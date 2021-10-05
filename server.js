@@ -37,15 +37,21 @@ PeerServer({port:3001, path:'/'})
 
 
 //Route
-app.get('/',(req, res)=>{
-    res.send('hello world')
-})
+// app.get('/',(req, res)=>{
+//     res.send('hello world')
+// })
 
 
 const __variableOfChoice = path.resolve();
 app.use('/profileuploads', express.static(path.join(__variableOfChoice, '/profileuploads')))
 app.use('/postuploads', express.static(path.join(__variableOfChoice, '/postuploads')))
 app.use('/messageuploads', express.static(path.join(__variableOfChoice, '/messageuploads')))
+
+app.use(express.static(path.join(__dirname, 'client/build')));
+app.get('*', (req, res) =>
+  res.sendFile(path.join(__dirname, 'client/build/index.html'))
+);
+
 
 
 app.use('/api/users', require('./routes/userRouter'))
@@ -62,5 +68,5 @@ app.use('/api/profileuploads', require('./routes/profileUploadRouter'));
 
 
 
-const port = process.env.port || 5000
+const port = process.env.PORT || 5000
 http.listen(port, ()=> console.log(`Server is listening on port ${port}.`))
