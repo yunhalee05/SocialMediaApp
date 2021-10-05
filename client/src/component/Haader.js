@@ -88,13 +88,16 @@ function Haader() {
                     {
                         load && <img  className = "loading" src={LoadIcon} alt="loading" />
                     }
-                    <div className="users">
-                        {
-                            search && users.map(user=>(
-                                <UserCard key = {user._id} user={user} border="border" handleClose = {handleClose}/>
-                            ))
-                        }
-                    </div>
+                    {
+                        search &&
+                        <div className="users">
+                            {
+                                users.map(user=>(
+                                    <UserCard key = {user._id} user={user} border="border" handleClose = {handleClose}/>
+                                ))
+                            }
+                        </div>
+                    }
                 </form>
 
                 <div className="menu">

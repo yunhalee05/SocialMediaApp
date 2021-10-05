@@ -1,14 +1,12 @@
-import io from 'socket.io-client'
 
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { ALERT, SOCKET } from './_constants/globalConstants'
+import { ALERT } from './_constants/globalConstants'
 import { LIKE_POST_SUCCESS, UNLIKE_POST_SUCCESS, UPDATE_POST_SUCCESS } from './_constants/postConstants'
 import { USER_LOGIN_SUCCESS } from './_constants/userConstants'
-import { PROFILE_GETUSER_SUCCESS, USER_FOLLOW_PROFILE, USER_UNFOLLOW_PROFILE, USER_UPDATE_PROFILE_SUCCESS } from './_constants/profileConstants'
 import { CREATE_NOTIFY_SUCCESS, REMOVE_NOTIFY_SUCCESS } from './_constants/notifyConstants'
 import { MESSAGE_ADD_SUCCESS, MESSAGE_ADD_USER } from './_constants/messageConstants'
-import { CHECK_ONLINE_SUCCESS, OFFLINE, ONLINE } from './_constants/onlineCheckConstants'
+import { OFFLINE, ONLINE } from './_constants/onlineCheckConstants'
 import { CALL } from './_constants/callConstants'
 
 
@@ -24,16 +22,6 @@ function SocketClient() {
     const socket = useSelector(state => state.socket)
 
     const dispatch = useDispatch()
-
-    // const socket = io();
-
-    // useEffect(() => {
-    //     dispatch({
-    //       type:SOCKET,
-    //       payload:socket
-    //     })
-    //     return ()=>socket.close()
-    //   }, [dispatch])
     
     //JoinUser
     useEffect(() => {

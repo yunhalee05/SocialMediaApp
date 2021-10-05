@@ -1,5 +1,5 @@
 import  {BrowserRouter ,Route} from 'react-router-dom'
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import RegisterPage from './pages/RegisterPage';
@@ -11,7 +11,6 @@ import Profile from './pages/Profile';
 import StatusModal from './component/StatusModal';
 import Post from './pages/Post';
 import SocketClient from './SocketClient';
-import { getSuggestions } from './_actions/suggestionActions';
 import { io } from 'socket.io-client';
 import { SOCKET } from './_constants/globalConstants';
 import PrivateRouter from './customRouter/PrivateRouter';
