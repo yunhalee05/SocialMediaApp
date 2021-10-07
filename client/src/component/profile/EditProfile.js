@@ -5,7 +5,6 @@ import Alert from '../Alert'
 import { updateUserProfile } from '../../_actions/profileActions'
 import { USER_UPDATE_PROFILE_RESET } from '../../_constants/profileConstants'
 import Loading from '../Loading'
-import axios from 'axios'
 
 function EditProfile({setOnEdit}) {
 
@@ -18,10 +17,7 @@ function EditProfile({setOnEdit}) {
     const [website, setWebsite] = useState(userInfo.user.website)
     const [story, setStory] = useState(userInfo.user.story)
     const [gender, setGender] = useState(userInfo.user.gender)
-    const [avatar, setAvatar] = useState('')
-
-    const [loadingUpload, setLoadingUpload] = useState(false)
-    const [errorUpload, setErrorUpload] = useState('')
+    const [image, setImage] = useState('')
 
     const changeAvatar= async (e) =>{
         const file = e.target.files[0]
@@ -31,23 +27,7 @@ function EditProfile({setOnEdit}) {
             var preview = document.getElementById('preview')
             preview.src = URL.createObjectURL(file)
         }
-
-        const bodyFormData = new FormData()
-        bodyFormData.append('image', file)
-
-        setLoadingUpload(true)
-        try{
-            const {data} = await axios.post('/api/profileuploads', bodyFormData,{
-                headers:{'Content-Type' : 'multipart/form-data', authorization:`Bearer ${userInfo.token}`}
-            })
-            console.log(data)
-            setAvatar(data)
-            setLoadingUpload(false)
-        }catch(error){
-            setLoadingUpload(false)
-            setErrorUpload(error.message)
-        }
-
+        setImage(file)
     }
     
     const checkImage = (file)=>{
@@ -78,7 +58,16 @@ function EditProfile({setOnEdit}) {
 
     const handleSubmit = (e) =>{
         e.preventDefault()
-        dispatch(updateUserProfile({avatar, fullname, mobile, address, website, story, gender}))
+
+        const user = {
+            fullname, 
+            mobile,
+            address,
+            website,
+            story,
+            gender
+        }
+        dispatch(updateUserProfile(user, image))
     }
     return (
         <div className="edit_profile">
@@ -86,7 +75,7 @@ function EditProfile({setOnEdit}) {
                 error && <Alert variant="danger">{error}</Alert>
             }
             {
-                error && <Loading></Loading>
+                loading && <Loading></Loading>
             }
             <button className="btn btn-danger btn_close" onClick={()=>setOnEdit(false)}>
                 Close
@@ -100,7 +89,6 @@ function EditProfile({setOnEdit}) {
                         <p>Change</p>
                         <input type="file" name="file" id="file_up" accept="image/*" onChange={changeAvatar}/>
                     </span>
-                    
                 </div>
 
 

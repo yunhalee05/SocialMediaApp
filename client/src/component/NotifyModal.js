@@ -11,9 +11,6 @@ import Alert from './Alert'
 
 function NotifyModal() {
 
-    const userLogin = useSelector(state => state.userLogin)
-    const {userInfo} = userLogin
-
     const notify = useSelector(state => state.notify)
 
     const dispatch = useDispatch()
@@ -55,18 +52,15 @@ function NotifyModal() {
             }
             {
                 notify.error
-                && <Alert variant="danger">sdf</Alert>
+                && <Alert variant="danger">{notify.error}</Alert>
             }
 
             {
-                notify.notify?.length ===0 &&
-                <div className="text-center p-3" style={{fontSize:"1.3rem"}}><strong style={{backgroundColor:"#fad920"}}>No notify yet.</strong></div>
-                // <img src={NoNotice} alt="NoNotice" className="w-50"/>
-            }
-
-            <div style={{maxHeight:'calc(100vh-200px)', overflow:'auto'}}>
-                {
-                    notify.notify && notify.notify.map((msg, index)=>(
+                notify.notify &&
+                notify.notify.length === 0
+                ? <div className="text-center p-3" style={{fontSize:"1.3rem"}}><strong style={{backgroundColor:"#fad920"}}>No notify yet.</strong></div>
+                : <div style={{maxHeight:'calc(100vh - 250px)', overflow:'auto'}}>
+                    {notify.notify.map((msg, index)=>(
                         <div className="px-2 mb-3" key={index}>
                             <Link to={`${msg.url}`} className="d-flex text-dark align-items-center" onClick={()=>handleIsRead(msg)}>
                                 <Avatar src={msg.user.avatar} size="big-avatar"/>
@@ -97,9 +91,9 @@ function NotifyModal() {
                             </small>
 
                         </div>
-                    ))
-                }
-            </div>
+                        ))}
+                    </div>
+            }
 
             <hr className="my-1" />
 

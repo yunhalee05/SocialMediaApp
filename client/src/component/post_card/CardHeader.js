@@ -63,11 +63,11 @@ function CardHeader({post}) {
                     {
                         userInfo.user._id ===post.user._id &&
                         <>
-                            <div className="dropdown-item">
-                                <span className="material-icons" onClick={handleEditPost}>create</span> Edit Post
+                            <div className="dropdown-item" onClick={handleEditPost}>
+                                <span className="material-icons" >create</span> Edit Post
                             </div>
-                            <div className="dropdown-item">
-                                <span className="material-icons" onClick = {handleDeletePost}>delete_outline</span> Remove Post
+                            <div className="dropdown-item"  onClick = {handleDeletePost}>
+                                <span className="material-icons">delete_outline</span> Remove Post
                             </div>
                         </>
                     }

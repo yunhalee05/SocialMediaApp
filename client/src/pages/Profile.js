@@ -34,8 +34,10 @@ function Profile(props) {
         <div className="profile">
             {loading&& <Loading></Loading>}
             {error && <Alert variant="danger">{error}</Alert>}
-            <UserInfo user={user}/>
-            
+            {
+                user && 
+                <UserInfo user={user}/>
+            }
             {
                 <div className="profile_tab">
                     <button className={saveTab? '': 'active'} onClick={()=>setSaveTab(false)}><i className="far fa-images fa-2x"></i></button>

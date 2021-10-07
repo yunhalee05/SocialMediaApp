@@ -16,11 +16,10 @@ function Haader() {
         { label: 'Home', icon: 'home', path: '/'},
         { label: 'Message', icon: 'near_me', path: '/message'},
         { label: 'Discover', icon: 'explore', path: '/discover'},
-        // {label:'Notify', icon:'favorite', path:'/notify'},
     ]
 
     const userLogin = useSelector(state => state.userLogin)
-    const {userInfo, loading, error} = userLogin;
+    const {userInfo} = userLogin;
     const notify = useSelector(state => state.notify)
 
 
@@ -114,7 +113,7 @@ function Haader() {
 
 
                         {
-                            notify.loading===false && notify.notify &&
+                            (notify.loading===false && notify.notify) &&
                             <li className="nav-item dropdown" style={{opacity:1}}>
                                 <span className="nav-link position-relative" id="navbarDropdown"
                                 role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -139,7 +138,7 @@ function Haader() {
                         <li className="nav-item dropdown" style={{opacity: 1}} >
                             <span className="nav-link dropdown-toggle" id="navbarDropdown" 
                             role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <Avatar src={userInfo.user.avatar} size = "medium-avatar"/>
+                                <Avatar src={userInfo.user?.avatar} size = "medium-avatar"/>
                             </span>
 
                             <div className="dropdown-menu" aria-labelledby="navbarDropdown">

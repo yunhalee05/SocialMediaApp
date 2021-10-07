@@ -34,17 +34,27 @@ export const getProfileUser = (userId)=>async (dispatch, getState)=>{
     }
 }
 
-export const updateUserProfile = (user ) =>async (dispatch, getState)=>{
+export const updateUserProfile = (user, image) =>async (dispatch, getState)=>{
     dispatch({
-        type:USER_UPDATE_PROFILE_REQUEST,
-        payload:{user}
+        type:USER_UPDATE_PROFILE_REQUEST
     })
     const {userLogin: {userInfo}} = getState()
     try{
 
-        const res = await axios.put(`/api/users/${userInfo.user._id}`, user, {
+        if(image!==''){
+            const bodyFormData = new FormData()
+            bodyFormData.append('image', image)
+            await axios.post('/api/profileuploads', bodyFormData,{
+                headers:{'Content-Type' : 'multipart/form-data', authorization:`Bearer ${userInfo.token}`}
+            }).then(res=>{
+                user = {...user, avatar : res.data}
+            })
+        }
+
+        const res = await axios.put(`/api/users/${userInfo.user._id}`, {user}, {
             headers: {authorization : `Bearer ${userInfo.token}`}
         })
+
         dispatch({
             type:USER_UPDATE_PROFILE_SUCCESS,
             payload : res.data.user
@@ -57,8 +67,6 @@ export const updateUserProfile = (user ) =>async (dispatch, getState)=>{
                 user:res.data.user
             }
         })
-
-        // localStorage.removeItem('userInfo')
         localStorage.setItem('userInfo',JSON.stringify({token:userInfo.token, user:res.data.user}))
 
     }catch(err){

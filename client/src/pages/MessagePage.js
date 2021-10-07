@@ -13,6 +13,7 @@ function Message(props) {
         props.history.push('/login')
     }
     const message = useSelector(state => state.message)
+    
     return (
         <div style={{padding:"2rem"}}>
             {
@@ -23,6 +24,7 @@ function Message(props) {
                 message.loading
                 && <Loading></Loading>
             }
+
             <div className="message d-flex">
                 <div className="col-md-4 border-right px-0 left-mess">
                     <LeftSide/>

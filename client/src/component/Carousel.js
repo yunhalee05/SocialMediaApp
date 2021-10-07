@@ -1,5 +1,4 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
 
 function Carousel({images, id}) {
     const isActive = index=>{
@@ -8,15 +7,18 @@ function Carousel({images, id}) {
     
     return (
         <div id={`image${id}`} className="carousel slide" data-ride="carousel">
-            <ol className="carousel-indicators" style={{zIndex: 1}}>
-                {
-                    images.map((img, index) => (
-                        <li key={index} data-target={`#image${id}`} 
-                        data-slide-to={index} className={isActive(index)} />
-                    ))
-                }
-                
-            </ol>
+            {
+                images.length > 1 &&
+                <ol className="carousel-indicators" style={{zIndex: 1}}>
+                    {
+                        images.map((img, index) => (
+                            <li key={index} data-target={`#image${id}`} 
+                            data-slide-to={index} className={isActive(index)} />
+                        ))
+                    }
+                    
+                </ol>
+            }
 
             <div className="carousel-inner">
                 {

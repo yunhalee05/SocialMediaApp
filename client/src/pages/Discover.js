@@ -63,17 +63,16 @@ function Discover({props}) {
                 <Alert variant="danger">{error}</Alert>
             }
             {
-                
-                loading
-                ? <Loading></Loading>
-                : discoveredpost && <PostThumb posts={discoveredpost} result={discoveredpost} />
-
-            }
-            <button className="btn btn-dark mx-auto d-block" style={{marginBottom:'100px', opacity:'0'}} ref={pageEnd}>LoadMore</button>
-            {
-                load &&
+                (loading || load) &&
                 <Loading></Loading>
             }
+
+            {
+                discoveredpost && <PostThumb posts={discoveredpost} result={discoveredpost.length} />
+            }
+
+            <button className="btn btn-dark mx-auto d-block" style={{marginBottom:'100px', opacity:'0'}} ref={pageEnd}>LoadMore</button>
+
         </div>
 
     )

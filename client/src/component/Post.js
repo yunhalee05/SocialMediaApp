@@ -2,16 +2,11 @@ import React, { useEffect,useRef,useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getHomePosts ,getMorePost} from '../_actions/postActions'
 import PostCard from './PostCard'
-import LoadIcon from '../images/loading.gif'
 import Loading from './Loading'
-import { ALERT } from '../_constants/globalConstants'
 import Alert from './Alert'
 
 
 function Post() {
-
-    const userLogin = useSelector(state => state.userLogin)
-    const {userInfo} = userLogin
 
     const dispatch = useDispatch()
 
@@ -58,20 +53,20 @@ function Post() {
                 getposts.error&&
                 <Alert variant="danger">{getposts.error}</Alert>
             }
+
             {
-                getposts.loading
-                ? <Loading/>
-                :  posts && 
+                (getposts.loading || getposts.loadMoreLoading) &&
+                <Loading/>
+            }
+            {
+                posts && 
                 posts.map(post=>(
                     <PostCard key={post._id} post={post}></PostCard> 
                 ))
             }
             
             <button style={{marginBottom:'100px', opacity:'0'}} ref={pageEnd}>loadmore</button>
-            {
-                getposts.loadMoreLoading  &&
-                <Loading></Loading>
-            }
+            
         </div>
     )
 }

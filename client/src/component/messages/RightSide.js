@@ -8,9 +8,6 @@ import Display from './Display'
 import LoadIcon from '../../images/loading.gif'
 import { useHistory } from 'react-router-dom'
 import { CALL } from '../../_constants/callConstants'
-import {Link} from 'react-router-dom'
-import Avatar from '../Avatar'
-
 
 function RightSide({id}) {
 
@@ -34,8 +31,6 @@ function RightSide({id}) {
     const [page, setPage] = useState(0)
     const [isLoadMore, setIsLoadMore] = useState(false)
     const [limit, setLimit] = useState(9)
-
-    const [preScrollHeight, setPreScrollHeight] = useState(0)
 
     const dispatch = useDispatch()
     const history = useHistory()
