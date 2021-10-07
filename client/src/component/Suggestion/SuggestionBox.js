@@ -24,25 +24,25 @@ function SuggestionBox() {
 
 
     return (
-        <div className="mt-3" style={{background:'#f2f2f2'}}>
+        <div className="mt-3" style={{background:'#f4f0f7'}}>
             {
                 suggestion.error
                 && <Alert variant="danger">{suggestion.error}</Alert>
             }
-            <div className=" text-center p-2">
-                <h5 >Suggestions for you 
+            <div className="text-center" style={{fontWeight:"800", fontSize:"1.4rem", textTransform:"uppercase", color:"white",WebkitTextStroke:"1px black", paddingTop:"2rem"}}> 
+                <div >Suggestions for you 
                 {
                     !suggestion.loading &&
-                    <i className="fas fa-redo ml-3" style={{cursor:'pointer'}} onClick={()=>dispatch(getSuggestions())}/>
+                    <i className="fas fa-redo ml-3" style={{cursor:'pointer', color:"#c46c23"}} onClick={()=>dispatch(getSuggestions())}/>
                 }
-                </h5>
+                </div>
             </div>
 
             {
                 suggestion.loading
                 ? <img src={LoadIcon} alt="loading" className="d-block mx-auto my-4"/>
                 : suggestion.users &&
-                <div className="suggestion" style={{display:'flex', justifyContent:'space-between', overflow:'scroll'}}>
+                <div className="suggestion">
                     {
                         suggestion.users.map(user=>(
                             <SuggestionCard key={user._id}  user={user}>
