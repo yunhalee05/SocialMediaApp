@@ -4,11 +4,11 @@ import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import RegisterPage from './pages/RegisterPage';
 import { useDispatch, useSelector } from 'react-redux';
-import Header from './component/Haader'
+import Header from './component/header/Header'
 import Discover from './pages/Discover';
 import MessagePage from './pages/MessagePage';
 import Profile from './pages/Profile';
-import StatusModal from './component/StatusModal';
+import StatusModal from './component/status/StatusModal';
 import Post from './pages/Post';
 import SocketClient from './SocketClient';
 import { io } from 'socket.io-client';

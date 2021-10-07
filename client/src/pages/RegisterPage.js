@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import Alert from '../component/Alert'
-import Loading from '../component/Loading'
-import { Link, useHistory } from 'react-router-dom'
+import Alert from '../component/common/Alert'
+import Loading from '../component/common/Loading'
+import { Link } from 'react-router-dom'
 import { register } from '../_actions/userActions'
 
 

@@ -1,8 +1,8 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import Alert from '../component/Alert'
+import Alert from '../component/common/Alert'
 import LeftSide from '../component/messages/LeftSide'
-import Loading from '../component/Loading'
+import Loading from '../component/common/Loading'
 import chat from '../images/chat.png'
 
 function Message(props) {

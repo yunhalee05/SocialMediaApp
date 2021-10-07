@@ -1,9 +1,9 @@
 import React, { useEffect,useRef,useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getHomePosts ,getMorePost} from '../_actions/postActions'
-import PostCard from './PostCard'
-import Loading from './Loading'
-import Alert from './Alert'
+import { getHomePosts ,getMorePost} from '../../_actions/postActions'
+import PostCard from './post_card/PostCard'
+import Loading from '../common/Loading'
+import Alert from '../common/Alert'
 
 
 function Post() {

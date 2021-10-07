@@ -1,8 +1,8 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteMessage } from '../../_actions/messageActions'
-import Avatar from '../Avatar'
-import Times from '../Times'
+import Avatar from '../common/Avatar'
+import Times from '../common/Times'
 
 function Display({user, msg, data}) {
 

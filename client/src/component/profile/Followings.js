@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import FollowBtn from '../FollowBtn'
-import UserCard from '../UserCard'
+import FollowBtn from '../common/FollowBtn'
+import UserCard from '../common/UserCard'
 
 function Followings({user, setShowFollowing}) {
 

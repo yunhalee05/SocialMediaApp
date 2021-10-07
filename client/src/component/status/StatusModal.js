@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { createPost, updatePost } from '../_actions/postActions'
-import { ALERT, EDITSTATUS, STATUS } from '../_constants/globalConstants'
-import Alert from './Alert'
-import Icons from './Icons'
+import { createPost, updatePost } from '../../_actions/postActions'
+import { ALERT, EDITSTATUS, STATUS } from '../../_constants/globalConstants'
+import Icons from '../common/Icons'
 
 function StatusModal() {
 

@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { getMessage } from '../../_actions/messageActions'
-import Alert from '../Alert'
-import Loading from '../Loading'
+import React from 'react'
+import { useSelector } from 'react-redux'
+import Alert from '../common/Alert'
+import Loading from '../common/Loading'
 import LeftSide from './LeftSide'
 import RightSide from './RightSide'
 

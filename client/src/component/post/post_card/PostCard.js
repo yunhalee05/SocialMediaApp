@@ -1,8 +1,8 @@
-import CardHeader from './post_card/CardHeader'
-import CardBody from './post_card/CardBody'
-import CardFooter from './post_card/CardFooter'
-import Comments from './post_card/Comments'
-import InputComment from './post_card/InputComment'
+import CardHeader from './CardHeader'
+import CardBody from './CardBody'
+import CardFooter from './CardFooter'
+import Comments from './Comments'
+import InputComment from './InputComment'
 
 import React from 'react'
 

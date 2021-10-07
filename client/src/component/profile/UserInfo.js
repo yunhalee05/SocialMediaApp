@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
-import Avatar from '../Avatar'
-import FollowBtn from '../FollowBtn';
+import Avatar from '../common/Avatar'
+import FollowBtn from '../common/FollowBtn';
 import EditProfile from './EditProfile'
 import Followers from './Followers';
 import Followings from './Followings';

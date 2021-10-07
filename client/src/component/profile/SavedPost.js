@@ -1,9 +1,9 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { ALERT } from '../_constants/globalConstants'
-import PostThumb from './PostThumb'
-import LoadIcon from '../images/loading.gif'
+import { ALERT } from '../../_constants/globalConstants'
+import PostThumb from '../common/PostThumb'
+import LoadIcon from '../../images/loading.gif'
 
 function SavedPost() {
 

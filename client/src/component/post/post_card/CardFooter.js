@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {Link} from 'react-router-dom'
-import Send from '../../images/send.svg'
-import { likePost, setSavePost, setUnsavePost, unlikePost } from '../../_actions/postActions'
-import LikeButton from '../LIkeButton'
-import ShareModal from '../ShareModal'
-import {BASE_URL} from '../../utils'
+import Send from '../../../images/send.svg'
+import { likePost, setSavePost, setUnsavePost, unlikePost } from '../../../_actions/postActions'
+import LikeButton from './LIkeButton'
+import ShareModal from './ShareModal'
+import {BASE_URL} from '../../../utils'
 
 function CardFooter({post}) {
     const [isLike, setIsLike] = useState(false)

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import PostCard from '../component/PostCard';
+import PostCard from '../component/post/post_card/PostCard';
 import { getPostDetail } from '../_actions/postActions';
 import { DELETE_POST_RESET } from '../_constants/postConstants';
-import Loading from '../component/Loading';
+import Loading from '../component/common/Loading';
 
 function Post(props) {
 

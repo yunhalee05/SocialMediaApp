@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import LoadIcon from '../../images/loading.gif'
-import FollowBtn from '../FollowBtn'
+import FollowBtn from '../common/FollowBtn'
 import { getSuggestions } from '../../_actions/suggestionActions'
 import SuggestionCard from './SuggestionCard'
-import Alert from '../Alert'
+import Alert from '../common/Alert'
 
 function SuggestionBox() {
 

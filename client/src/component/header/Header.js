@@ -2,16 +2,16 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {Link, useLocation} from 'react-router-dom'
-import { logout } from '../_actions/userActions'
-import { ALERT } from '../_constants/globalConstants'
-import Avatar from './Avatar'
-import LoadIcon from '../images/loading.gif'
-import UserCard from './UserCard'
+import { logout } from '../../_actions/userActions'
+import { ALERT } from '../../_constants/globalConstants'
+import Avatar from '../common/Avatar'
+import LoadIcon from '../../images/loading.gif'
+import UserCard from '../common/UserCard'
 import NotifyModal from './NotifyModal'
-import { getNotify } from '../_actions/NotifyActions'
-import headerlogo from '../images/headerlogo.png'
+import { getNotify } from '../../_actions/NotifyActions'
+import headerlogo from '../../images/headerlogo.png'
 
-function Haader() {
+function Header() {
     const navLinks = [
         { label: 'Home', icon: 'home', path: '/'},
         { label: 'Message', icon: 'near_me', path: '/message'},
@@ -154,4 +154,4 @@ function Haader() {
     )
 }
 
-export default Haader
+export default Header

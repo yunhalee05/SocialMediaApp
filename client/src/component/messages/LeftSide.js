@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom'
 import { getConversation } from '../../_actions/messageActions'
 import { ALERT } from '../../_constants/globalConstants'
 import { CHECK_ONLINE, MESSAGE_ADD_USER } from '../../_constants/messageConstants'
-import UserCard from '../UserCard'
+import UserCard from '../common/UserCard'
 import LoadIcon from '../../images/loading.gif'
 
 function LeftSide({id}) {

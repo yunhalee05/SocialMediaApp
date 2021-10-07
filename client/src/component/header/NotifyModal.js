@@ -1,13 +1,11 @@
-import  Avatar from '../component/Avatar'
+import  Avatar from '../common/Avatar'
 import moment from 'moment'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import NoNotice from '../images/no-alarm.png'
-import { BASE_URL } from '../utils'
-import { deleteAllNotifies, readNotify } from '../_actions/NotifyActions'
-import LoadIcon from '../images/loading.gif'
-import Alert from './Alert'
+import { deleteAllNotifies, readNotify } from '../../_actions/NotifyActions'
+import LoadIcon from '../../images/loading.gif'
+import Alert from '../common/Alert'
 
 function NotifyModal() {
 

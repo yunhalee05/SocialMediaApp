@@ -1,8 +1,8 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import Status from '../component/Status'
-import Post from '../component/Post'
-import SuggestionBox from '../component/Suggestion/SuggestionBox'
+import Status from '../component/status/Status'
+import Post from '../component/post/Post'
+import SuggestionBox from '../component/suggestion/SuggestionBox'
 
 function HomePage(props) {
     const userLogin = useSelector(state => state.userLogin)

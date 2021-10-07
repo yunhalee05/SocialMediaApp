@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { getProfileUser } from '../_actions/profileActions';
-import Loading from '../component/Loading';
-import Alert from '../component/Alert'
+import Loading from '../component/common/Loading';
+import Alert from '../component/common/Alert'
 
-import SavedPost from '../component/SavedPost'
+import SavedPost from '../component/profile/SavedPost'
 import UserInfo from '../component/profile/UserInfo';
-import PostThumb from '../component/PostThumb';
+import PostThumb from '../component/common/PostThumb';
 
 
 function Profile(props) {

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import Avatar from '../Avatar'
+import Avatar from '../../common/Avatar'
 import {Link} from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import moment from 'moment'
-import LIkeButton from '../LIkeButton'
+import LIkeButton from '../post_card/LIkeButton'
 import InputComment from '../post_card/InputComment'
 import CommentMenu from './CommentMenu'
-import { likeComment, unlikeComment, updateComment } from '../../_actions/commentActions'
+import { likeComment, unlikeComment, updateComment } from '../../../_actions/commentActions'
 
 function CommentCard({children, comment, post, commentId}) {
 

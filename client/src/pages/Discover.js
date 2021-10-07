@@ -1,11 +1,11 @@
 import axios from 'axios'
 import React, { useEffect, useState,useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import Alert from '../component/Alert'
-import Loading from '../component/Loading'
-import PostThumb from '../component/PostThumb'
+import Alert from '../component/common/Alert'
+import Loading from '../component/common/Loading'
+import PostThumb from '../component/common/PostThumb'
 import { getDiscoverPost } from '../_actions/postActions'
-import { GET_DISCOVER_POST_RESET, GET_DISCOVER_POST_UPDATE } from '../_constants/postConstants'
+import { GET_DISCOVER_POST_UPDATE } from '../_constants/postConstants'
 
 function Discover({props}) {
     const userLogin = useSelector(state => state.userLogin)

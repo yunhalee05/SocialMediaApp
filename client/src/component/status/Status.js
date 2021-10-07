@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { STATUS } from '../_constants/globalConstants'
-import Avatar from './Avatar'
+import { STATUS } from '../../_constants/globalConstants'
+import Avatar from '../common/Avatar'
 
 function Status() {
     const userLogin = useSelector(state => state.userLogin)

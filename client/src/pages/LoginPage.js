@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import { login } from '../_actions/userActions'
-import Loading from '../component/Loading'
-import Alert from '../component/Alert'
+import Loading from '../component/common/Loading'
+import Alert from '../component/common/Alert'
 import logo from '../images/logo.png'
 
 

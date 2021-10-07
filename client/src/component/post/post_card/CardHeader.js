@@ -1,10 +1,10 @@
 import React from 'react'
-import Avatar from '../Avatar'
+import Avatar from '../../common/Avatar'
 import {Link, useHistory}  from 'react-router-dom'
 import moment from 'moment'
 import { useDispatch, useSelector } from 'react-redux'
-import { EDITSTATUS, STATUS } from '../../_constants/globalConstants'
-import { deletePost } from '../../_actions/postActions'
+import { EDITSTATUS, STATUS } from '../../../_constants/globalConstants'
+import { deletePost } from '../../../_actions/postActions'
 
 function CardHeader({post}) {
     const userLogin = useSelector(state => state.userLogin)

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addMessage } from '../../_actions/messageActions'
 import { CALL } from '../../_constants/callConstants'
 import { ALERT } from '../../_constants/globalConstants'
-import Avatar from '../Avatar'
+import Avatar from '../common/Avatar'
 import ring from '../../audio/ring.mp3'
 
 function CallModal() {

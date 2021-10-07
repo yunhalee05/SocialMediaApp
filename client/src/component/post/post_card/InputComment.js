@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { createComment } from '../../_actions/commentActions'
-import Icons from '../Icons'
+import { createComment } from '../../../_actions/commentActions'
+import Icons from '../../common/Icons'
 
 function InputComment({children,post , onReply, setOnReply}) {
 
