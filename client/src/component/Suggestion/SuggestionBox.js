@@ -20,7 +20,7 @@ function SuggestionBox() {
         if(userInfo.token){
             dispatch(getSuggestions())
         }
-    }, [userInfo.token, dispatch])
+    }, [userInfo.token, userInfo.user._id,dispatch])
 
 
     return (

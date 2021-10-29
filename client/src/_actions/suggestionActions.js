@@ -11,7 +11,6 @@ export const getSuggestions = ()=>async (dispatch, getState)=>{
         const res = await axios.get(`/api/users/suggestion/${userInfo.user._id}`,{headers:{authorization : `Bearer ${userInfo?.token}`}
         })
 
-
         dispatch({
             type:GET_USER_SUGGESTION_SUCCESS,
             payload:res.data

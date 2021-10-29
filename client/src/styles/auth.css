@@ -50,3 +50,47 @@
     opacity: 0.5;
 
 }
+
+.auth_social_buttons{
+    display: flex;
+    flex-direction: column;
+}
+
+.auth_social_button{
+    margin-top: 10px;
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: none;
+    font-weight: 800;
+}
+
+.auth_social_button a{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 3rem;
+    padding-left: 3rem;
+    box-shadow: none;
+    color: black;
+}
+
+.auth_social_button a:hover{
+    text-decoration: none;
+}
+
+.auth_social_buttons button:hover{
+    cursor: pointer;
+}
+
+.auth_social_button_image{
+    width: 37px;
+    height: 37px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.auth_social_button_image img{
+    object-fit: cover;
+    width: 100%;
+
+}

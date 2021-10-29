@@ -122,8 +122,6 @@ const validateEmail = (email)=>{
 
 export const socialLogin = (socialName, access_token) => async (dispatch)=>{
 
-    console.log("social login")
-    console.log(socialName, access_token)
     dispatch({
         type:SOCIAL_LOGIN_REQUEST
     })

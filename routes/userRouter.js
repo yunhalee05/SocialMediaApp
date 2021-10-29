@@ -208,7 +208,7 @@ userRouter.get('/auth/google', auth, async(req, res)=>{
 userRouter.post('/socialLogin', async(req, res)=>{
     try{
         const {socialName, access_token} = req.body
-        var fullname, username, email, password, avatar
+        var fullname, username, email, password, avatar, gender
         console.log(access_token)
 
         if(socialName === "google"){
@@ -218,6 +218,7 @@ userRouter.post('/socialLogin', async(req, res)=>{
             email = res.data.email
             password = access_token
             avatar = res.data.picture
+            gender = "male"
 
         }else if(socialName === "kakao"){
             const res = await axios.get("https://kapi.kakao.com/v2/user/me", {
@@ -231,8 +232,25 @@ userRouter.post('/socialLogin', async(req, res)=>{
             email = res.data.kakao_account.email
             password = access_token
             avatar = res.data.properties.profile_image
+            gender = res.data.kakao_account.gender
+        }else if(socialName ==="naver"){
+            const res = await axios.get('https://openapi.naver.com/v1/nid/me',{
+                headers: {
+                    Authorization: `Bearer ${access_token}`
+                }
+            })
+            
+            const response = res.data.response
+
+            fullname = response.name
+            username = response.name + res.data.response.id.substring(0,5)
+            email = response.email
+            password = access_token
+            avatar = response.profile_image
+            gender = response.gender === 'F' ? "Female" : "Male"
 
         }
+
         let newUserName = username.toLowerCase().replace(/ /g, '')
 
         var user = await User.findOne({email:email})
@@ -248,11 +266,10 @@ userRouter.post('/socialLogin', async(req, res)=>{
                 user.fullname = fullname
 
                 user = await user.save()
-
             }
             token = generateToken(user)
         }else{
-            const createdUser = new User({fullname, username:newUserName, email, password, social:socialName})
+            const createdUser = new User({fullname, username:newUserName, email, password, social:socialName, gender})
             user = await createdUser.save()
 
             token = generateToken({id:createdUser._id})

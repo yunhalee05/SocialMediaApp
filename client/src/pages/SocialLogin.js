@@ -7,7 +7,7 @@ import {KAKAO_TOKEN_URL} from '../env'
 function SocialLogin(props) {
 
     const socialName = props.match.params.social
-    var params = socialName === "google" ? props.history.location.hash.substring(1) : socialName === "kakao" ? props.history.location.search.substring(1) :props.history.location
+    var params = socialName === "google" ? props.history.location.hash.substring(1) : socialName === "kakao" ? props.history.location.search.substring(1) :  props.history.location.hash.substring(1)
 
     console.log(props)
     console.log(params)
@@ -38,6 +38,17 @@ function SocialLogin(props) {
                             dispatch(socialLogin(socialName, res.data.access_token))                            
                         })
             
+        }else if(socialName === "naver"){
+            params = params.split("&")
+            var param = new Array()
+            var key, value
+            for(var i = 0; i<params.length; i++){
+                key = params[i].split("=")[0]
+                value = params[i].split("=")[1]
+                param[key]=value
+            }
+            dispatch(socialLogin(socialName, param["access_token"]))
+
         }
     }
     return (

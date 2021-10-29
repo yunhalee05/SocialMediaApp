@@ -59,7 +59,7 @@ function App() {
     <BrowserRouter>
       {/* <input type="checkbox" id="theme"/> */}
       <div className="App">
-        <div className="main-header">
+        <div className="main-header" style={!userInfo && {display:"none"} }>
           {userInfo && <Header/>}
         </div>
         <div className="main">
