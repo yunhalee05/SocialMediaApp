@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken')
 const {generateToken} = require('../middleware/auth')
 const {auth} = require('../middleware/auth')
 // var ObjectId = require('mongodb').ObjectId
+const axios = require('axios')
 
 
 const userRouter = express.Router();
@@ -206,9 +207,33 @@ userRouter.get('/auth/google', auth, async(req, res)=>{
 
 userRouter.post('/socialLogin', async(req, res)=>{
     try{
-        const {fullname, username, email, password, avatar, socialName}=req.body
+        const {socialName, access_token} = req.body
+        var fullname, username, email, password, avatar
+        console.log(access_token)
+
+        if(socialName === "google"){
+            const res = await axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?&access_token=${access_token}`)
+            fullname = res.data.name
+            username = res.data.given_name+res.data.id.substring(0,5)
+            email = res.data.email
+            password = access_token
+            avatar = res.data.picture
+
+        }else if(socialName === "kakao"){
+            const res = await axios.get("https://kapi.kakao.com/v2/user/me", {
+                headers: {
+                    Authorization: `Bearer ${access_token}`
+                }
+            })
+
+            fullname = res.data.properties.nickname
+            username = res.data.properties.nickname + res.data.id.toString().substring(0,5)
+            email = res.data.kakao_account.email
+            password = access_token
+            avatar = res.data.properties.profile_image
+
+        }
         let newUserName = username.toLowerCase().replace(/ /g, '')
-        console.log(fullname, newUserName, email , password)
 
         var user = await User.findOne({email:email})
         var token;
@@ -227,7 +252,7 @@ userRouter.post('/socialLogin', async(req, res)=>{
             }
             token = generateToken(user)
         }else{
-            const createdUser = new User({fullname, username:newUserName, email, password})
+            const createdUser = new User({fullname, username:newUserName, email, password, social:socialName})
             user = await createdUser.save()
 
             token = generateToken({id:createdUser._id})
@@ -247,6 +272,52 @@ userRouter.post('/socialLogin', async(req, res)=>{
         return res.status(500).json({message:err.message})
     }
 })
+
+// userRouter.post('/socialLogin', async(req, res)=>{
+//     try{
+//         const {socialName, access_token} = req.body
+//         const {fullname, username, email, password, avatar, socialName}=req.body
+
+//         let newUserName = username.toLowerCase().replace(/ /g, '')
+//         console.log(fullname, newUserName, email , password)
+
+//         var user = await User.findOne({email:email})
+//         var token;
+
+//         if(user){
+//             if(user.social !== socialName){
+//                 return res.status(400).json({message:"You already have an acoount with this email."})
+//             }
+            
+//             if(user.avtar!== avatar || user.fullname !== fullname){
+//                 user.avatar = avatar
+//                 user.fullname = fullname
+
+//                 user = await user.save()
+
+//             }
+//             token = generateToken(user)
+//         }else{
+//             const createdUser = new User({fullname, username:newUserName, email, password})
+//             user = await createdUser.save()
+
+//             token = generateToken({id:createdUser._id})
+//         }
+        
+//         res.status(200)
+//             .send({
+//                 token,
+//                 user:{
+//                     ...user._doc,
+//                     password:''
+//                 },
+//                 msg:"Social Login Success"
+//             })
+ 
+//     }catch(err){
+//         return res.status(500).json({message:err.message})
+//     }
+// })
 
 
 

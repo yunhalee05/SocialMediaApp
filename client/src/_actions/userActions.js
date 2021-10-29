@@ -120,16 +120,17 @@ const validateEmail = (email)=>{
 }
 
 
-export const socialLogin = (fullname, username, email, password, avatar, socialName) => async (dispatch)=>{
+export const socialLogin = (socialName, access_token) => async (dispatch)=>{
 
     console.log("social login")
-    console.log(fullname, username, email, password)
+    console.log(socialName, access_token)
     dispatch({
         type:SOCIAL_LOGIN_REQUEST
     })
     try{
-        const {data} = await axios.post('/api/users/socialLogin', {fullname,username, email, password, avatar, socialName})
+        const {data} = await axios.post('/api/users/socialLogin', {socialName, access_token})
 
+        console.log(data)
         dispatch({
             type:SOCIAL_LOGIN_SUCCESS,
             payload:data
@@ -147,4 +148,35 @@ export const socialLogin = (fullname, username, email, password, avatar, socialN
         })
     }
 }
+
+
+// export const socialLogin = (fullname, username, email, password, avatar, socialName) => async (dispatch)=>{
+
+//     console.log("social login")
+//     console.log(fullname, username, email, password)
+//     dispatch({
+//         type:SOCIAL_LOGIN_REQUEST
+//     })
+//     try{
+//         const {data} = await axios.post('/api/users/socialLogin', {fullname,username, email, password, avatar, socialName})
+
+//         dispatch({
+//             type:SOCIAL_LOGIN_SUCCESS,
+//             payload:data
+//         })
+
+//         localStorage.setItem("userInfo", JSON.stringify(data))
+
+//     }catch(error){
+//         dispatch({
+//             type:SOCIAL_LOGIN_FAIL,
+//             payload:
+//                 error.response && error.response.data.message
+//                 ? error.response.data.message
+//                 : error.message
+//         })
+//     }
+// }
+
+
 

@@ -6,7 +6,7 @@ import { login } from '../_actions/userActions'
 import Loading from '../component/common/Loading'
 import Alert from '../component/common/Alert'
 import logo from '../images/logo.png'
-import {GOOGLE_AUTH_URL, GOOGLE_CLIENT_ID, OAUTH_REDIRECT_URI,GOOGLE_CLIENT_SECRET} from '../env.js'
+import {GOOGLE_AUTH_URL, KAKAO_AUTH_URL} from '../env.js'
 
 
 function LoginPage(props) {
@@ -76,10 +76,10 @@ function LoginPage(props) {
 
 
                     <button>
-                        <a href={`https://accounts.google.com/o/oauth2/auth?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=http://localhost:3000/auth/google&scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile&response_type=token&include_granted_scopes=true`}>Login to google</a>
+                        <a href={GOOGLE_AUTH_URL}>Login to google</a>
                     </button>
                     <button>
-
+                        <a href={KAKAO_AUTH_URL}>Login to kakao</a>
                     </button>
                     <button>
 

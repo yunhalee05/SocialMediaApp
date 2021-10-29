@@ -2,40 +2,43 @@ import axios from 'axios'
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { socialLogin } from '../_actions/userActions'
+import {KAKAO_TOKEN_URL} from '../env'
 
 function SocialLogin(props) {
 
     const socialName = props.match.params.social
-    var params = props.history.location.hash.substring(1)
+    var params = socialName === "google" ? props.history.location.hash.substring(1) : socialName === "kakao" ? props.history.location.search.substring(1) :props.history.location
 
+    console.log(props)
     console.log(params)
     console.log(socialName)
 
     const dispatch = useDispatch()
     
     useEffect(() => {
-        const access_token = getAccessToken(params)
-        getData(access_token)
-
+        getAccessToken(params)
     }, [params])
 
-    const getData = async(access_token) =>{
-        const res = await axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?&access_token=${access_token}`)
-        console.log(res)
-        dispatch(socialLogin(res.data.name, res.data.given_name+res.data.id.substring(0,5), res.data.email, access_token, res.data.picture,socialName))
-    }
+    const getAccessToken = async(params)=>{
+        if(socialName === "google"){    
+            params = params.split("&")
+            var param = new Array()
+            var key, value
+            for(var i = 0; i<params.length; i++){
+                key = params[i].split("=")[0]
+                value = params[i].split("=")[1]
+                param[key]=value
+            }
 
-    const getAccessToken = (params)=>{
-        params = params.split("&")
-        var param = new Array()
-        var key, value
-        for(var i = 0; i<params.length; i++){
-            key = params[i].split("=")[0]
-            value = params[i].split("=")[1]
-            param[key]=value
+            dispatch(socialLogin(socialName, param["access_token"]))
+             
+        }else if(socialName === "kakao"){
+            await axios.post(KAKAO_TOKEN_URL+params.substring(5))
+                        .then(res=>{
+                            dispatch(socialLogin(socialName, res.data.access_token))                            
+                        })
+            
         }
-
-        return param["access_token"]
     }
     return (
         <div>
