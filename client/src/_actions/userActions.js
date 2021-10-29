@@ -1,4 +1,4 @@
-import { USER_LOGIN_FAIL, USER_LOGIN_LOGOUT, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_REGISTER_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS} from "../_constants/userConstants";
+import { SOCIAL_LOGIN_FAIL, SOCIAL_LOGIN_REQUEST, SOCIAL_LOGIN_SUCCESS, USER_LOGIN_FAIL, USER_LOGIN_LOGOUT, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_REGISTER_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS} from "../_constants/userConstants";
 import axios from 'axios'
 import { ALERT } from "../_constants/globalConstants";
 
@@ -119,4 +119,32 @@ const validateEmail = (email)=>{
     return re.test(email);
 }
 
+
+export const socialLogin = (fullname, username, email, password, avatar, socialName) => async (dispatch)=>{
+
+    console.log("social login")
+    console.log(fullname, username, email, password)
+    dispatch({
+        type:SOCIAL_LOGIN_REQUEST
+    })
+    try{
+        const {data} = await axios.post('/api/users/socialLogin', {fullname,username, email, password, avatar, socialName})
+
+        dispatch({
+            type:SOCIAL_LOGIN_SUCCESS,
+            payload:data
+        })
+
+        localStorage.setItem("userInfo", JSON.stringify(data))
+
+    }catch(error){
+        dispatch({
+            type:SOCIAL_LOGIN_FAIL,
+            payload:
+                error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message
+        })
+    }
+}
 

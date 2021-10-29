@@ -18,6 +18,7 @@ import Message from './component/messages/Message';
 import CallModal from './component/messages/CallModal';
 import Peer from 'peerjs'
 import { PEER } from './_constants/callConstants';
+import SocialLogin from './pages/SocialLogin';
 
 
 function App() {
@@ -74,6 +75,8 @@ function App() {
           <Route exact path="/login" component={LoginPage}/>
           <Route exact path="/home" component={userInfo? HomePage: LoginPage}/>
           <Route exact path="/" component={LoginPage}/>
+          <Route exact path="/auth/:social" component={SocialLogin}/>
+
         </div>
       </div>
     </BrowserRouter>

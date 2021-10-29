@@ -200,6 +200,54 @@ userRouter.get('/suggestion/:id', auth, async(req, res)=>{
     }
 })
 
+userRouter.get('/auth/google', auth, async(req, res)=>{
+    console.log("authorization code = " + req.query.token);
+})
+
+userRouter.post('/socialLogin', async(req, res)=>{
+    try{
+        const {fullname, username, email, password, avatar, socialName}=req.body
+        let newUserName = username.toLowerCase().replace(/ /g, '')
+        console.log(fullname, newUserName, email , password)
+
+        var user = await User.findOne({email:email})
+        var token;
+
+        if(user){
+            if(user.social !== socialName){
+                return res.status(400).json({message:"You already have an acoount with this email."})
+            }
+            
+            if(user.avtar!== avatar || user.fullname !== fullname){
+                user.avatar = avatar
+                user.fullname = fullname
+
+                user = await user.save()
+
+            }
+            token = generateToken(user)
+        }else{
+            const createdUser = new User({fullname, username:newUserName, email, password})
+            user = await createdUser.save()
+
+            token = generateToken({id:createdUser._id})
+        }
+        
+        res.status(200)
+            .send({
+                token,
+                user:{
+                    ...user._doc,
+                    password:''
+                },
+                msg:"Social Login Success"
+            })
+ 
+    }catch(err){
+        return res.status(500).json({message:err.message})
+    }
+})
+
 
 
 module.exports = userRouter
