@@ -18,7 +18,22 @@
     <br/>
     <br/>
 <div>
-    <h2>🍕 Improvement</h2>
+    <h2>🚀 Shortcut</h2>
+<div> 
+        
+- [__Improvement__](#improvement)
+- [__Challenges__](#challenges)
+- [__Tech Stack Used__](#tech)
+- [__Features__](#feature)
+- [__Implementation__](#implementation)
+- [__Structure__](#structure)
+
+</div>
+    <br/>
+    <br/>
+    <br/>
+<div>
+    <h2 id="improvement">🍕 Improvement</h2>
     <ul>
       <li>
         <h3>✔️ Follow 기능 만들기</h3> 
@@ -90,18 +105,91 @@
             </li>
           </ul>
       </li>
+      <li>
+        <h3>✔️ OAuth2</h3> 
+          <ul>
+            <li>
+              <h4>Challenge : </h4>
+              <p>
+                사용자의 편의를 위해서 이전 프로젝트에서 진행했던 구글이외에도 카카오, 네이버의 소셜로그인버튼 또한 기능을 구현하고자 하였습니다. 
+              </p>
+            </li>
+            <li>
+              <h4>Solution : </h4>
+              <p>
+                기존 프로젝트(react-google-login)와는 다르게 <strong><em>Rest API</em></strong> 를 통하여 소셜사이트와 프로그램이 어떻게 데이터를 주고받는지 확인하고자 하였습니다. 예를들어 카카오에서는 버튼에는 authorization_code를 요정하는 링크를 생성하고, 받아온 authorization_code로 access_token을 발급받아 이를 통해 회원정보를 가져올 수 있도록 하였습니다. 가져온 회원정보는 회원등록이 가능하도록 처리하였습니다. 
+              </p>
+            </li>
+          </ul>
+      </li>
     </ul>
 </div>
     <br/>
     <br/>
     <br/>
 <div>
-    <h2>🛠 Tech Stack Used</h2>
+    <h2 id="challenges">⚡️ Challenges</h2>
+    <ul>
+      <li>
+        <h3>✔️ Too many re-renders(Infinite Loop) 오류 </h3> 
+          <ul>
+            <li>
+              <h4>Reason : </h4>
+              <p>
+                onClick 이벤트를 함수로 실행시에 "Too many re-renders. React limits the number of renders to prevent an infinite loop" 에러가 발생하였습니다. 이 오류는 리액트에서 onClick 이벤트로 실행되는 콜백함수에서 state 상태를 변경하려고 하여 리렌더링이 계속해서 이뤄지면서 발생하는 오류였습니다. 
+              </p>
+            </li>
+            <li>
+              <h4>Solution : </h4>
+              <p>
+                onClick 이벤트로 실행되는 함수를 화살표 함수로 변경해주어 리렌더링 되는 것을 방지하여 해결하였습니다. 
+              </p>
+            </li>
+          </ul>
+      </li>
+      <li>
+        <h3>✔️ Data URI의 이미지타입 오류 </h3> 
+          <ul>
+            <li>
+              <h4>Reason : </h4>
+              <p>프로젝트 진행중 canvas를 통한 화면캡쳐기능을 이용하여 포스트작성이 가능하도록 할 때, 촬영된 이미지의 URI가 Data URIs(base 64인코딩)로 생성되어 기존의 이미지와 같이 서버로 보낼 파일리스트에 파일형식으로 저장하는데 오류가 발생하였습니다. </p>
+            </li>
+            <li>
+              <h4>Solution : </h4>
+              <p>
+                생성된 Data URI를 atob로 디코딩하여 새로운 배열을 생성해준 뒤, Unit8Array를 이용하여 새로운 image/png타입의 Blob파일로 바꿔주었습니다. Blob파일로 변경된 이미지는 파일형식으로 파일리스트에 추가하는 것이 가능하였습니다. 
+              </p>
+            </li>
+          </ul>       
+      </li>
+      <li>
+        <h3>✔️ OAuth2 Cors 오류 </h3> 
+          <ul>
+            <li>
+              <h4>Reason : </h4>
+              <p>RestAPI를 이용하여 네이버 OAuth2 진행시, 프론트엔드 부분에서 받은 인증코드(authorization_code)로 access_token을 발급하려는 경우 cors오류가 발생하였습니다. 이는 네이버에서 client_id, client_secret을 도용하여 api를 호출하는 것을 방지하기 위해서 서버측(node js)에서만 발급이 가능하도록 설정되어 있기 때문이었습니다. 카카오의 경우에는 access_token은 프론트에서도 발급이 가능했지만, 네이버는 이를 허용하고 있지 않았습니다. </p>
+            </li>
+            <li>
+              <h4>Solution : </h4>
+              <p>
+                네이버 아이디로 로그인(네아로)를 구현할 떄, 서버가 아닌 프론트엔드에서 access_token을 받아오는 방법으로는 첫번째로 JDK를 사용하는 방법이 있었습니다. index.html에 해당 JDK스크립트를 추가해주고 실행시켜 이를 이용해 인증하고 데이터를 받아오는 방법이 있었습니다. 두번째로 처음 인증 코드를 요청할 때 response_type=token을 실행하여 바로 access_token을 받아오는 방법이 있었습니다. 해당 프로젝트에서는 두번째 방법으로 바로 access_token을 발급받아 해당 오류를 해결하도록 하였습니다. 
+              </p>
+            </li>
+          </ul>
+      </li>
+    </ul>
+</div>
+    <br/>
+    <br/>
+    <br/><div>
+    <h2 id="tech">🛠 Tech Stack Used</h2>
     <ul>
       <li>
         <h4>Frontend</h4> 
         <img src="https://img.shields.io/badge/react-6cc1d9?style=for-the-badge&logo=react&logoColor=white">
         <img src="https://img.shields.io/badge/redux-bb93e6?style=for-the-badge&logo=redux&logoColor=white">
+        <img src="https://img.shields.io/badge/fontawesome-102969?style=for-the-badge&logo=redux&logoColor=white">
+        <img src="https://img.shields.io/badge/bootstrap-3e1b6b?style=for-the-badge&logo=redux&logoColor=white">
         <img src="https://img.shields.io/badge/socket.io Client-e37dc9?style=for-the-badge&logo=socket.io&logoColor=white">
         <img src="https://img.shields.io/badge/peerjs-e3834b?style=for-the-badge&logo=socket.io&logoColor=white">
       </li>
@@ -123,7 +211,7 @@
     <br/>
     <br/>
 <div>
-    <h2>🍔 Implementation</h2>
+    <h2 id="implementation">🍔 Implementation</h2>
     <ul>
       <li>
         <h3>✔️ MERN </h3> 
@@ -155,6 +243,8 @@
     <br/>
     <br/>
     <br/>
+<div id="feature">
+</div>
     
 🪵 Features
 --
@@ -166,11 +256,12 @@
 <h4> 🧀 마음에 드는 포스를 북마크하연 내 프로필화면에서 확인 가능</h4>
 <h4> 🧀 WebSocket(socket.io) WebRTC(peerjs)를 이용한 실시간 화상/음성통화 기능</h4>
 <h4> 🧀 실시간 메세지 채팅 기능</h4>
+<h4> 🧀 구글, 네이버, 카카오 소셜로그인 기능</h4>
 <br/>
 
 |  |  |
 |:--------|:--------:|
-|<div align="center"><img height="200px" alt="스크린샷 2021-10-02 오후 6 48 23" src="https://user-images.githubusercontent.com/63947424/137156801-608d87ce-1fbd-4a91-823f-88a7facc0747.png"></br><p><strong>로그인페이지</strong></p><p>로그인안한 사용자는 바로 로그인 페이지로 이동.</p></div>|<div align="center"><img height="200px" alt="스크린샷 2021-10-02 오후 6 48 23" src="https://user-images.githubusercontent.com/63947424/137157056-2cc5a81f-721d-4883-9c0b-e688a862901e.png"></br><p><strong>메인페이지</strong></p><p>사용자 추천과 팔로우한 사용자 포스트 나열.</p></div>|
+|<div align="center"><img height="200px" alt="스크린샷 2021-10-02 오후 6 48 23" src="https://user-images.githubusercontent.com/63947424/139517376-4271f02c-f83a-4218-96d0-773e06853244.jpg"></br><p><strong>로그인페이지</strong></p><p>소셜로그인 가능.</p></div>|<div align="center"><img height="200px" alt="스크린샷 2021-10-02 오후 6 48 23" src="https://user-images.githubusercontent.com/63947424/137157056-2cc5a81f-721d-4883-9c0b-e688a862901e.png"></br><p><strong>메인페이지</strong></p><p>사용자 추천과 팔로우한 사용자 포스트 나열.</p></div>|
 |<div align="center"><img height="200px" alt="스크린샷 2021-10-02 오후 6 48 23" src="https://user-images.githubusercontent.com/63947424/137157460-fb0101eb-3415-4e4e-8f82-ec30abfe0f44.png"></br><p><strong>프로필페이지</strong></p><p>사용자의 포스트와 북마크한 포스트 확인 가능.</p></div>|<div align="center"><img height="200px" alt="스크린샷 2021-10-02 오후 6 48 23" src="https://user-images.githubusercontent.com/63947424/137157693-141efbf6-d61e-465d-8502-d664e71c44a5.png"></br><p><strong>알람</strong></p><p>팔로우한 사용자의 활동을 헤더의 알람으로 확인.</p></div>|
 |<div align="center"><img height="200px" alt="스크린샷 2021-10-02 오후 6 48 23" src="https://user-images.githubusercontent.com/63947424/137159185-1a562f96-1c7f-4617-a8e1-d79a7dbe5af0.png"></br><p><strong>프로필페이지</strong></p><p>팔로우 정보 확인하고 팔로우 언팔로우 가능.</p></div>|<div align="center"><img height="200px" alt="스크린샷 2021-10-02 오후 6 48 23" src="https://user-images.githubusercontent.com/63947424/137170414-7aaeab5e-255f-401e-bafd-94c83551d9f1.png"><img height="200px" alt="스크린샷 2021-10-02 오후 6 48 23" src="https://user-images.githubusercontent.com/63947424/137170615-656f3d74-e0a1-483c-9edf-ab34168643c1.png"></br><p><strong>반응형 웹페이지</strong></p><p>화면 크기에 따라 반응형으로 웹페이지 설계.</p></div>|
 |<div align="center"><img height="200px" alt="스크린샷 2021-10-02 오후 6 48 23" src="https://user-images.githubusercontent.com/63947424/137158829-5d53f6f4-c29a-4083-8a48-ace30650671d.png"></br><p><strong>디스커버페이지</strong></p><p>팔로우하지 않은 사용자들의 포스트들 랜덤으로 확인 가능.</p></div>|<div align="center"><img height="200px" alt="스크린샷 2021-10-02 오후 6 48 23" src="https://user-images.githubusercontent.com/63947424/137158654-e7b2e7be-eff0-4c90-a1fd-5b2259ee404e.png"></br><p><strong>메세지페이지</strong></p><p>실시간 메세지 및 사용자 온라인 정보 확인 가능.</p></div>|
@@ -198,3 +289,153 @@
   <p>실시간으로  가능.</p>
     </br>
 </div>
+    <br/>
+    <br/>
+    <br/>
+<div>
+    <h2 id="structure">🧱 Structure</h2>
+</div>
+
+```bash
+📦SocialMediaApp
+├── 🗂client
+│   ├── src
+│   │   ├── App.js
+│   │   ├── SocketClient.js
+│   │   ├── _actions
+│   │   │   ├── NotifyActions.js
+│   │   │   ├── commentActions.js
+│   │   │   ├── messageActions.js
+│   │   │   ├── postActions.js
+│   │   │   ├── profileActions.js
+│   │   │   ├── suggestionActions.js
+│   │   │   └── userActions.js
+│   │   ├── _constants
+│   │   │   ├── callConstants.js
+│   │   │   ├── commentConstants.js
+│   │   │   ├── globalConstants.js
+│   │   │   ├── messageConstants.js
+│   │   │   ├── notifyConstants.js
+│   │   │   ├── onlineCheckConstants.js
+│   │   │   ├── postConstants.js
+│   │   │   ├── profileConstants.js
+│   │   │   └── userConstants.js
+│   │   ├── _reducers
+│   │   │   ├── callReducers.js
+│   │   │   ├── messageReducers.js
+│   │   │   ├── notifyReducers.js
+│   │   │   ├── onlineCheckReducers.js
+│   │   │   ├── postReducers.js
+│   │   │   ├── profileReducers.js
+│   │   │   ├── socketReducers.js
+│   │   │   ├── statusReducers.js
+│   │   │   ├── store.js
+│   │   │   ├── suggestionReducers.js
+│   │   │   └── userReducers.js
+│   │   ├── audio
+│   │   │   └── ring.mp3
+│   │   ├── component
+│   │   │   ├── common
+│   │   │   │   ├── Alert.js
+│   │   │   │   ├── Avatar.js
+│   │   │   │   ├── FollowBtn.js
+│   │   │   │   ├── Icons.js
+│   │   │   │   ├── Loading.js
+│   │   │   │   ├── PostThumb.js
+│   │   │   │   ├── Times.js
+│   │   │   │   └── UserCard.js
+│   │   │   ├── header
+│   │   │   │   ├── Header.js
+│   │   │   │   └── NotifyModal.js
+│   │   │   ├── messages
+│   │   │   │   ├── CallModal.js
+│   │   │   │   ├── Display.js
+│   │   │   │   ├── LeftSide.js
+│   │   │   │   ├── Message.js
+│   │   │   │   └── RightSide.js
+│   │   │   ├── post
+│   │   │   │   ├── Post.js
+│   │   │   │   ├── comments
+│   │   │   │   │   ├── CommentCard.js
+│   │   │   │   │   ├── CommentDisplay.js
+│   │   │   │   │   └── CommentMenu.js
+│   │   │   │   └── post_card
+│   │   │   │       ├── CardBody.js
+│   │   │   │       ├── CardFooter.js
+│   │   │   │       ├── CardHeader.js
+│   │   │   │       ├── Carousel.js
+│   │   │   │       ├── Comments.js
+│   │   │   │       ├── InputComment.js
+│   │   │   │       ├── LIkeButton.js
+│   │   │   │       ├── PostCard.js
+│   │   │   │       └── ShareModal.js
+│   │   │   ├── profile
+│   │   │   │   ├── EditProfile.js
+│   │   │   │   ├── Followers.js
+│   │   │   │   ├── Followings.js
+│   │   │   │   ├── SavedPost.js
+│   │   │   │   └── UserInfo.js
+│   │   │   ├── status
+│   │   │   │   ├── Status.js
+│   │   │   │   └── StatusModal.js
+│   │   │   └── suggestion
+│   │   │       ├── SuggestionBox.js
+│   │   │       └── SuggestionCard.js
+│   │   ├── customRouter
+│   │   │   └── PrivateRouter.js
+│   │   ├── pages
+│   │   │   ├── Discover.js
+│   │   │   ├── HomePage.js
+│   │   │   ├── LoginPage.js
+│   │   │   ├── MessagePage.js
+│   │   │   ├── Post.js
+│   │   │   ├── Profile.js
+│   │   │   ├── RegisterPage.js
+│   │   │   └── SocialLogin.js
+│   │   ├── styles
+│   │   │   ├── alert.css
+│   │   │   ├── auth.css
+│   │   │   ├── avatar.css
+│   │   │   ├── call_modal.css
+│   │   │   ├── comment.css
+│   │   │   ├── global.css
+│   │   │   ├── header.css
+│   │   │   ├── home.css
+│   │   │   ├── icon.css
+│   │   │   ├── loading.css
+│   │   │   ├── messages.css
+│   │   │   ├── post_thumb.css
+│   │   │   ├── profile.css
+│   │   │   └── status_modal.css
+│   │   ├── env.js
+│   │   ├── images
+│   │   ├── index.css
+│   │   ├── index.js
+│   │   └── utils.js
+├── 🗂middleware
+│   └── auth.js
+├── 🗂models
+│   ├── Comment.js
+│   ├── Conversation.js
+│   ├── Message.js
+│   ├── Notify.js
+│   ├── Post.js
+│   └── User.js
+├── 🗂routes
+│   ├── commentRouter.js
+│   ├── discoverRouter.js
+│   ├── messageRouter.js
+│   ├── messageUploadRouter.js
+│   ├── notifyRouter.js
+│   ├── postRouter.js
+│   ├── postUploadRouter.js
+│   ├── profileUploadRouter.js
+│   ├── searchRouter.js
+│   └── userRouter.js
+├── server.js
+├── SocketServer.js
+├── postuploads
+├── profileuploads
+├── messageuploads
+└── uploads
+```

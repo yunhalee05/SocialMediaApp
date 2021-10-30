@@ -147,34 +147,3 @@ export const socialLogin = (socialName, access_token) => async (dispatch)=>{
     }
 }
 
-
-// export const socialLogin = (fullname, username, email, password, avatar, socialName) => async (dispatch)=>{
-
-//     console.log("social login")
-//     console.log(fullname, username, email, password)
-//     dispatch({
-//         type:SOCIAL_LOGIN_REQUEST
-//     })
-//     try{
-//         const {data} = await axios.post('/api/users/socialLogin', {fullname,username, email, password, avatar, socialName})
-
-//         dispatch({
-//             type:SOCIAL_LOGIN_SUCCESS,
-//             payload:data
-//         })
-
-//         localStorage.setItem("userInfo", JSON.stringify(data))
-
-//     }catch(error){
-//         dispatch({
-//             type:SOCIAL_LOGIN_FAIL,
-//             payload:
-//                 error.response && error.response.data.message
-//                 ? error.response.data.message
-//                 : error.message
-//         })
-//     }
-// }
-
-
-
