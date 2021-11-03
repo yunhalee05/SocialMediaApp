@@ -12,7 +12,7 @@
     </p>
     <br/>
     <br/>
-    <a href="https://social-media-app-with-you.herokuapp.com/home"><strong>social-media-app-with-you</strong></a>
+    <a href="https://social-media-with-you.herokuapp.com"><strong>social-media-app-with-you</strong></a>
 </div>
     <br/>
     <br/>

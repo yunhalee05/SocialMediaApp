@@ -2,7 +2,8 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import Status from '../component/status/Status'
 import Post from '../component/post/Post'
-import SuggestionBox from '../component/suggestion/SuggestionBox'
+import Sgb from '../component/Sgb'
+// import SuggestionBox from '../component/suggestion/SuggestionBox'
 
 function HomePage(props) {
     const userLogin = useSelector(state => state.userLogin)
@@ -15,7 +16,7 @@ function HomePage(props) {
         <div className="home mx-0">
             <div >
                 <Status/>
-                <SuggestionBox/>
+                <Sgb/>
                 <Post />
             </div>
         </div>
